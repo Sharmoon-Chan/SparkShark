@@ -19,3 +19,9 @@ Add visitor registration, scrypt password authentication, private cloud resumes,
 Add the independently threaded Node 24 SQLite backend, deployment build and HTTP integration tests for reuse on an existing server.
 
 验证：Prior Node validation: 11 unit tests and 19 HTTP integration tests, including repeated maximum-size photos. Imported snapshot typecheck recorded separately.
+
+## 第 4 批
+
+Run the shared API inside a SQLite Durable Object with bounded admission, transactional SQL and streamed outer requests. Include adapter, cancellation, isolation and maximum-photo tests.
+
+验证：Prior Free DO validation: 22 workerd integration tests, adapter/admission and cancellation regressions, plus successful asset dry run. Remote preview results recorded in final development log.

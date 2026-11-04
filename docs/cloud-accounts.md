@@ -29,7 +29,8 @@
 
 单份简历大小的合成测量见 [容量测算](cloud-size-assessment.md)。
 
+## 运行与上线
 
-## 运行方式
+前端使用静态文件；账户与保存 API 已支持 Cloudflare Workers + D1，以及现有服务器上的 Node 24 + SQLite。用户当前要求不新增费用，已准备 Node 运行方式，继续保留用户名与密码登录。上线前需要完成资源验证、独立数据目录、同域地址配置与管理员初始化。
 
-共享 API 与当前实现见 [后端说明](../cloud/README.md)。
+开发和部署步骤见 [Node 后端说明](../cloud/node/README.md)。免费身份认证与容量对比见 [不新增托管订阅的方案](free-hosting.md)。当前不会购买套餐；GitHub 登录尚未接入，线上服务尚未切换。

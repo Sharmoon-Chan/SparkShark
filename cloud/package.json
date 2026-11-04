@@ -8,7 +8,11 @@
     "db:migrate:local": "wrangler d1 migrations apply DB --local",
     "deploy": "wrangler deploy",
     "build:node": "node node/build.mjs",
-    "test:node": "node --import tsx --test node/node.test.ts"
+    "test:node": "node --import tsx --test node/node.test.ts",
+    "dev:free": "wrangler dev --config wrangler-free.toml --port 8788",
+    "deploy:free": "wrangler deploy --config wrangler-free.toml",
+    "dry-run:free": "wrangler deploy --config wrangler-free.toml --dry-run --outdir .wrangler/dry-run-free",
+    "test:free-adapter": "node --import tsx --test free/sqlite-d1.test.ts free/request-admission.test.ts"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "5.20261104.1",

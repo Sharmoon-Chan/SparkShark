@@ -1,0 +1,35 @@
+name = "myresume-free"
+main = "free/index.ts"
+compatibility_date = "2026-11-04"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "../output/cloud-assets"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = ["/api", "/api/*", "/fonts/*.ttf"]
+
+[vars]
+APP_ORIGIN = "https://me.sharmoon.cc.cd"
+
+[dev]
+port = 8788
+local_protocol = "http"
+
+[[rules]]
+type = "Text"
+globs = ["**/*.sql"]
+fallthrough = true
+
+[[durable_objects.bindings]]
+name = "STATE"
+class_name = "MyResumeState"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["MyResumeState"]
+
+[[ratelimits]]
+name = "AUTH_RATE_LIMIT"
+namespace_id = "1001"
+simple = { limit = 10, period = 60 }

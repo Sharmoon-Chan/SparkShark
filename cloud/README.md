@@ -1,5 +1,7 @@
 # MyResume accounts and cloud storage
 
+For **zero additional hosting cost**, the independent [SQLite Durable Objects Free candidate](free/README.md) and the [Node 24 + SQLite variant](node/README.md) on the existing Ali server both reuse the same API. The Free candidate has been verified locally; actual account eligibility and managed CPU limits still need remote verification before public deployment. Select its explicit `dev:free` / `deploy:free` scripts when evaluating it. The original D1 Worker configuration below remains separate; no paid plan or remote resources have been created.
+
 This Worker serves the dedicated Cloudflare static stage and a same-origin `/api/*` API backed by D1. It does not require Instabox, a permanent VM, PostgreSQL, R2, or email delivery. No remote resources are created by the source files or local development commands.
 
 Open registration is enabled initially. Each new account receives a configurable default quota of **10 cloud resumes**. The administrator can disable/reactivate users, change individual quotas, reset another user's password, switch registration on/off, set the default quota for future accounts, and inspect user/resume counts and stored bytes. Quota changes do not delete resumes; an account above its quota can still update or delete its existing resumes.
@@ -106,7 +108,3 @@ These are operator steps, not commands already executed by the implementation:
 6. Verify existing local resumes, cloud save/load, per-account isolation, quota and conflict behavior, and browser PDF export before the public cutover.
 
 The checked-in migration is initial schema only. Never reapply it destructively to an existing database, and preserve future migration history and backups when upgrading. No deployment, purchase, public DNS change, or existing production data change is part of local setup.
-
-## Existing-server Node variant
-
-The [Node 24 SQLite backend](node/README.md) reuses this API without requiring new hosting subscriptions.

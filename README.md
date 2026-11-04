@@ -111,3 +111,7 @@ HTML 下载包含可见内容、样式和裁剪后的头像，可离线打开，
 ## 现有服务器运行
 
 提供 [Node 24 + SQLite 后端](cloud/node/README.md)，复用账户与保存 API。
+
+## 免费 Cloudflare 运行候选
+
+提供 [SQLite Durable Objects 运行方式](cloud/free/README.md)，免费额度与验证边界见 [托管说明](docs/free-hosting.md)。
