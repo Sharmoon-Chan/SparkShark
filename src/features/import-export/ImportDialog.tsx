@@ -13,6 +13,9 @@ import { readPdfResume, type ImportedPhoto, type PdfImportResult } from './pdfIm
 import type { DocxImportResult } from './docxImport';
 import { CandidateReview } from './CandidateReview';
 import { uid } from '../../domain/resume';
+import { StorageChoice } from '../../cloud/AccountUI';
+import { accountScope } from '../../cloud/account';
+import { saveChosenResumes, type StorageLocation } from '../../cloud/sync';
 
 type ImportMode = 'pdf' | 'docx' | 'backup' | 'text';
 const modes = [['pdf', 'PDF 简历'], ['docx', 'Word 文档'], ['backup', 'JSON 备份'], ['text', '文本 / Markdown']] as const;
@@ -30,6 +33,8 @@ export function ImportDialog({ open, onClose, initial = 'pdf' }: { open: boolean
   const [showOriginal, setShowOriginal] = useState(false), [previewRetry, setPreviewRetry] = useState(0);
   const [locale, setLocale] = useState<Locale>('zh-CN'), [error, setError] = useState('');
   const [busy, setBusy] = useState(false), [committing, setCommitting] = useState(false), [progress, setProgress] = useState(''), [fileName, setFileName] = useState('');
+  const [location, setLocation] = useState<StorageLocation>('local');
+  useEffect(() => { if (open) setLocation('local'); }, [open]);
   const photo = mode === 'pdf' ? pdf?.photo : mode === 'docx' ? docxPhotos[photoIndex] : null;
   const photoUrl = useObjectUrl(photo?.blob);
   const originalPreview = useMemo(() => pdf ? { bytes: pdf.bytes, pages: pdf.candidate.pageCount, key: 'import-' + fileName + '-' + previewRetry } : null, [pdf, fileName, previewRetry]);
@@ -81,6 +86,7 @@ export function ImportDialog({ open, onClose, initial = 'pdf' }: { open: boolean
   };
 
   const commit = async () => {
+    const owner = accountScope().userId;
     setError(''); setCommitting(true);
     try {
       let resumes;
@@ -102,7 +108,8 @@ export function ImportDialog({ open, onClose, initial = 'pdf' }: { open: boolean
           ? await repository.importBackup({ format: 'myresume', schemaVersion: 1, exportedAt: new Date().toISOString(), resumes: [resume], assets }, mode === 'docx' ? '导入 Word' : '导入 PDF')
           : [await repository.create(resume)];
       } else throw new Error('请先预览需要导入的内容');
-      await useApp.getState().refresh(); useApp.getState().notify({ message: '已导入 ' + resumes.length + ' 份简历' });
+      const result = await saveChosenResumes(resumes, location, owner);
+      await useApp.getState().refresh(); useApp.getState().notify({ message: result.failed ? '已导入本机 ' + resumes.length + ' 份，其中云端成功 ' + result.uploaded + ' 份、未成功 ' + result.failed + ' 份；本机草稿已保留，可在云端简历页重试。' : '已导入 ' + resumes.length + ' 份简历' + (location === 'cloud' ? '并保存到云端' : '到本机'), error: Boolean(result.failed) });
       onClose(); if (resumes.length === 1) navigate('/resume/' + resumes[0].id);
     } catch (error) { setError(error instanceof Error ? error.message : String(error)); }
     finally { setCommitting(false); }
@@ -141,6 +148,7 @@ export function ImportDialog({ open, onClose, initial = 'pdf' }: { open: boolean
       </div>}
       {mode === 'backup' && backup && <div className="import-summary"><h3>将创建 {backup.resumes.length} 份简历</h3>{backup.resumes.map(resume => <div key={resume.id}><FileJson size={16} /><span>{resume.title || '未命名简历'}</span><small>{resume.sections.length} 个模块</small></div>)}<p>{backup.assets.length} 张照片{backup.histories ? ' · ' + backup.histories.length + ' 个历史版本' : ''}。现有简历保持原样。</p></div>}
       {mode !== 'backup' && candidate && <CandidateReview candidate={candidate} onChange={setCandidate} recognised={mode === 'pdf' || mode === 'docx'} preserveFormatting={mode === 'docx'} />}
+      <StorageChoice value={location} onChange={setLocation} disabled={committing} />
       {error && <p className="field-error" role="alert">{error}</p>}
       <div className="modal-actions"><Button secondary disabled={committing} onClick={() => { reader.current?.abort(); onClose(); }}>取消</Button><Button loading={committing} disabled={!valid || busy} onClick={() => void commit()}>确认导入</Button></div>
     </div>

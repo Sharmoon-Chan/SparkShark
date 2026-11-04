@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "node scripts/setup-pdf-assets.mjs && vite --host 127.0.0.1 --port 5173",
     "build": "node scripts/setup-pdf-assets.mjs && tsc -b && vite build",
+    "build:cloud": "npm run build && node scripts/prepare-cloud-assets.mjs",
     "preview": "vite preview --host 127.0.0.1 --port 4173",
     "test": "vitest run",
     "typecheck": "tsc -b",

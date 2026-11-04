@@ -1,6 +1,7 @@
 import Dexie, { type Table } from 'dexie';
 import type { Asset, BackupAsset, BackupEnvelope, HistoryEntry, Resume, StoredResume } from '../domain/types';
 import { createExample, parseResume, remapResume, snapshotOf, uid } from '../domain/resume';
+import { localResumeSaved } from '../cloud/events';
 
 export class ResumeDatabase extends Dexie {
   resumes!: Table<StoredResume, string>;
@@ -72,6 +73,7 @@ export class ResumeRepository {
         if (histories.length >= 50) await this.db.histories.bulkDelete(histories.slice(0, histories.length - 49).map(item => item.id));
       }
     });
+    localResumeSaved(next.id);
     return next;
   }
   async snapshot(resume: Resume, reason: string, restoredFrom?: string) {

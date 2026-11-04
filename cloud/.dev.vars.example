@@ -1,0 +1,3 @@
+APP_ORIGIN=http://127.0.0.1:5178
+# For local development only. Generate a separate random value for production.
+BOOTSTRAP_TOKEN=replace-with-a-random-token-of-at-least-32-characters

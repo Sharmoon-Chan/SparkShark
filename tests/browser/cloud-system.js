@@ -1,0 +1,136 @@
+async (page) => {
+  if (new URL(page.url()).origin !== 'http://127.0.0.1:5178') throw new Error('Use the isolated local cloud fixture on port 5178');
+  const report = [], uploads = [];
+  const suffix = Date.now().toString(36), username = 'qa_user_' + suffix, otherUsername = 'qa_other_' + suffix;
+  const password = 'Synthetic-cloud-2026-user!';
+  const base = 'http://127.0.0.1:5178';
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  page.on('request', request => { if (/\/api\/resumes(?:\/|$)/.test(request.url()) && request.method() !== 'GET') uploads.push(request.method()); });
+  const auth = async (target, user, pass, register = false) => {
+    await target.goto(base + '/cloud');
+    await target.getByRole('button', { name: '登录 / 注册', exact: true }).click();
+    const dialog = target.getByRole('dialog', { name: '登录云端账户', exact: true });
+    if (register) await dialog.getByRole('button', { name: '注册', exact: true }).click();
+    await target.locator('#cloud-username').fill(user);
+    await target.locator('#cloud-password').fill(pass);
+    await target.getByTestId('auth-submit').click();
+    await target.getByTestId('auth-form').waitFor({ state: 'hidden' });
+  };
+  const make = async (target, title, cloud = false) => {
+    await target.goto(base + '/');
+    await target.getByRole('button', { name: '新建简历', exact: true }).click();
+    const dialog = target.getByRole('dialog', { name: '新建简历', exact: true });
+    if (!(await dialog.getByTestId('storage-local').isChecked())) throw new Error('Creation did not default to local');
+    await dialog.getByRole('textbox', { name: '简历名称', exact: true }).fill(title);
+    if (cloud) await dialog.getByTestId('storage-cloud').check();
+    await dialog.getByRole('button', { name: '创建简历', exact: true }).click();
+    await target.getByRole('textbox', { name: '全名', exact: true }).waitFor();
+    return target.url();
+  };
+  const localTitle = '仅本机验收 ' + suffix;
+  await make(page, localTitle);
+  if (uploads.length) throw new Error('Local creation uploaded a resume');
+  report.push('新建默认本机且不上传');
+
+  await auth(page, username, password, true);
+  await page.getByRole('heading', { name: '已保存 0 / 10 份', exact: true }).waitFor();
+  if (uploads.length) throw new Error('Registration uploaded existing local resumes');
+  report.push('开放注册和登录不上传旧简历');
+
+  const cloudTitle = '云端验收 ' + suffix;
+  const cloudLocalUrl = await make(page, cloudTitle, true);
+  await page.getByText('已存云端', { exact: true }).first().waitFor();
+  const firstSync = page.waitForResponse(response => response.url().includes('/api/resumes/') && response.request().method() === 'PUT' && response.status() === 200);
+  await page.getByRole('textbox', { name: '全名', exact: true }).fill('虚构用户 · 首个设备');
+  await page.getByRole('button', { name: '保存', exact: true }).click();
+  await firstSync;
+  await page.getByText('已存云端', { exact: true }).first().waitFor();
+  await page.goto(base + '/cloud');
+  await page.getByRole('heading', { name: '已保存 1 / 10 份', exact: true }).waitFor();
+  const firstList = await (await page.request.get(base + '/api/resumes')).json();
+  const cloudId = firstList.resumes[0].id;
+  report.push('选择云端后保存并显示数量和容量');
+
+  const context = await page.context().browser().newContext({ viewport: { width: 1440, height: 1000 } });
+  const second = await context.newPage();
+  await auth(second, username, password);
+  await second.getByTestId('cloud-resume-row').getByRole('button', { name: '打开并继续编辑', exact: true }).click();
+  const secondName = second.getByRole('textbox', { name: '全名', exact: true });
+  await secondName.waitFor();
+  if (await secondName.inputValue() !== '虚构用户 · 首个设备') throw new Error('Another device did not restore resume content');
+  const secondSync = second.waitForResponse(response => response.url().includes('/api/resumes/') && response.request().method() === 'PUT' && response.status() === 200);
+  await secondName.fill('虚构用户 · 第二个设备');
+  await second.getByRole('button', { name: '保存', exact: true }).click();
+  await secondSync;
+  await second.getByText('已存云端', { exact: true }).first().waitFor();
+  report.push('新浏览器账户恢复与编辑同步');
+
+  await page.goto(cloudLocalUrl);
+  await page.getByRole('textbox', { name: '全名', exact: true }).fill('虚构用户 · 保留的旧设备修改');
+  await page.getByRole('button', { name: '保存', exact: true }).click();
+  await page.getByText('云端版本冲突', { exact: true }).first().waitFor();
+  await page.goto(base + '/cloud');
+  await page.getByRole('button', { name: '处理冲突', exact: true }).click();
+  await page.getByRole('button', { name: '保留本机副本并加载云端', exact: true }).click();
+  await page.getByRole('textbox', { name: '全名', exact: true }).waitFor();
+  if (await page.getByRole('textbox', { name: '全名', exact: true }).inputValue() !== '虚构用户 · 第二个设备') throw new Error('Conflict recovery did not load latest server content');
+  report.push('版本冲突保留本机副本并读取最新云端');
+
+  await page.goto(base + '/cloud');
+  await page.getByRole('button', { name: '退出登录', exact: true }).click();
+  await page.getByRole('button', { name: '登录 / 注册', exact: true }).waitFor();
+  await auth(page, otherUsername, password, true);
+  await page.getByRole('heading', { name: '已保存 0 / 10 份', exact: true }).waitFor();
+  await page.goto(cloudLocalUrl);
+  await page.getByRole('heading', { name: '没有找到这份简历', exact: true }).waitFor();
+  await page.goto(base + '/');
+  await page.getByRole('link', { name: '编辑 ' + localTitle, exact: true }).waitFor();
+  if (await page.getByRole('link', { name: '编辑 ' + cloudTitle, exact: true }).count()) throw new Error('Account B could see account A cloud cache');
+  report.push('切换账户隔离云端缓存并保留原本本机简历');
+
+  await page.goto(base + '/cloud');
+  await page.getByRole('button', { name: '退出登录', exact: true }).click();
+  await auth(page, 'qa_admin', 'Synthetic-cloud-2026-admin!');
+  await page.goto(base + '/admin');
+  const userRow = page.getByTestId('admin-user-row').filter({ hasText: '@' + username });
+  await userRow.waitFor();
+  if (!(await userRow.innerText()).includes('1 / 10')) throw new Error('Administrator saw an incorrect resume count');
+  await userRow.getByRole('button', { name: '调整配额', exact: true }).click();
+  await page.getByRole('spinbutton', { name: '最多保存的云端简历份数', exact: true }).fill('0');
+  await page.getByRole('button', { name: '保存配额', exact: true }).click();
+  await page.getByRole('dialog', { name: '调整用户简历配额', exact: true }).waitFor({ state: 'hidden' });
+  await userRow.getByRole('button', { name: '停用', exact: true }).click();
+  await userRow.getByRole('button', { name: '恢复', exact: true }).waitFor();
+  await second.goto(base + '/cloud');
+  await second.getByRole('button', { name: '登录 / 注册', exact: true }).waitFor();
+  await userRow.getByRole('button', { name: '恢复', exact: true }).click();
+  await userRow.getByRole('button', { name: '停用', exact: true }).waitFor();
+  await page.screenshot({ path: 'output/playwright/cloud-admin.png', fullPage: true });
+  report.push('管理员查看用户数量、调整配额、停用和恢复');
+
+  await auth(second, username, password);
+  await second.getByRole('heading', { name: '已保存 1 / 0 份', exact: true }).waitFor();
+  const failedTitle = '配额不足本机保留 ' + suffix;
+  await make(second, failedTitle, true);
+  await second.getByText('云端未同步', { exact: true }).first().waitFor();
+  await second.goto(base + '/cloud');
+  await second.getByTestId('pending-cloud-resume').filter({ hasText: failedTitle }).waitFor();
+  report.push('配额超限拒绝上传并保留本机稿和重试入口');
+
+  await second.goto(base + '/');
+  await second.getByRole('button', { name: '导入简历', exact: true }).click();
+  const importing = second.getByRole('dialog', { name: '导入简历', exact: true });
+  if (!(await importing.getByTestId('storage-local').isChecked())) throw new Error('Import did not default to local');
+  await importing.getByRole('button', { name: '文本 / Markdown', exact: true }).click();
+  await importing.getByRole('textbox', { name: '粘贴文本', exact: true }).fill('# 个人总结\n\n这是一份虚构的导入验收简历。\n\n# 教育背景\n\n示例大学，计算机专业。');
+  await importing.getByRole('button', { name: '预览解析结果', exact: true }).click();
+  await second.screenshot({ path: 'output/playwright/cloud-import-choice.png', fullPage: true });
+  await importing.getByRole('button', { name: '确认导入', exact: true }).click();
+  await second.getByRole('textbox', { name: '全名', exact: true }).waitFor();
+  await second.getByText('仅本机', { exact: true }).first().waitFor();
+  const finalList = await (await second.request.get(base + '/api/resumes')).json();
+  if (finalList.used !== 1) throw new Error('Local import or rejected creation consumed cloud quota');
+  report.push('导入弹窗默认本机，导入后不消耗云端名额');
+  await context.close();
+  return { passed: report, username, cloudId, screenshots: ['cloud-admin.png', 'cloud-import-choice.png'] };
+}

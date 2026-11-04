@@ -7,3 +7,9 @@
 Reconstruct the existing browser-only version from reviewed pre-cloud backups. Preserve licensed fonts, fictional fixtures, local history and import/export source.
 
 验证：Imported existing tested local implementation; reconstruction typecheck recorded separately.
+
+## 第 2 批
+
+Add visitor registration, scrypt password authentication, private cloud resumes, default quota 10, administrator management, account isolation and local/cloud selection. Include the shared API, D1 adapter tests and lossless Cloudflare font asset stage.
+
+验证：Prior complete local frontend: 155 tests and build; original workerd/D1: 15 integration tests. Imported snapshot typecheck recorded separately.

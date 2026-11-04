@@ -1,0 +1,29 @@
+name = "myresume-cloud"
+main = "src/index.ts"
+compatibility_date = "2026-11-04"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "../output/cloud-assets"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = ["/api/*", "/fonts/*.ttf"]
+
+[vars]
+APP_ORIGIN = "https://me.sharmoon.cc.cd"
+
+[dev]
+port = 8788
+local_protocol = "http"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "myresume-cloud"
+# Replace this placeholder only after creating the intended database.
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+
+[[ratelimits]]
+name = "AUTH_RATE_LIMIT"
+namespace_id = "1001"
+simple = { limit = 10, period = 60 }

@@ -1,0 +1,53 @@
+async (page) => {
+  const base = 'http://127.0.0.1:5178';
+  if (new URL(page.url()).origin !== base) throw new Error('Use the isolated local cloud fixture');
+  const passed = [], username = 'qa_batch_' + Date.now().toString(36), password = 'Synthetic-cloud-2026-batch!';
+  const context = await page.context().browser().newContext({ viewport: { width: 1440, height: 1000 } });
+  const guest = await context.newPage();
+  let posted = 0;
+  guest.on('request', request => { if (request.method() === 'POST' && request.url().endsWith('/api/resumes')) posted++; });
+  await guest.goto(base + '/');
+  await guest.getByRole('button', { name: '新建简历', exact: true }).click();
+  const creating = guest.getByRole('dialog', { name: '新建简历', exact: true });
+  await creating.getByRole('textbox', { name: '简历名称', exact: true }).fill('取消登录仍保留本机');
+  await creating.getByTestId('storage-cloud').check();
+  await guest.screenshot({ path: 'output/playwright/cloud-create-choice.png', fullPage: true });
+  await creating.getByRole('button', { name: '创建简历', exact: true }).click();
+  await guest.getByRole('dialog', { name: '登录云端账户', exact: true }).getByRole('button', { name: '取消', exact: true }).click();
+  await guest.getByRole('textbox', { name: '全名', exact: true }).waitFor();
+  if (posted !== 0) throw new Error('A cancelled anonymous choice uploaded data');
+  passed.push('选择云端才弹出登录，取消后保留本机且未上传');
+
+  await guest.goto(base + '/cloud');
+  await guest.getByRole('button', { name: '登录 / 注册', exact: true }).click();
+  await guest.getByRole('dialog', { name: '登录云端账户', exact: true }).getByRole('button', { name: '注册', exact: true }).click();
+  await guest.locator('#cloud-username').fill(username);
+  await guest.locator('#cloud-password').fill(password);
+  await guest.getByTestId('auth-submit').click();
+  await guest.getByTestId('auth-form').waitFor({ state: 'hidden' });
+  await guest.getByRole('heading', { name: '已保存 0 / 10 份', exact: true }).waitFor();
+  if (posted !== 0) throw new Error('Login silently uploaded the cancelled draft');
+  const actor = await (await guest.request.get(base + '/api/auth/me')).json();
+  const admin = await (await page.request.get(base + '/api/auth/me')).json();
+  const quota = await page.request.patch(base + '/api/admin/users/' + actor.user.id, { headers: { Origin: base, 'X-CSRF-Token': admin.csrfToken }, data: { resumeQuota: 1 } });
+  if (!quota.ok()) throw new Error('Could not configure local batch test quota');
+  passed.push('后续注册不自动上传取消登录的本机稿');
+
+  await guest.goto(base + '/');
+  await guest.getByRole('button', { name: '导入简历', exact: true }).click();
+  const importing = guest.getByRole('dialog', { name: '导入简历', exact: true });
+  await importing.getByLabel('选择导入文件', { exact: true }).setInputFiles('output/playwright/cloud-batch.json');
+  await importing.getByRole('heading', { name: '将创建 2 份简历', exact: true }).waitFor();
+  if (!(await importing.getByTestId('storage-local').isChecked())) throw new Error('JSON batch did not default to local');
+  await importing.getByTestId('storage-cloud').check();
+  await importing.getByRole('button', { name: '确认导入', exact: true }).click();
+  await importing.waitFor({ state: 'hidden' });
+  await guest.getByRole('link', { name: '编辑 批量云端验收甲', exact: true }).waitFor();
+  await guest.getByRole('link', { name: '编辑 批量云端验收乙', exact: true }).waitFor();
+  await guest.goto(base + '/cloud');
+  await guest.getByRole('heading', { name: '已保存 1 / 1 份', exact: true }).waitFor();
+  await guest.getByTestId('pending-cloud-resume').filter({ hasText: '批量云端验收乙' }).waitFor();
+  passed.push('批量JSON选择云端，部分超配额仍保留全部本机简历');
+  await context.close();
+  return { passed, username, screenshot: 'cloud-create-choice.png' };
+}
