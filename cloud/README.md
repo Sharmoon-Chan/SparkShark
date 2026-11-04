@@ -1,14 +1,14 @@
 # MyResume accounts and cloud storage
 
-For **zero additional hosting cost**, the independent [SQLite Durable Objects Free candidate](free/README.md) and the [Node 24 + SQLite variant](node/README.md) on the existing Ali server both reuse the same API. The Free candidate has been verified locally; actual account eligibility and managed CPU limits still need remote verification before public deployment. Select its explicit `dev:free` / `deploy:free` scripts when evaluating it. The original D1 Worker configuration below remains separate; no paid plan or remote resources have been created.
+The primary **zero additional hosting cost** path is [Workers Free + SQLite Durable Objects](free/README.md). On November 5, 2026, the dashboard confirmed the selected account's Workers Free/US$0 plan, and the [independent preview](https://myresume-free-preview.cwh20030613.workers.dev) passed 10 remote verification groups covering 68 API/font operations with no HTTP 5xx responses. Ordinary registration/login/password changes, account isolation, CSRF, administrator quotas and an exact 5 MiB photo roundtrip passed. The production domain has not been switched; managed CPU metrics and sustained workloads have not been measured.
 
-This Worker serves the dedicated Cloudflare static stage and a same-origin `/api/*` API backed by D1. It does not require Instabox, a permanent VM, PostgreSQL, R2, or email delivery. No remote resources are created by the source files or local development commands.
+The [Node 24 + SQLite variant](node/README.md) and the original D1 Worker remain alternate entrypoints using the same API. The Free preview uses neither D1 nor R2. The D1 instructions below apply specifically to `wrangler.toml`; use `wrangler-free.toml` and the explicit `dev:free` / `deploy:free` scripts for Durable Objects. Local build, development and dry-run commands do not publish a remote Worker; deployment commands do.
 
 Open registration is enabled initially. Each new account receives a configurable default quota of **10 cloud resumes**. The administrator can disable/reactivate users, change individual quotas, reset another user's password, switch registration on/off, set the default quota for future accounts, and inspect user/resume counts and stored bytes. Quota changes do not delete resumes; an account above its quota can still update or delete its existing resumes.
 
 The cloud stores only the current editable resume and its referenced avatar. Local Dexie editing and local history remain available. The cloud revision is an optimistic-concurrency token, distinct from the existing local resume revision. Updates and deletes must send `expectedRevision`; conflicts return HTTP 409 and must preserve the local draft.
 
-## Local development
+## Local development for the alternate D1 Worker
 
 Run these commands from the indicated directories. The root dependency directory is the existing application dependency tree; install cloud tools only inside `cloud/`.
 
@@ -39,7 +39,7 @@ Initialize one local administrator from an interactive terminal:
 node scripts/bootstrap-admin.mjs --origin http://127.0.0.1:5178 --api http://127.0.0.1:8788
 ```
 
-The script prompts for secrets without echoing them. The bootstrap endpoint requires both the correct Origin and `X-Bootstrap-Token`; the D1 latch permits only one successful initialization. Ordinary registration always creates role `user`, including the first registration. Do not put a bootstrap token or password into frontend source, browser storage, source control, or a shell command argument.
+The script prompts for secrets without echoing them. The bootstrap endpoint requires both the correct Origin and `X-Bootstrap-Token`; the database latch permits only one successful initialization. Ordinary registration always creates role `user`, including the first registration. Do not put a bootstrap token or password into frontend source, browser storage, source control, or a shell command argument.
 
 ```powershell
 # cloud/
@@ -83,20 +83,20 @@ All modification requests require the exact configured `Origin`. Authenticated m
 - Resume content uses the existing strict resume schema. Its canonical UTF-8 JSON is limited to **512 KiB**.
 - The single referenced avatar must be PNG/JPEG, match its reported dimensions and SHA256, and be at most **5 MiB of raw binary**. Unreferenced extra assets are rejected.
 - Request JSON is limited to **8 MiB**, including Base64 transfer overhead. The limit is enforced on the stream even without Content-Length.
-- D1 stores avatar bytes in **512 KiB BLOB chunks**, not Base64 text. This avoids D1's per-row limit for a 5 MiB photo. Foreign keys cascade deletions through metadata and chunks.
-- A resume's reported `byteSize` is canonical content JSON bytes + raw avatar bytes. It excludes PDFs, fonts, local history, Base64 transport overhead, and SQLite indexes/page overhead. Administrator totals use the same logical measurement; actual D1 billing storage will be somewhat larger.
+- All database entrypoints store avatar bytes in **512 KiB BLOB chunks**, not Base64 text. This keeps an entire 5 MiB photo out of any single row. Foreign keys cascade deletions through metadata and chunks. The real Free preview passed an exact 5 MiB upload/download with matching SHA256 and logical storage bytes.
+- A resume's reported `byteSize` is canonical content JSON bytes + raw avatar bytes. It excludes PDFs, fonts, local history, Base64 transport overhead, and SQLite indexes/page overhead. Administrator totals use the same logical measurement; actual database storage will be somewhat larger.
 
-Quota check and creation use one atomic SQL statement. Updates, avatar replacement, and chunks use one D1 transaction, with a random mutation nonce guarding every asset statement. A stale revision cannot replace photos even when its UPDATE affects zero rows. GET retrieves the resume and all photo chunks in one transactional snapshot. A successful write returns its own committed revision and data, avoiding a subsequent concurrent writer's result.
+Quota check and creation use one atomic SQL statement. Updates, avatar replacement, and chunks use one database transaction, with a random mutation nonce guarding every asset statement. A stale revision cannot replace photos even when its UPDATE affects zero rows. GET retrieves the resume and all photo chunks in one transactional snapshot. A successful write returns its own committed revision and data, avoiding a subsequent concurrent writer's result.
 
 ## Password runtime and abuse control
 
 Passwords use scrypt with **N=32768, r=8, p=3**, a fresh 16-byte salt, and a 64-byte derived key; comparison is constant-time. Unknown-account login performs equivalent work. Parameters are encoded in the hash and are not weakened to fit a pricing tier. Auth sessions use 32-byte random tokens; only their SHA256 hashes are stored.
 
-Login and registration are limited before password hashing. An edge Rate Limiting binding restricts IP and username attempts. D1 additionally provides atomic rolling-window limits across locations. Expired rate windows and sessions are cleaned up during relevant requests. Closed registration is checked again inside the SQL insertion so a simultaneous administrator action takes effect.
+Login and registration are limited before password hashing. An edge Rate Limiting binding restricts IP and username attempts. The shared database logic additionally provides atomic rolling-window limits. Expired rate windows and sessions are cleaned up during relevant requests. Closed registration is checked again inside the SQL insertion so a simultaneous administrator action takes effect.
 
-`node scripts/probe-crypto-runtime.mjs` compares native synchronous and callback-style scrypt with a concurrent simple request. On the local workerd run, both hashes took approximately 199 ms and delayed the simple request to approximately 200 ms. The async callback did not demonstrate work off the runtime thread, so scryptSync is retained. **These local timings are not managed Cloudflare CPU billing; Workers Free compatibility is not confirmed.** Check actual production CPU metrics and the chosen plan before enabling public registration. No paid plan has been purchased by this implementation.
+`node scripts/probe-crypto-runtime.mjs` compares native synchronous and callback-style scrypt with a concurrent simple request. On the local workerd run, both hashes took approximately 199 ms and delayed the simple request to approximately 200 ms. The async callback did not demonstrate work off the runtime thread, so scryptSync is retained. The verified Free entrypoint runs this unchanged profile inside its Durable Object; the direct D1 Worker still needs separate managed CPU qualification. **Local probe timings and remote client wall times are not Worker/DO CPU metrics.** No paid plan was purchased, and sustained workload limits have not been measured.
 
-## Production preparation
+## Production preparation for the alternate D1 Worker
 
 These are operator steps, not commands already executed by the implementation:
 
@@ -107,4 +107,4 @@ These are operator steps, not commands already executed by the implementation:
 5. Initialize the administrator using the interactive script against the production origin; then remove `BOOTSTRAP_TOKEN` from production. The database latch also prevents reinitialization.
 6. Verify existing local resumes, cloud save/load, per-account isolation, quota and conflict behavior, and browser PDF export before the public cutover.
 
-The checked-in migration is initial schema only. Never reapply it destructively to an existing database, and preserve future migration history and backups when upgrading. No deployment, purchase, public DNS change, or existing production data change is part of local setup.
+The checked-in migration is initial schema only. Never reapply it destructively to an existing database, and preserve future migration history and backups when upgrading. The completed remote verification was an isolated Free Durable Objects preview. These D1 production steps have not been executed; the production domain and its existing data remain outside that preview. For the primary Free deployment and controlled production activation, follow [the Durable Objects instructions](free/README.md).

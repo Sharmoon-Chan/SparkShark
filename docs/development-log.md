@@ -1,27 +1,49 @@
 # 开发记录
 
-2026 年 11 月 5 日开始将已有开发成果分批导入 SparkShark。提交时间为实际导入时间，以下记录为已有功能的整理。
+2026 年 11 月 5 日，将已有本地成果整理到 [SparkShark](https://github.com/Sharmoon-Chan/SparkShark)。以下记录描述导入时已经实现的功能和验证范围；Git 提交使用实际提交时间，不将旧开发记录伪造成过去的提交。
 
-## 第 1 批
+## 浏览器本地简历编辑
 
-Reconstruct the existing browser-only version from reviewed pre-cloud backups. Preserve licensed fonts, fictional fixtures, local history and import/export source.
+建立多份简历管理、内容模块与富文本编辑、单栏和双栏模板、实时 PDF 预览、分页和字段排版。数据默认保存在浏览器 IndexedDB，支持历史版本、冲突副本、回收站及 JSON 文件备份。
 
-验证：Imported existing tested local implementation; reconstruction typecheck recorded separately.
+补充 PDF、DOCX、文本和 Markdown 导入，以及 PDF、PNG、ZIP 和离线 HTML 导出。五款自托管中文字体随附各自 OFL 许可证；PDF.js 运行资源在构建时从锁定依赖复制，保留原许可证文件。
 
-## 第 2 批
+## 账户、私有云端简历和管理
 
-Add visitor registration, scrypt password authentication, private cloud resumes, default quota 10, administrator management, account isolation and local/cloud selection. Include the shared API, D1 adapter tests and lossless Cloudflare font asset stage.
+增加访客自行注册、登录、退出和修改密码。使用 scrypt 保护密码，HttpOnly 会话和同源校验保护账户请求。管理员可以管理用户状态、调整每人云端简历上限和控制注册设置，默认上限为 10 份。
 
-验证：Prior complete local frontend: 155 tests and build; original workerd/D1: 15 integration tests. Imported snapshot typecheck recorded separately.
+新建、复制和导入时提供本地保存或云端保存选择，默认本地。登录不会自动上传已有简历。不同账户的云端简历、关联信息和编辑操作按账户隔离，异步操作结束前重新校验账户状态。
 
-## 第 3 批
+保存接口使用原子配额、版本与请求标识处理并发和重复保存；出现冲突时保留本地副本。正文限制为 512 KiB，原始照片限制为 5 MiB，照片按最多 512 KiB 的块存储，避免单个数据库行承载整张大图。
 
-Add the independently threaded Node 24 SQLite backend, deployment build and HTTP integration tests for reuse on an existing server.
+## 不新增托管费用的运行方式
 
-验证：Prior Node validation: 11 unit tests and 19 HTTP integration tests, including repeated maximum-size photos. Imported snapshot typecheck recorded separately.
+提供 Node 24 + SQLite 后端，密码计算在独立线程执行；服务器部署需要独立数据库目录和实际资源核验。
 
-## 第 4 批
+增加 Cloudflare Free + SQLite Durable Objects 运行方式。静态资源由外层 Worker 托管，账户接口、密码计算和数据库操作在 Durable Object 内执行。保持密码保护参数，限制排队请求数量，并在拥堵或超时时返回明确错误。
 
-Run the shared API inside a SQLite Durable Object with bounded admission, transactional SQL and streamed outer requests. Include adapter, cancellation, isolation and maximum-photo tests.
+大型字体只在专用 Cloudflare 资产阶段无损分块，普通构建产物和源字体保留原样。字体请求流式组合各块，维持原始字体 URL、文件内容、HEAD 和缓存语义。
 
-验证：Prior Free DO validation: 22 workerd integration tests, adapter/admission and cancellation regressions, plus successful asset dry run. Remote preview results recorded in final development log.
+## 已有验证与当前边界
+
+整理前的本地验证包括：前端 155 项测试与生产构建，原 workerd/D1 接口 15 项测试，Node 单元与真实 HTTP 集成测试，以及 SQLite Durable Objects 的 22 项 workerd 集成测试。另有浏览器流程、最大照片往返、事务回滚、账户隔离、配额冲突、对象重新加载和请求取消检查。测试使用虚构简历、隔离数据库和临时凭据。
+
+本地 Free 配置构建和部署 dry run 已通过。四个导入快照分别完成类型检查：本地版本基线、账户与云端功能、Node + SQLite 后端、Free SQLite Durable Objects。功能按这四组及维护/开发记录共五组导入，使用实际当前提交日期，不伪造过去的 Git 历史。
+
+| 分组 | 内容 | 版本或验证 |
+| --- | --- | --- |
+| 1 | 浏览器本地编辑、模板、导入导出与保存基线 | `31d0c31`，快照类型检查通过 |
+| 2 | 账户、管理员与可选云端保存 | `9cdc401`，快照类型检查通过 |
+| 3 | Node 24 + SQLite 备用后端 | `13b4799`，快照类型检查通过 |
+| 4 | Workers Free + SQLite Durable Objects | `e6c4c62`，快照类型检查通过 |
+| 5 | 公开维护说明、开发记录与远程验证状态 | 本记录所属文档提交，公开文件与相对链接核验 |
+
+## 2026-11-05：真实免费测试站验证
+
+Cloudflare 控制台确认目标账户为 Workers Free、US$0，独立 [测试站](https://myresume-free-preview.cwh20030613.workers.dev) 已部署。10 组、68 次 API/字体操作通过，没有 HTTP 5xx：普通注册、登录和修改密码、会话、账户隔离、同源/CSRF、管理员设置、配额与并发最后名额均符合预期。
+
+恰好 5,242,880 字节的照片上传和下载后 SHA256 一致，逻辑容量等于正文 JSON 字节加照片原始字节；过期版本和超上限照片正确拒绝。完整下载的圆体分块字体为 28,904,336 字节，普通字体为 10,595,912 字节，都与独立本地哈希一致。
+
+浏览器检查确认匿名页面可渲染，新建简历对话框默认选择本地保存；对话框随后取消，没有创建简历。远程 API 验证使用独立的虚构账户与数据，原生产域名尚未切换。请求耗时是包括网络在内的端到端时间，CPU 指标与长期负载尚未测量，完整生产浏览器保存/导出流程仍待验收。GitHub 登录尚未接入，源码版本管理与简历数据存储分别进行。
+
+项目许可证尚未选定。原站研究截图、导出简历、环境运维记录、数据库、真实凭据及测试输出留在本机，排除出公开源码。
