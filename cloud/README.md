@@ -106,3 +106,7 @@ These are operator steps, not commands already executed by the implementation:
 6. Verify existing local resumes, cloud save/load, per-account isolation, quota and conflict behavior, and browser PDF export before the public cutover.
 
 The checked-in migration is initial schema only. Never reapply it destructively to an existing database, and preserve future migration history and backups when upgrading. No deployment, purchase, public DNS change, or existing production data change is part of local setup.
+
+## Existing-server Node variant
+
+The [Node 24 SQLite backend](node/README.md) reuses this API without requiring new hosting subscriptions.
