@@ -1,0 +1,30 @@
+name: myresume
+services:
+  web:
+    image: __IMAGE__
+    pull_policy: never
+    container_name: myresume-web
+    entrypoint: ["nginx"]
+    command: ["-c", "/etc/nginx/myresume.conf", "-g", "daemon off;"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:__PORT__:__PORT__"
+    volumes:
+      - "__DEPLOY_ROOT__:__DEPLOY_ROOT__:ro"
+      - "__DEPLOY_ROOT__/nginx.conf:/etc/nginx/myresume.conf:ro"
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/cache/nginx
+      - /var/run
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://127.0.0.1:__PORT__/healthz"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

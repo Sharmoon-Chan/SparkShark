@@ -1,0 +1,79 @@
+{
+  "type": "doc",
+  "content": [
+    {
+      "type": "heading",
+      "attrs": { "level": 1, "textAlign": "left" },
+      "content": [{ "type": "text", "text": "富文本格式演示（虚构）" }]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "text": "加粗", "marks": [{ "type": "bold" }] },
+        { "type": "text", "text": "、" },
+        { "type": "text", "text": "斜体", "marks": [{ "type": "italic" }] },
+        { "type": "text", "text": "、" },
+        { "type": "text", "text": "下划线", "marks": [{ "type": "underline" }] },
+        { "type": "text", "text": "、" },
+        { "type": "text", "text": "删除线", "marks": [{ "type": "strike" }] },
+        { "type": "text", "text": "、" },
+        { "type": "text", "text": "高亮", "marks": [{ "type": "highlight" }] },
+        { "type": "text", "text": "、" },
+        { "type": "text", "text": "inlineCode", "marks": [{ "type": "code" }] },
+        { "type": "text", "text": "。" },
+        {
+          "type": "text",
+          "text": "作品链接（虚构）",
+          "marks": [{ "type": "link", "attrs": { "href": "https://example.com/portfolio" } }]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "attrs": { "level": 2, "textAlign": "center" },
+      "content": [{ "type": "text", "text": "二级标题与居中" }]
+    },
+    {
+      "type": "paragraph",
+      "attrs": { "textAlign": "center" },
+      "content": [{ "type": "text", "text": "居中文本保留中文和数字 000-0000-0000。" }]
+    },
+    {
+      "type": "heading",
+      "attrs": { "level": 3, "textAlign": "right" },
+      "content": [{ "type": "text", "text": "三级标题与右对齐" }]
+    },
+    {
+      "type": "paragraph",
+      "attrs": { "textAlign": "justify" },
+      "content": [{ "type": "text", "text": "这段虚构文字用于验证两端对齐和窄栏折行。中文、React 与 TypeScript 混排时，标点、空格和数字应保留。缩放预览后，最终 PDF 的分页和文本内容保持相同。" }]
+    },
+    {
+      "type": "bulletList",
+      "content": [
+        { "type": "listItem", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "第一条无序要点（虚构）。" }] }] },
+        { "type": "listItem", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "第二条无序要点（虚构）。" }] }] }
+      ]
+    },
+    {
+      "type": "orderedList",
+      "attrs": { "start": 3 },
+      "content": [
+        { "type": "listItem", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "编号从 3 开始的第一项。" }] }] },
+        { "type": "listItem", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "编号连续的第二项。" }] }] }
+      ]
+    },
+    {
+      "type": "codeBlock",
+      "content": [{ "type": "text", "text": "const resumeName = \"林示例\";\nconst phone = \"000-0000-0000\";\n// 保留换行和两个前导空格\n  console.log(resumeName, phone);" }]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "text": "硬换行第一行。" },
+        { "type": "hardBreak" },
+        { "type": "text", "text": "硬换行第二行。" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+.preview-layout-toggle{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;border:1px solid #cadccc;border-radius:5px;background:#fff;color:#54795f;padding:4px 8px;font-size:11px;line-height:1.4}
+.preview-layout-toggle[aria-pressed=true]{background:#237953;border-color:#237953;color:#fff}
+.preview-heading .preview-layout-controls{display:flex;align-items:center;gap:10px;margin-left:auto}
+.preview-layout-help{padding:7px 12px;border-bottom:1px solid #dce8dd;background:#f2f8f1;color:#647c69;font-size:11px;line-height:1.5}
+.preview-field-layer{position:absolute;inset:0;z-index:4;pointer-events:none}
+.preview-field-target{position:absolute;pointer-events:auto;touch-action:none;cursor:grab;border:1px dashed transparent;border-radius:2px;background:transparent;padding:0;text-align:left;outline:none}
+.preview-field-target:hover,.preview-field-target:focus-visible{border-color:#2e8a61;background:#247f5909}
+.preview-field-target.is-dragging{border-color:#2e8a61;background:#247f5912;opacity:.6}
+.preview-field-target>span{display:none;position:absolute;left:0;top:0;transform:translateY(-100%);align-items:center;gap:3px;padding:2px 5px;background:#237953;color:white;border-radius:3px;font-size:10px;line-height:1.3;white-space:nowrap;pointer-events:none}
+.preview-field-target:hover>span,.preview-field-target:focus-visible>span{display:flex}
+.preview-field-drop-indicator{position:absolute;z-index:6;background:#17895c;box-shadow:0 0 0 1px white;pointer-events:none}
+.preview-field-drop-indicator>span{position:absolute;left:0;top:0;transform:translateY(-100%);padding:3px 6px;background:#17895c;color:white;border-radius:3px;font-size:10px;line-height:1.3;white-space:nowrap;pointer-events:none}
+.preview-field-drag-ghost{position:fixed;z-index:150;display:flex;align-items:center;gap:5px;padding:7px 10px;background:#fff;border:1px solid #72ac8b;border-radius:6px;box-shadow:0 4px 14px #12351f21;color:#2d6443;font-size:12px;line-height:1.4;pointer-events:none}
+.preview-field-drag-ghost>small{font-size:10px;color:#678473;margin-left:4px}
+@media(max-width:500px){.preview-heading .preview-layout-controls{gap:6px}.preview-layout-toggle{font-size:10px;padding:4px 6px}.preview-layout-help{font-size:10px}.preview-field-drag-ghost{max-width:calc(100vw - 30px);flex-wrap:wrap}.preview-field-drag-ghost>small{flex-basis:100%;margin-left:0}}

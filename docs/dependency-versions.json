@@ -1,0 +1,180 @@
+{
+  "checkedOn": "2026-11-01",
+  "purpose": "版本调研快照；执行前须核对兼容性并生成锁文件。",
+  "packages": [
+    {
+      "name": "react",
+      "version": "19.3.1",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      },
+      "source": "https://www.npmjs.com/package/react"
+    },
+    {
+      "name": "typescript",
+      "version": "7.0.2",
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">=16.20.0"
+      },
+      "source": "https://www.npmjs.com/package/typescript"
+    },
+    {
+      "name": "vite",
+      "version": "8.3.5",
+      "license": "MIT",
+      "engines": {
+        "node": "^20.19.0 || >=22.12.0"
+      },
+      "source": "https://www.npmjs.com/package/vite"
+    },
+    {
+      "name": "react-router-dom",
+      "version": "7.18.5",
+      "license": "MIT",
+      "engines": {
+        "node": ">=20.0.0"
+      },
+      "source": "https://www.npmjs.com/package/react-router-dom"
+    },
+    {
+      "name": "zustand",
+      "version": "5.0.16",
+      "license": "MIT",
+      "engines": {
+        "node": ">=12.20.0"
+      },
+      "source": "https://www.npmjs.com/package/zustand"
+    },
+    {
+      "name": "@dnd-kit/core",
+      "version": "6.3.1",
+      "license": "MIT",
+      "engines": {},
+      "source": "https://www.npmjs.com/package/@dnd-kit/core"
+    },
+    {
+      "name": "@dnd-kit/sortable",
+      "version": "10.0.0",
+      "license": "MIT",
+      "engines": {},
+      "source": "https://www.npmjs.com/package/@dnd-kit/sortable"
+    },
+    {
+      "name": "@tiptap/react",
+      "version": "3.32.2",
+      "license": "MIT",
+      "engines": {},
+      "source": "https://www.npmjs.com/package/@tiptap/react"
+    },
+    {
+      "name": "@tiptap/starter-kit",
+      "version": "3.32.2",
+      "license": "MIT",
+      "engines": {},
+      "source": "https://www.npmjs.com/package/@tiptap/starter-kit"
+    },
+    {
+      "name": "dexie",
+      "version": "4.4.7",
+      "license": "Apache-2.0",
+      "engines": {},
+      "source": "https://www.npmjs.com/package/dexie"
+    },
+    {
+      "name": "@react-pdf/renderer",
+      "version": "4.9.0",
+      "license": "MIT",
+      "engines": {},
+      "source": "https://www.npmjs.com/package/@react-pdf/renderer"
+    },
+    {
+      "name": "pdfjs-dist",
+      "version": "6.4.299",
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">=22.13.0 || >=24"
+      },
+      "source": "https://www.npmjs.com/package/pdfjs-dist"
+    },
+    {
+      "name": "tailwindcss",
+      "version": "4.3.3",
+      "license": "MIT",
+      "engines": {},
+      "source": "https://www.npmjs.com/package/tailwindcss"
+    },
+    {
+      "name": "zod",
+      "version": "4.6.7",
+      "license": "MIT",
+      "engines": {},
+      "source": "https://www.npmjs.com/package/zod"
+    },
+    {
+      "name": "vitest",
+      "version": "5.0.5",
+      "license": "MIT",
+      "engines": {
+        "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
+      },
+      "source": "https://www.npmjs.com/package/vitest"
+    },
+    {
+      "name": "mammoth",
+      "version": "1.13.0",
+      "license": "BSD-2-Clause",
+      "engines": {
+        "node": ">=12.0.0"
+      },
+      "source": "https://www.npmjs.com/package/mammoth"
+    },
+    {
+      "name": "remark-parse",
+      "version": "11.0.0",
+      "license": "MIT",
+      "engines": {},
+      "source": "https://www.npmjs.com/package/remark-parse"
+    },
+    {
+      "name": "fflate",
+      "version": "0.8.3",
+      "license": "MIT",
+      "engines": {},
+      "source": "https://www.npmjs.com/package/fflate"
+    },
+    {
+      "name": "@react-pdf/fontkit",
+      "version": "2.1.2",
+      "license": "MIT",
+      "engines": {},
+      "source": "https://www.npmjs.com/package/@react-pdf/fontkit"
+    },
+    {
+      "name": "pdf-lib",
+      "version": "1.17.1",
+      "license": "MIT",
+      "engines": {},
+      "source": "https://www.npmjs.com/package/pdf-lib"
+    },
+    {
+      "name": "@tiptap/extension-highlight",
+      "version": "3.32.2",
+      "engines": {},
+      "peerDependencies": {
+        "@tiptap/core": "3.32.2"
+      },
+      "source": "https://registry.npmjs.org/%40tiptap%2Fextension-highlight/3.32.2"
+    },
+    {
+      "name": "@tiptap/extension-text-align",
+      "version": "3.32.2",
+      "engines": {},
+      "peerDependencies": {
+        "@tiptap/core": "3.32.2"
+      },
+      "source": "https://registry.npmjs.org/%40tiptap%2Fextension-text-align/3.32.2"
+    }
+  ]
+}

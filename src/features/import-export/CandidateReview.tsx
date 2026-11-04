@@ -1,0 +1,26 @@
+import { useState } from 'react';
+import { ChevronDown, ChevronRight } from 'lucide-react';
+import { FIELD_SPECS, LEVEL_LABELS, SECTION_ORDER, sectionTitle } from '../../domain/registry';
+import { newSection, plainRich, richText } from '../../domain/resume';
+import type { FieldValue, SectionKind } from '../../domain/types';
+import { Field } from '../../components/ui';
+import { RichEditor } from '../editor/RichEditor';
+import type { TextCandidate } from './parsers';
+import { updateImportedField } from './pdfLayout';
+
+export function CandidateReview({ candidate, onChange, recognised = false, preserveFormatting = false }: { candidate: TextCandidate; onChange: (candidate: TextCandidate) => void; recognised?: boolean; preserveFormatting?: boolean }) {
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const basics = ['name', 'headline', 'email', 'phone', 'website', 'location'] as const;
+  const labels = ['全名', '职位', '邮箱', '电话', '个人主页', '位置'];
+  return <div className="mapping-preview"><h3>{recognised ? '核对识别结果' : '确认模块映射'}</h3><Field label="简历标题" htmlFor="import-title"><input id="import-title" maxLength={200} value={candidate.title} onChange={event => onChange({ ...candidate, title: event.target.value })} /></Field>
+    {(recognised || basics.some(key => candidate.basics[key])) && <div className="import-basics"><h4>基本信息</h4><div className="form-grid">{basics.map((key, index) => <Field key={key} label={labels[index]} htmlFor={'import-basic-' + key}><input id={'import-basic-' + key} value={candidate.basics[key]} onChange={event => onChange({ ...candidate, basics: { ...candidate.basics, [key]: event.target.value } })} placeholder={'核对' + labels[index]} /></Field>)}</div></div>}
+    {candidate.groups.map(group => <div className="mapping-row" key={group.id}><div><strong>{group.heading}{group.pages?.length ? <small className="import-page-label">第 {group.pages.join('、')} 页</small> : null}</strong><select aria-label={group.heading + '映射到模块'} value={group.kind} onChange={event => onChange({ ...candidate, groups: candidate.groups.map(item => item.id === group.id ? { ...item, kind: event.target.value as SectionKind, itemKind: undefined, items: undefined } : item) })}>{SECTION_ORDER.map(kind => <option value={kind} key={kind}>{sectionTitle(newSection(kind))}</option>)}<option value="custom">自定义模块</option></select></div>
+      {group.items?.length && group.itemKind === group.kind ? <><button type="button" className="import-item-toggle" aria-expanded={expanded.has(group.id)} onClick={() => setExpanded(previous => { const next = new Set(previous); if (next.has(group.id)) next.delete(group.id); else next.add(group.id); return next; })}>{expanded.has(group.id) ? <ChevronDown size={14} /> : <ChevronRight size={14} />}核对 {group.items.length} 条记录</button>{expanded.has(group.id) && <div className="import-item-list">{group.items.map((item, index) => <div className="import-item-card" key={item.id}><h4>第 {index + 1} 条</h4><div className="form-grid">{FIELD_SPECS[group.itemKind!].map(spec => {
+        const value = item.fields[spec.key], id = 'import-item-' + item.id + '-' + spec.key;
+        const set = (value: FieldValue) => onChange(updateImportedField(candidate, group.id, item.id, spec.key, value));
+        return <Field key={spec.key} label={spec.label} htmlFor={id} full={spec.type === 'rich' || spec.type === 'textarea' || spec.type === 'tags'}>{spec.type === 'rich' ? preserveFormatting ? <RichEditor label={spec.label} value={value && typeof value === 'object' && !Array.isArray(value) ? value : plainRich('')} onChange={set} /> : <textarea id={id} rows={3} value={value && typeof value === 'object' && !Array.isArray(value) ? richText(value) : ''} onChange={event => set(plainRich(event.target.value))} /> : spec.type === 'level' ? <select id={id} value={typeof value === 'number' ? value : ''} onChange={event => set(event.target.value ? Number(event.target.value) as FieldValue : null)}><option value="">不显示等级</option>{LEVEL_LABELS.map((label, index) => <option value={index + 1} key={label}>{label}</option>)}</select> : spec.type === 'tags' ? <input id={id} value={Array.isArray(value) ? value.join('、') : ''} onChange={event => set(event.target.value.split(/[,，、]/).map(value => value.trim()).filter(Boolean))} /> : spec.type === 'textarea' ? <textarea id={id} rows={3} value={typeof value === 'string' ? value : ''} onChange={event => set(event.target.value)} /> : <input id={id} value={typeof value === 'string' ? value : ''} onChange={event => set(event.target.value)} />}</Field>;
+      })}</div></div>)}</div>}<details><summary>查看提取原文</summary><p>{richText(group.content)}</p></details></> : <>{preserveFormatting ? <RichEditor label={group.heading + '识别内容'} value={group.content} onChange={content => onChange({ ...candidate, groups: candidate.groups.map(item => item.id === group.id ? { ...item, content } : item) })} /> : recognised ? <textarea className="import-group-text" aria-label={group.heading + '识别内容'} rows={4} value={richText(group.content)} onChange={event => onChange({ ...candidate, groups: candidate.groups.map(item => item.id === group.id ? { ...item, content: plainRich(event.target.value) } : item) })} /> : <p>{richText(group.content)}</p>}</>}
+    </div>)}
+    <p className="helper-text">确认后创建新的简历。未确定的内容会完整保留，之后仍可继续编辑字段和排版。</p>
+  </div>;
+}

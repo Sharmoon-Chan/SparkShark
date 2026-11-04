@@ -1,0 +1,480 @@
+{
+  "format": "myresume",
+  "schemaVersion": 1,
+  "exportedAt": "2026-11-01T09:00:00.000Z",
+  "resumes": [
+    {
+      "id": "resume-demo-001",
+      "schemaVersion": 1,
+      "title": "演示简历 - 虚构资料",
+      "locale": "zh-CN",
+      "createdAt": "2026-11-01T09:00:00.000Z",
+      "updatedAt": "2026-11-01T09:00:00.000Z",
+      "revision": 1,
+      "basics": {
+        "name": "林示例",
+        "headline": "前端开发工程师（虚构资料）",
+        "email": "lin.demo@example.com",
+        "phone": "000-0000-0000",
+        "website": "https://example.com",
+        "location": "示例城市",
+        "avatarAssetId": null,
+        "customFields": [
+          {
+            "id": "basic-intent",
+            "iconId": "briefcase",
+            "label": "求职意向",
+            "value": "前端开发",
+            "visible": true
+          }
+        ]
+      },
+      "sections": [
+        {
+          "id": "section-summary",
+          "kind": "summary",
+          "titleOverride": null,
+          "visible": true,
+          "content": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "本简历中的姓名、联系方式和经历均为虚构，用于编辑与导出测试。"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "熟悉 React、TypeScript 与浏览器本地存储。"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "section-profiles",
+          "kind": "profiles",
+          "titleOverride": null,
+          "visible": true,
+          "items": [
+            {
+              "id": "profile-site",
+              "visible": true,
+              "fields": {
+                "network": "个人网站",
+                "username": "lin.demo",
+                "iconId": "globe",
+                "url": "https://example.com"
+              }
+            }
+          ]
+        },
+        {
+          "id": "section-education",
+          "kind": "education",
+          "titleOverride": null,
+          "visible": true,
+          "items": [
+            {
+              "id": "education-demo",
+              "visible": true,
+              "fields": {
+                "institution": "示例大学",
+                "studyType": "本科",
+                "major": "计算机科学与技术",
+                "score": "3.8/4.0",
+                "officialUrl": "https://example.com/university",
+                "dateText": "2020.09-2024.06",
+                "summary": {
+                  "type": "doc",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "此条教育信息为演示数据。"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "section-work",
+          "kind": "work",
+          "titleOverride": null,
+          "visible": true,
+          "items": [
+            {
+              "id": "work-demo",
+              "visible": true,
+              "fields": {
+                "company": "示例科技公司",
+                "position": "前端开发工程师",
+                "location": "示例城市",
+                "dateText": "2024.07-至今",
+                "url": "https://example.com/company",
+                "summary": {
+                  "type": "doc",
+                  "content": [
+                    {
+                      "type": "bulletList",
+                      "content": [
+                        {
+                          "type": "listItem",
+                          "content": [
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "维护交互组件和表单，关注可访问性与输入体验。"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "listItem",
+                          "content": [
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "验证数据备份、恢复和长文本分页；以上经历仅用于演示。"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "section-projects",
+          "kind": "projects",
+          "titleOverride": null,
+          "visible": true,
+          "items": [
+            {
+              "id": "project-resume",
+              "visible": true,
+              "fields": {
+                "name": "个人简历制作工具（演示）",
+                "description": "浏览器内编辑、预览和备份流程的虚构示例。",
+                "dateText": "2026.10-2026.11",
+                "url": "https://example.com/projects/resume",
+                "keywords": [
+                  "React",
+                  "TypeScript",
+                  "IndexedDB"
+                ],
+                "summary": {
+                  "type": "doc",
+                  "content": [
+                    {
+                      "type": "bulletList",
+                      "content": [
+                        {
+                          "type": "listItem",
+                          "content": [
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "设计结构化简历字段与可配置布局。"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "listItem",
+                          "content": [
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "检查原始中文、电话号码和跨页列表是否完整。"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": "project-components",
+              "visible": true,
+              "fields": {
+                "name": "交互组件演示",
+                "description": "验证折叠、排序、菜单和主题设置。",
+                "dateText": "2026.08-2026.09",
+                "url": "https://example.com/projects/components",
+                "keywords": [
+                  "可访问性"
+                ],
+                "summary": {
+                  "type": "doc",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "所有项目内容均为测试资料。"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "section-internships",
+          "kind": "internships",
+          "titleOverride": null,
+          "visible": true,
+          "items": []
+        },
+        {
+          "id": "section-skills",
+          "kind": "skills",
+          "titleOverride": null,
+          "visible": true,
+          "items": [
+            {
+              "id": "skill-react",
+              "visible": true,
+              "fields": {
+                "name": "React",
+                "description": "组件化开发与交互设计",
+                "level": 3,
+                "keywords": [
+                  "TypeScript",
+                  "状态管理"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "section-languages",
+          "kind": "languages",
+          "titleOverride": null,
+          "visible": true,
+          "items": [
+            {
+              "id": "language-zh",
+              "visible": true,
+              "fields": {
+                "name": "中文",
+                "description": "用于验证简历语言与中文字体",
+                "level": 5
+              }
+            }
+          ]
+        },
+        {
+          "id": "section-awards",
+          "kind": "awards",
+          "titleOverride": null,
+          "visible": true,
+          "items": []
+        },
+        {
+          "id": "section-certifications",
+          "kind": "certifications",
+          "titleOverride": null,
+          "visible": true,
+          "items": []
+        },
+        {
+          "id": "section-interests",
+          "kind": "interests",
+          "titleOverride": null,
+          "visible": true,
+          "items": [
+            {
+              "id": "interest-demo",
+              "visible": true,
+              "fields": {
+                "name": "开源项目",
+                "keywords": [
+                  "文档",
+                  "可访问性"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "section-publications",
+          "kind": "publications",
+          "titleOverride": null,
+          "visible": true,
+          "items": []
+        },
+        {
+          "id": "section-volunteer",
+          "kind": "volunteer",
+          "titleOverride": null,
+          "visible": true,
+          "items": []
+        },
+        {
+          "id": "section-references",
+          "kind": "references",
+          "titleOverride": null,
+          "visible": true,
+          "items": []
+        },
+        {
+          "id": "section-custom-portfolio",
+          "kind": "custom",
+          "titleOverride": "作品链接",
+          "visible": true,
+          "fieldDefinitions": [
+            {
+              "id": "custom-name",
+              "type": "name",
+              "label": "名称",
+              "visible": true
+            },
+            {
+              "id": "custom-url",
+              "type": "url",
+              "label": "网址",
+              "visible": true
+            },
+            {
+              "id": "custom-summary",
+              "type": "summary",
+              "label": "说明",
+              "visible": true
+            },
+            {
+              "id": "custom-keywords",
+              "type": "keywords",
+              "label": "关键词",
+              "visible": true
+            }
+          ],
+          "items": [
+            {
+              "id": "custom-item-demo",
+              "visible": true,
+              "values": {
+                "custom-name": "示例作品",
+                "custom-url": "https://example.com/portfolio",
+                "custom-summary": {
+                  "type": "doc",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "演示自定义字段、链接和富文本。"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "custom-keywords": [
+                  "展示",
+                  "测试"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "layout": {
+        "mode": "double",
+        "sidebarSide": "left",
+        "mainRatio": 0.6,
+        "groups": [
+          {
+            "id": "page-main",
+            "main": [
+              "section-summary",
+              "section-work",
+              "section-education",
+              "section-internships",
+              "section-volunteer",
+              "section-references"
+            ],
+            "sidebar": [
+              "section-profiles",
+              "section-skills",
+              "section-languages",
+              "section-awards",
+              "section-certifications",
+              "section-interests",
+              "section-publications",
+              "section-custom-portfolio"
+            ]
+          },
+          {
+            "id": "page-projects",
+            "main": [
+              "section-projects"
+            ],
+            "sidebar": []
+          }
+        ]
+      },
+      "appearance": {
+        "templateId": "split",
+        "themeColor": "#0F766E",
+        "fontFamilyId": "noto-sans-sc",
+        "fontSizePx": 14,
+        "lineHeight": 1.5,
+        "marginPx": 18,
+        "columnGapPx": 20,
+        "density": "standard",
+        "hideIcons": false,
+        "underlineLinks": true,
+        "pageNumbers": true,
+        "avatar": {
+          "visible": false,
+          "widthPx": 88,
+          "aspectRatio": 1,
+          "radiusPx": 8,
+          "borderWidthPx": 0,
+          "borderColor": "#E5E7EB",
+          "crop": null
+        }
+      }
+    }
+  ],
+  "assets": [],
+  "histories": []
+}

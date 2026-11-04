@@ -1,0 +1,13 @@
+.theme-palette{display:flex;flex-direction:column;gap:13px;margin-bottom:18px}
+.theme-palette-group{display:flex;align-items:center;gap:16px;min-width:0}
+.theme-palette-label{flex:0 0 72px;font-size:10px;color:#839789;line-height:1.5}
+.theme-palette .color-swatches{gap:11px;margin:0;padding:3px;flex:1}
+.theme-palette .color-swatches button{width:25px;height:25px;flex-shrink:0;transition:transform .15s,box-shadow .15s}
+.theme-palette .color-swatches button:hover{transform:scale(1.12)}
+.theme-palette .color-swatches button:focus-visible{outline:2px solid #3c5946;outline-offset:3px}
+.theme-color-current{margin-top:9px;font-size:10px;color:#839789}
+.resume-font-preview{margin:12px 0 5px;padding:14px 16px;border:1px solid #e1e9dc;border-radius:7px;background:#f9fcf7;color:#3c5946;overflow-wrap:anywhere}
+.resume-font-preview strong{display:block;font-size:18px;line-height:1.7}
+.resume-font-preview span{display:block;font-size:13px;line-height:1.8}
+.font-description{line-height:1.7}
+@media(max-width:480px){.theme-palette-group{gap:9px}.theme-palette-label{flex-basis:66px}.theme-palette .color-swatches{gap:9px}.theme-palette .color-swatches button{width:23px;height:23px}}
