@@ -1,6 +1,6 @@
 # Cloudflare Free: SQLite Durable Object API
 
-This is the primary Free deployment path. An independent [preview](https://myresume-free-preview.cwh20030613.workers.dev) was deployed and remotely verified on November 5, 2026, on an account whose dashboard showed Workers Free/US$0. The production domain has not been switched. The original D1 Worker and Node/SQLite entrypoints remain available, sharing the frontend and every account, cloud-resume and administrator API contract.
+This is the primary Free deployment path. An independent [preview](https://myresume-free-preview.cwh20030613.workers.dev) was remotely verified on November 5, 2026, on an account whose dashboard showed Workers Free/US$0. The production Custom Domain `https://sparkshark.sharmoon.cc.cd` is now active over HTTPS, with an initialized administrator and its bootstrap secret removed. The original D1 Worker and Node/SQLite entrypoints remain available, sharing the frontend and every account, cloud-resume and administrator API contract.
 
 The production configuration uses Worker name `sparkshark` and origin `https://sparkshark.sharmoon.cc.cd`. Its exact Custom Domain is declared as:
 
@@ -34,7 +34,7 @@ npm run dev:free
 npm run dry-run:free
 ```
 
-The Free config reads `output/cloud-assets` and uses port 8788, matching the current Vite `/api` proxy. Use the explicitly named `dev:free`, `dry-run:free` and `deploy:free` scripts for this entrypoint; the existing D1 and Node entrypoints remain available separately. `deploy:free` performs a real remote deployment. Preview deployment used a separate Worker name and its exact preview `APP_ORIGIN`; the checked-in production origin is not proof that its domain has been activated.
+The Free config reads `output/cloud-assets` and uses port 8788, matching the current Vite `/api` proxy. Use the explicitly named `dev:free`, `dry-run:free` and `deploy:free` scripts for this entrypoint; the existing D1 and Node entrypoints remain available separately. `deploy:free` performs a real remote deployment and reconciles the configured Custom Domain. Preview deployment used a separate Worker name and its exact preview `APP_ORIGIN`; production uses `sparkshark` and its own namespace.
 
 Set a local ignored `cloud/.dev.vars` origin compatible with the frontend proxy if using browser development. `free/.env.example` leaves the bootstrap token empty: generate a cryptographically random token of at least 32 characters and never use a published placeholder as a valid credential. Bootstrap credentials belong in the ignored local secret file or later Wrangler secret, never source/frontend code.
 
@@ -50,7 +50,7 @@ The adapter consumes cursors before reading row statistics, obtains direct write
 
 The official Durable Objects limits distinguish their request CPU allowance from the outer Workers Free allowance. This separation is why password computation is placed in the object. The config declares only a SQLite Durable Object, static assets and the existing rate limiter; it has no remote D1/R2 binding and sets no paid CPU limit.
 
-The selected account's dashboard and successful remote preview establish that the tested operations ran on Workers Free without a plan purchase. Local success alone was not used as that evidence. **Managed Worker/DO CPU metrics and sustained usage quotas have not been measured.** Client-observed remote request durations include network time and do not establish CPU consumption or long-term capacity. Stay on Free if no additional charges are permitted; reaching a Free hard limit may make requests fail. Local build/dev/dry-run commands do not deploy or purchase a plan. The deployment script explicitly creates or updates a remote Worker, and production routing remains a separate activation step.
+The selected account's dashboard and successful preview and production checks establish that the tested operations ran on Workers Free without a plan purchase. Local success alone was not used as that evidence. **Managed Worker/DO CPU metrics and sustained usage quotas have not been measured.** Client-observed request durations include network time and do not establish CPU consumption or long-term capacity. Stay on Free if no additional charges are permitted; reaching a Free hard limit may make requests fail. Local build/dev/dry-run commands do not deploy or purchase a plan. The deployment script explicitly creates or updates a remote Worker and its configured Custom Domain.
 
 ## Remote preview verification
 
@@ -58,7 +58,13 @@ On November 5, 2026, 10 verification groups and 68 recorded API/font operations 
 
 Full downloads of the 28,904,336-byte reconstructed round font and 10,595,912-byte ordinary font matched independent local hashes. Browser inspection confirmed anonymous rendering and that the new-resume dialog defaults to local storage; it was cancelled without creating a resume. This browser check does not replace the API tests or constitute a complete production browser acceptance run.
 
-Before activating the production domain, configure its exact `APP_ORIGIN`, initialize its intended administrator securely, and verify the user-facing save/load and export flows. `sparkshark.sharmoon.cc.cd` is a different browser origin from `me.sharmoon.cc.cd`; its local IndexedDB cannot read the old origin. Export JSON at the old origin and import it at the new one, keeping local storage as the default choice. See [domain migration](../../docs/domain-migration.md). Preview data and accounts belong to the separate preview environment. Production routing, CPU metrics and sustained workloads remain outside the completed preview verification.
+`sparkshark.sharmoon.cc.cd` is a different browser origin from `me.sharmoon.cc.cd`; its local IndexedDB cannot read the old origin. Export JSON at the old origin and import it at the new one, keeping local storage as the default choice. See [domain migration](../../docs/domain-migration.md). Preview data and accounts belong to the separate preview environment.
+
+## Production Custom Domain verification
+
+On November 5, 2026, the HTTPS production domain passed 7 verification groups covering 42 bounded HTTP operations, with no HTTP 5xx. Homepage and SPA routes showed SparkShark; login, ordinary registration, secure sessions, Origin/CSRF rejection, private account isolation, cloud save/read/edit, administrator quota/statistics, exact-5-MiB photo roundtrip and complete font hashes passed. Synthetic documents were deleted, synthetic accounts disabled, and issued test sessions logged out.
+
+The administrator was initialized separately, and the one-time bootstrap secret was removed. Existing domains were not changed. Browser inspection confirmed SparkShark branding and default-local new-resume selection. These checks do not constitute live browser account interaction or PDF-export acceptance, and they do not measure Worker/DO CPU metrics or sustained workloads.
 
 Primary references:
 

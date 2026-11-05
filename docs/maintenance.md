@@ -4,7 +4,7 @@
 
 网站名称为 SparkShark，正式地址为 `https://sparkshark.sharmoon.cc.cd`。`cloud/wrangler-free.toml` 配置精确 Custom Domain，Cloudflare 为新主机名管理 DNS 与证书；无需手工创建指向 Instabox 的记录。旧域名的浏览器数据迁移见 [域名与本机数据迁移](domain-migration.md)。
 
-当前优先使用 `cloud/wrangler-free.toml` 的 Cloudflare Free + SQLite Durable Objects 方案。它托管静态网页、普通账号密码登录、用户配额和私有云端简历。2026 年 11 月 5 日已在确认为 Workers Free/US$0 的独立测试站通过账户、保存、配额、隔离、5 MiB 照片和字体检查；生产域名尚未切换，CPU 指标和长期负载尚未测量。`cloud/node/` 和原 D1 Worker 保留为其他运行方式，配置说明见 [免费托管方案](free-hosting.md)。
+当前使用 `cloud/wrangler-free.toml` 的 Cloudflare Free + SQLite Durable Objects 方案，托管静态网页、普通账号密码登录、用户配额和私有云端简历。2026 年 11 月 5 日正式 SparkShark Custom Domain 已启用 HTTPS，管理员已初始化，一次性初始化 secret 已移除。正式域名通过 7 组、42 次 HTTP 操作，含账户、保存、配额、隔离、5 MiB 照片和字体检查，没有 HTTP 5xx。浏览器已确认名称和新建默认本地选择；完整浏览器账户交互、PDF 导出、CPU 指标和长期负载仍待验收。`cloud/node/` 和原 D1 Worker 保留为其他运行方式，配置说明见 [免费托管方案](free-hosting.md)。
 
 GitHub 保存源码、测试、部署模板和数据库迁移；账户、简历与照片保存在部署环境的私有数据库。登录本站不会自动上传已有本地简历。云端保存由用户明确选择，本地保存始终可用。
 

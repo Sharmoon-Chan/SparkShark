@@ -4,7 +4,7 @@
 
 源码仓库：[SparkShark](https://github.com/Sharmoon-Chan/SparkShark)。项目许可证尚未选定；第三方依赖和字体保留各自的许可证。
 
-正式地址为 [sparkshark.sharmoon.cc.cd](https://sparkshark.sharmoon.cc.cd)，使用 `cloud/wrangler-free.toml` 的 Workers Custom Domain 配置。新旧域名拥有独立的浏览器存储；旧地址中的本机简历需要先导出 JSON 备份，再在新地址导入。详见 [域名与本机数据迁移](docs/domain-migration.md)。
+正式网站 [sparkshark.sharmoon.cc.cd](https://sparkshark.sharmoon.cc.cd) 已启用 HTTPS，使用 `cloud/wrangler-free.toml` 的 Workers Custom Domain 配置。新旧域名拥有独立的浏览器存储；旧地址中的本机简历需要先导出 JSON 备份，再在新地址导入。详见 [域名与本机数据迁移](docs/domain-migration.md)。
 
 ## 本地运行
 
@@ -24,7 +24,7 @@ pnpm preview
 
 构建产物位于 `dist/`。部署到静态托管时，将 `/resume/*` 等应用路由回退到 `index.html`，并随构建部署 `fonts/` 静态资源。
 
-2026 年 11 月 5 日，账户与云端保存版本已在实际 Workers Free 账户的 [测试站](https://myresume-free-preview.cwh20030613.workers.dev) 完成远程验证。账户套餐为 Free、US$0；注册、登录、配额、隔离和最大照片保存检查通过。生产域名尚未切换，CPU 指标与长期负载尚未测量，详情见 [免费托管方案](docs/free-hosting.md)。
+2026 年 11 月 5 日，账户与云端保存版本在实际 Workers Free/US$0 的 [测试站](https://myresume-free-preview.cwh20030613.workers.dev) 完成 68 次远程操作验证，正式 SparkShark 网站随后上线并通过 7 组、42 次 HTTP 操作，没有 HTTP 5xx。注册、登录、配额、隔离、最大照片保存及完整字体哈希检查通过，管理员已初始化。浏览器确认 SparkShark 名称与新建默认本地保存；完整浏览器账户交互、PDF 导出、CPU 指标与长期负载仍待验收，详情见 [免费托管方案](docs/free-hosting.md)。
 
 ## 已实现
 

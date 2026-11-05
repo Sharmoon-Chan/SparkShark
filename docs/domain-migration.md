@@ -1,6 +1,6 @@
 # SparkShark 域名与本机数据迁移
 
-网站名称统一为 SparkShark，正式地址为 `https://sparkshark.sharmoon.cc.cd`。Cloudflare Free 部署使用独立 Worker `sparkshark` 与 SQLite Durable Objects；旧测试站及其虚构账户属于另一套环境。
+网站名称统一为 SparkShark，正式地址 `https://sparkshark.sharmoon.cc.cd` 已启用 HTTPS。Cloudflare Free 部署使用独立 Worker `sparkshark` 与 SQLite Durable Objects，生产管理员已初始化，一次性初始化 secret 已移除；旧测试站及其虚构账户属于另一套环境。旧域名未修改，浏览器数据迁移仍通过 JSON 备份完成。
 
 ## 从旧地址迁移本机简历
 

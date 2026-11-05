@@ -6,13 +6,15 @@
 
 已实现 `cloud/free/` 与 `cloud/wrangler-free.toml`：静态网页由 Cloudflare 托管，账户、私有云端简历和管理员配额保存在 SQLite Durable Object 中。访客可自行注册，默认每人可保存 10 份简历，管理员可调整配额。新建、复制或导入时选择本地保存或云端保存，默认本地；登录不会自动上传已有简历。
 
-SparkShark 的正式地址配置为 `https://sparkshark.sharmoon.cc.cd`，Worker 名为 `sparkshark`，使用 Workers Custom Domain 自动管理此主机名的 DNS 与证书。预览 Worker 和生产 Worker 的 Durable Object 命名空间独立，预览账户不会成为生产账户。旧域名中的本机简历仍由原浏览器保存，迁移方法见 [域名与本机数据迁移](domain-migration.md)。
+SparkShark 已在 `https://sparkshark.sharmoon.cc.cd` 正式启用 HTTPS，Worker 名为 `sparkshark`，使用 Workers Custom Domain 管理此主机名的 DNS 与证书。预览 Worker 和生产 Worker 的 Durable Object 命名空间独立，预览账户不会成为生产账户。旧域名中的本机简历仍由原浏览器保存，迁移方法见 [域名与本机数据迁移](domain-migration.md)。
 
 普通用户名和密码登录已在本地 Miniflare/workerd 和真实 Free 测试站验证。密码仍使用原安全 scrypt 参数，在 Durable Object 内计算；外层 Free Worker 只转发原始 API 请求，不计算密码或解析大请求。配置只有 SQLite Durable Object、静态资源与限流绑定，没有 D1/R2 或付费 CPU 设置。免费运行不要求改用 GitHub 登录。
 
 2026 年 11 月 5 日，控制台确认目标账户为 Workers Free、US$0，并部署独立 [测试站](https://myresume-free-preview.cwh20030613.workers.dev)。10 组、68 次 API/字体操作全部通过，没有 HTTP 5xx：包括普通注册/登录/修改密码、会话与账户隔离、同源/CSRF、管理员配额、并发最后名额和恰好 5 MiB 照片往返。两个完整字体下载也与本地哈希一致，匿名网页与新建默认本地选择已检查。
 
-**生产域名尚未切换，CPU 指标和长期负载尚未测量。** 测试站结果证明这些操作在真实免费环境可运行，不代表无限容量或生产长期稳定性。请求耗时是包括网络在内的端到端时间，不能当作 Worker 或 Durable Object 的 CPU 消耗。生产启用前还需配置精确同域地址、管理员与完整浏览器保存/导出流程。
+正式域名随后通过 7 组、42 次 HTTP 操作，没有 HTTP 5xx；覆盖首页及应用路由、注册和登录、会话安全、同源/CSRF、账户隔离、云端保存/读取/更新、管理员配额和统计、恰好 5 MiB 照片以及完整字体下载哈希。生产管理员已初始化，一次性初始化 secret 已移除。浏览器已确认 SparkShark 名称和新建默认本地选择。
+
+**完整浏览器账户交互、PDF 导出、CPU 指标和长期负载仍待验收。** HTTP 验证证明这些操作在真实免费环境可运行，不代表无限容量或生产长期稳定性。请求耗时包含网络时间，不能当作 Worker 或 Durable Object 的 CPU 消耗。没有购买或升级套餐，也没有修改旧域名。
 
 官方免费上限核验日期：2026 年 11 月 5 日。
 
