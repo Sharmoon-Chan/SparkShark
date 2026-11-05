@@ -2,6 +2,8 @@
 
 这次功能增加账户、可选云端保存和管理员用户配额管理。浏览器本地数据库 `myresume-local-v1` 保留原有结构，旧简历不会在登录时自动上传。
 
+网站名称为 SparkShark，正式域名为 `https://sparkshark.sharmoon.cc.cd`。新域名与原 `me.sharmoon.cc.cd` 的 IndexedDB 按浏览器来源隔离，不能直接读取旧域名的本机简历。应从旧地址导出 JSON 备份后在新地址导入，详见 [域名迁移](domain-migration.md)。
+
 ## 保存位置
 
 - 新建、复制和导入简历时显示“仅保存在本机”和“保存到云端”，默认选择本机。

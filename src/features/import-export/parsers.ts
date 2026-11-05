@@ -6,7 +6,7 @@ import { FIELD_SPECS, SECTION_ORDER, sectionTitle } from '../../domain/registry'
 
 export function parseBackup(text: string): BackupEnvelope {
   const raw = JSON.parse(text) as Record<string, unknown>;
-  if (raw.format !== 'myresume') throw new Error('请选择 MyResume 导出的 JSON 备份文件');
+  if (raw.format !== 'myresume') throw new Error('请选择 SparkShark 导出的 JSON 备份文件');
   if (raw.schemaVersion !== 1) throw new Error('这个备份版本暂不支持，请使用匹配版本的应用导入');
   if (typeof raw.exportedAt !== 'string' || Number.isNaN(Date.parse(raw.exportedAt))) throw new Error('备份缺少有效的导出时间');
   if (Object.keys(raw).some(key => !['format', 'schemaVersion', 'exportedAt', 'resumes', 'assets', 'histories'].includes(key))) throw new Error('备份包含当前版本无法识别的字段');

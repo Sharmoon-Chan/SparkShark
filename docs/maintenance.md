@@ -2,6 +2,8 @@
 
 本项目使用 [SparkShark](https://github.com/Sharmoon-Chan/SparkShark) 管理源码。可以在本机修改功能、运行测试与构建，再提交版本。使用独立分支开发，验证完成后再合并到部署分支。
 
+网站名称为 SparkShark，正式地址为 `https://sparkshark.sharmoon.cc.cd`。`cloud/wrangler-free.toml` 配置精确 Custom Domain，Cloudflare 为新主机名管理 DNS 与证书；无需手工创建指向 Instabox 的记录。旧域名的浏览器数据迁移见 [域名与本机数据迁移](domain-migration.md)。
+
 当前优先使用 `cloud/wrangler-free.toml` 的 Cloudflare Free + SQLite Durable Objects 方案。它托管静态网页、普通账号密码登录、用户配额和私有云端简历。2026 年 11 月 5 日已在确认为 Workers Free/US$0 的独立测试站通过账户、保存、配额、隔离、5 MiB 照片和字体检查；生产域名尚未切换，CPU 指标和长期负载尚未测量。`cloud/node/` 和原 D1 Worker 保留为其他运行方式，配置说明见 [免费托管方案](free-hosting.md)。
 
 GitHub 保存源码、测试、部署模板和数据库迁移；账户、简历与照片保存在部署环境的私有数据库。登录本站不会自动上传已有本地简历。云端保存由用户明确选择，本地保存始终可用。
@@ -27,7 +29,7 @@ npm run build:cloud
 npm run dry-run:free --prefix cloud
 ```
 
-Free 方案的开发与部署步骤见 [Durable Objects 后端说明](../cloud/free/README.md)。使用 `dev:free`、`dry-run:free` 和 `deploy:free`，避免误用旧 D1 配置。`deploy:free` 会实际发布远程 Worker；生产域名启用应使用精确 `APP_ORIGIN`，保护既有浏览器保存来源，并再次核验管理员、保存/读取和导出。测试站通过不代表生产路由已切换，也不替代后续 CPU 与长期负载测量。发布前确认目标账户和套餐，不自动购买套餐或升级规格。
+Free 方案的开发与部署步骤见 [Durable Objects 后端说明](../cloud/free/README.md)。使用 `dev:free`、`dry-run:free` 和 `deploy:free`，避免误用旧 D1 配置。`deploy:free` 会实际发布远程 Worker 并绑定配置中的 Custom Domain；生产的 `APP_ORIGIN` 必须是 `https://sparkshark.sharmoon.cc.cd`。部署后再次核验管理员、保存/读取和导出。更改域名不会移动旧地址的浏览器数据；测试站通过不替代生产验收、CPU 与长期负载测量。发布前确认目标账户和套餐，不自动购买套餐或升级规格。
 
 Git 集成可后续配置 Cloudflare Workers Builds，为指定分支自动构建部署；本地 Wrangler 手动部署也可继续使用。官方说明：
 https://developers.cloudflare.com/workers/ci-cd/builds/

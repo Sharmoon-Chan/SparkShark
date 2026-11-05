@@ -21,7 +21,7 @@ type ImportMode = 'pdf' | 'docx' | 'backup' | 'text';
 const modes = [['pdf', 'PDF 简历'], ['docx', 'Word 文档'], ['backup', 'JSON 备份'], ['text', '文本 / Markdown']] as const;
 const formats: Record<ImportMode, string> = {
   pdf: '带文字的 PDF 简历 · 最大 10 MB', docx: 'Word DOCX 文档 · 最大 10 MB',
-  backup: 'MyResume JSON 备份 · 最大 20 MB', text: 'TXT / Markdown · 最大 1 MB',
+  backup: 'SparkShark JSON 备份 · 最大 20 MB', text: 'TXT / Markdown · 最大 1 MB',
 };
 
 export function ImportDialog({ open, onClose, initial = 'pdf' }: { open: boolean; onClose: () => void; initial?: ImportMode }) {
@@ -79,7 +79,7 @@ export function ImportDialog({ open, onClose, initial = 'pdf' }: { open: boolean
         if (file.size > 1024 * 1024) throw new Error('文本文件需要小于 1 MB');
         const content = await file.text(); if (id !== requestId.current) return;
         setText(content); setCandidate(parseText(content, file.name.replace(/\.[^.]+$/, '').slice(0, 200)));
-      } else throw new Error(/\.doc$/i.test(file.name) ? '请在 Word 中将 DOC 文件另存为 DOCX 后导入' : '请选择 PDF、DOCX、TXT、Markdown 或 MyResume JSON 文件');
+      } else throw new Error(/\.doc$/i.test(file.name) ? '请在 Word 中将 DOC 文件另存为 DOCX 后导入' : '请选择 PDF、DOCX、TXT、Markdown 或 SparkShark JSON 文件');
     } catch (error) {
       if (!controller.signal.aborted && id === requestId.current) setError(error instanceof Error ? error.message : '文件无法识别');
     } finally { if (id === requestId.current) { setBusy(false); setProgress(''); } }

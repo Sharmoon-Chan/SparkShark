@@ -26,7 +26,7 @@ function validAppOrigin(value: string): boolean {
 }
 
 export function configuration(environment: NodeJS.ProcessEnv = process.env): NodeServerConfiguration {
-  const appOrigin = environment.APP_ORIGIN ?? 'https://me.sharmoon.cc.cd';
+  const appOrigin = environment.APP_ORIGIN ?? 'https://sparkshark.sharmoon.cc.cd';
   if (!validAppOrigin(appOrigin)) throw new Error('APP_ORIGIN must be an exact HTTPS origin or an HTTP loopback development origin');
   const host = environment.LISTEN_HOST ?? '127.0.0.1';
   if (host !== '127.0.0.1' && host !== '::1') throw new Error('The backend must listen on loopback only');

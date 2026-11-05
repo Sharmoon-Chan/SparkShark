@@ -285,7 +285,7 @@ export async function renderResume(resume: Resume, assets: PdfAssetMap = {}, fon
   const fieldLabels = Object.fromEntries(resume.sections.map(section => [section.id, Object.fromEntries(contentFieldSpecs(section).map(spec => [spec.key, spec.label]))]));
   const richFields = Object.fromEntries(resume.sections.map(section => [section.id, contentFieldSpecs(section).filter(spec => spec.type === 'rich').map(spec => spec.key)]));
   const labels = { basics: '基本信息', ...Object.fromEntries(resume.sections.map(section => [section.id, sectionTitle(section, resume.locale) || '未命名模块'])) };
-  output.setTitle(resume.title); output.setCreator('MyResume'); output.setProducer('MyResume · react-pdf / pdf-lib');
+  output.setTitle(resume.title); output.setCreator('SparkShark'); output.setProducer('SparkShark · react-pdf / pdf-lib');
   const baseStyle = { fontFamily: context.font, fontSize: context.size, lineHeight: context.line, color: templateDesign(resume.appearance.templateId).classic ? '#0F172A' : '#27312B' };
   const hasBasics = Object.entries(resume.basics).some(([key, value]) => key !== 'avatarAssetId' && typeof value === 'string' && value.trim()) || resume.basics.customFields.some(field => field.visible && (field.label || field.value)) || Boolean(resume.appearance.avatar.visible && resume.basics.avatarAssetId && assets[resume.basics.avatarAssetId]);
   stageStart = performance.now();

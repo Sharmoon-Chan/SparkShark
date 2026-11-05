@@ -1,8 +1,10 @@
-# MyResume accounts and cloud storage
+# SparkShark accounts and cloud storage
 
 The primary **zero additional hosting cost** path is [Workers Free + SQLite Durable Objects](free/README.md). On November 5, 2026, the dashboard confirmed the selected account's Workers Free/US$0 plan, and the [independent preview](https://myresume-free-preview.cwh20030613.workers.dev) passed 10 remote verification groups covering 68 API/font operations with no HTTP 5xx responses. Ordinary registration/login/password changes, account isolation, CSRF, administrator quotas and an exact 5 MiB photo roundtrip passed. The production domain has not been switched; managed CPU metrics and sustained workloads have not been measured.
 
 The [Node 24 + SQLite variant](node/README.md) and the original D1 Worker remain alternate entrypoints using the same API. The Free preview uses neither D1 nor R2. The D1 instructions below apply specifically to `wrangler.toml`; use `wrangler-free.toml` and the explicit `dev:free` / `deploy:free` scripts for Durable Objects. Local build, development and dry-run commands do not publish a remote Worker; deployment commands do.
+
+The production origin is `https://sparkshark.sharmoon.cc.cd`. The Free configuration names the production Worker `sparkshark` and binds that exact hostname with `custom_domain = true`, without a path or wildcard. This Custom Domain is separate from the existing `me.sharmoon.cc.cd` site. Existing browser-local resumes are not moved by a hostname change; follow [the JSON backup migration](../docs/domain-migration.md).
 
 Open registration is enabled initially. Each new account receives a configurable default quota of **10 cloud resumes**. The administrator can disable/reactivate users, change individual quotas, reset another user's password, switch registration on/off, set the default quota for future accounts, and inspect user/resume counts and stored bytes. Quota changes do not delete resumes; an account above its quota can still update or delete its existing resumes.
 
@@ -102,7 +104,7 @@ These are operator steps, not commands already executed by the implementation:
 
 1. Run `npm run build:cloud` and create the intended D1 database in the chosen Cloudflare account.
 2. Replace the all-zero database ID in `wrangler.toml`, retaining the binding `DB`.
-3. Keep `APP_ORIGIN=https://me.sharmoon.cc.cd` if preserving the existing browser storage origin. Configure the intended domain on this Worker; domain/DNS changes require a controlled cutover.
+3. Set `APP_ORIGIN=https://sparkshark.sharmoon.cc.cd` for the intended production hostname. Domain changes create a distinct browser storage origin; migrate old local resumes through JSON backup/import rather than assuming they become visible automatically.
 4. Set a new random `BOOTSTRAP_TOKEN` using Wrangler secrets, apply the migration to that database, and deploy the static build plus Worker.
 5. Initialize the administrator using the interactive script against the production origin; then remove `BOOTSTRAP_TOKEN` from production. The database latch also prevents reinitialization.
 6. Verify existing local resumes, cloud save/load, per-account isolation, quota and conflict behavior, and browser PDF export before the public cutover.

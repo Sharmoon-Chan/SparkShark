@@ -1,8 +1,10 @@
-# MyResume
+# SparkShark
 
 支持浏览器本地编辑和可选账户云端保存的简历制作工具，提供内容编辑、分栏、模板和实时 PDF 预览。
 
 源码仓库：[SparkShark](https://github.com/Sharmoon-Chan/SparkShark)。项目许可证尚未选定；第三方依赖和字体保留各自的许可证。
+
+正式地址为 [sparkshark.sharmoon.cc.cd](https://sparkshark.sharmoon.cc.cd)，使用 `cloud/wrangler-free.toml` 的 Workers Custom Domain 配置。新旧域名拥有独立的浏览器存储；旧地址中的本机简历需要先导出 JSON 备份，再在新地址导入。详见 [域名与本机数据迁移](docs/domain-migration.md)。
 
 ## 本地运行
 

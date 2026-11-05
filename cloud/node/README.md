@@ -1,8 +1,8 @@
-# MyResume on an existing server, without a new hosting subscription
+# SparkShark on an existing server, without a new hosting subscription
 
 This variant runs the unchanged MyResume account/cloud/admin API on **Node 24** and its built-in `node:sqlite`. It needs no Workers paid plan, remote D1 database, R2, runtime npm dependencies, or external authentication service. Run it on the already-paid Ali server if zero additional recurring cost is required.
 
-The original frontend build is served directly, including the complete 28–30 MB fonts. The Cloudflare-specific lossless font stage is not used. Preserve `https://me.sharmoon.cc.cd`: it keeps existing browser-local resumes accessible while cloud storage is added.
+The original frontend build is served directly, including the complete 28–30 MB fonts. The Cloudflare-specific lossless font stage is not used. Set the intended public origin to `https://sparkshark.sharmoon.cc.cd`. Changing the hostname does not move existing browser-local resumes; export/import JSON through the [domain migration workflow](../../docs/domain-migration.md).
 
 ## Build locally
 
@@ -19,7 +19,7 @@ The second command writes the self-contained `output/node-backend` directory: tw
 Provide the values from `.env.example` through a private environment file or the existing service/container configuration. `DATA_DIR` is an independent writable persistent directory; bundle/static files may be mounted read-only. It must be outside `public/`.
 
 ```text
-APP_ORIGIN=https://me.sharmoon.cc.cd
+APP_ORIGIN=https://sparkshark.sharmoon.cc.cd
 LISTEN_HOST=127.0.0.1
 PORT=8790
 DATA_DIR=/data/myresume
@@ -32,7 +32,7 @@ node --env-file=/private/myresume.env server.mjs
 
 The server only accepts loopback listen addresses. Put the existing Cloudflared/Nginx route in front of `127.0.0.1:8790`, keeping the same public origin for both pages and `/api`. An isolated container may use host networking to retain a loopback-only listener. Do not publish the backend directly on a public interface. Keep the existing applications and their databases separate.
 
-`APP_ORIGIN` defaults to the original domain and may be explicitly set to another exact HTTPS origin for a future deployment/preview. URLs containing credentials, a path, query or fragment are rejected. For local testing, HTTP is allowed only on localhost/127.0.0.1/::1. The backend always checks the configured origin; it never chooses trust based on an incoming Host or Origin header. Username/password, bootstrap, CSRF, session, quota and resume APIs are the same as the Worker implementation. The initial administrator still requires a random `BOOTSTRAP_TOKEN` and one-time bootstrap latch. Use `cloud/scripts/bootstrap-admin.mjs` with the correct public/local origin; remove the token from service configuration after initialization.
+`APP_ORIGIN` must match the exact public HTTPS origin. Set it explicitly to `https://sparkshark.sharmoon.cc.cd` for this deployment; the `.env.example` reflects that name. URLs containing credentials, a path, query or fragment are rejected. For local testing, HTTP is allowed only on localhost/127.0.0.1/::1. The backend always checks the configured origin; it never chooses trust based on an incoming Host or Origin header. Username/password, bootstrap, CSRF, session, quota and resume APIs are the same as the Worker implementation. The initial administrator still requires a random `BOOTSTRAP_TOKEN` and one-time bootstrap latch. Use `cloud/scripts/bootstrap-admin.mjs` with the correct public/local origin; remove the token from service configuration after initialization.
 
 ## Resource bounds
 

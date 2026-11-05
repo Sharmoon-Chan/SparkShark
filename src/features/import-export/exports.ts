@@ -37,5 +37,5 @@ export async function exportImages(resume: Resume, assets: Record<string, Asset>
 }
 export async function exportBackup(resumes: Resume[], includeHistory = false, assets: Record<string, Asset> = {}) {
   const data = await repository.exportBackup(resumes, includeHistory, assets);
-  downloadBlob(new Blob([JSON.stringify(data, null, 2) + '\n'], { type: 'application/json;charset=utf-8' }), `${resumes.length === 1 ? filename(resumes[0].title) : 'MyResume-全部简历'}.json`);
+  downloadBlob(new Blob([JSON.stringify(data, null, 2) + '\n'], { type: 'application/json;charset=utf-8' }), `${resumes.length === 1 ? filename(resumes[0].title) : 'SparkShark-全部简历'}.json`);
 }

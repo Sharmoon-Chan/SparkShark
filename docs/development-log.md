@@ -47,3 +47,9 @@ Cloudflare 控制台确认目标账户为 Workers Free、US$0，独立 [测试�
 浏览器检查确认匿名页面可渲染，新建简历对话框默认选择本地保存；对话框随后取消，没有创建简历。远程 API 验证使用独立的虚构账户与数据，原生产域名尚未切换。请求耗时是包括网络在内的端到端时间，CPU 指标与长期负载尚未测量，完整生产浏览器保存/导出流程仍待验收。GitHub 登录尚未接入，源码版本管理与简历数据存储分别进行。
 
 项目许可证尚未选定。原站研究截图、导出简历、环境运维记录、数据库、真实凭据及测试输出留在本机，排除出公开源码。
+
+## 2026-11-05：SparkShark 名称与正式域名
+
+按用户要求将网站名称统一为 SparkShark，正式地址改为 `https://sparkshark.sharmoon.cc.cd`。Free 部署配置使用独立 Worker `sparkshark` 和精确 Workers Custom Domain，生产同源校验对应新 HTTPS 地址，原测试站仍为独立环境。Cloudflare 为 Custom Domain 管理 DNS 与证书；此开发记录只记录配置变更，部署结果需以实际验证为准。
+
+页面显示名称与导出标识更新，同时保留 `myresume-local-v1` 本地数据库、`myresume` JSON 格式及字体内部名称，确保旧备份和既有内容兼容。新域名不能读取旧来源的 IndexedDB，用户通过旧地址导出 JSON 后在新地址导入，默认仍保存在本机；迁移步骤见 [域名与本机数据迁移](domain-migration.md)。
