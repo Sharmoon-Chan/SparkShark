@@ -90,7 +90,7 @@ python scripts/verify-local-formats.py
 
 ## 字体
 
-静态 TTF 与 SIL OFL 许可证一同放在 `public/fonts/`。提供 Noto Sans SC 黑体、Noto Serif SC 宋体、霞鹜文楷 TC、IBM Plex Sans SC 人文黑体和 Chiron GoRound TC 圆体；使用独立的 MyResume 内部名称。每款提供 400／700 字重，斜体使用实际倾斜的静态轮廓。字体在预览和 PDF 中按选用的字体加载，详细来源与重建流程见 [字体说明](public/fonts/README.md)。
+静态 TTF 与 SIL OFL 许可证一同放在 `public/fonts/`。提供 Noto Sans SC 黑体、Noto Serif SC 宋体、霞鹜文楷 TC、IBM Plex Sans SC 人文黑体、Chiron GoRound TC 圆体，以及与 TalenCat 同源的思源黑体选项；使用独立的 MyResume 内部名称。思源黑体正文采用原生 Medium 字重，其他字体为 Regular，并各自提供 Bold 和实际倾斜的静态轮廓。字体在预览和 PDF 中按选用的字体加载，详细来源与重建流程见 [字体说明](public/fonts/README.md)。
 
 如需重新生成字体，在 Python 环境安装 `scripts/font-requirements.txt` 后执行 `python scripts/setup-fonts.py`。正常运行及构建直接使用已经准备好的字体文件。
 

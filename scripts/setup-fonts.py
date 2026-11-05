@@ -40,6 +40,11 @@ FAMILIES = [
      'license': PLEX + 'LICENSE.txt'},
     {'id': 'chiron-round-tc', 'prefix': 'round', 'family': 'MyResumeRoundTC',
      'variable': GOOGLE + 'chirongoroundtc/ChironGoRoundTC%5Bwght%5D.ttf', 'license': GOOGLE + 'chirongoroundtc/OFL.txt'},
+    # TalenCat's 思源黑体 is Noto Sans SC, from the same Source Han / Noto project.
+    # Map the native Medium outlines to the regular face for a more solid body.
+    {'id': 'source-han-sans-sc', 'prefix': 'sourcehan', 'family': 'MyResumeSourceHanSansSC',
+     'variable': GOOGLE + 'notosanssc/NotoSansSC%5Bwght%5D.ttf', 'license': GOOGLE + 'notosanssc/OFL.txt',
+     'instance_weights': {400: 500, 700: 700}},
 ]
 
 def download(url: str, path: Path) -> None:
@@ -152,7 +157,7 @@ def main(selected: list[str] | None = None, force: bool = False) -> None:
     CACHE.mkdir(parents=True, exist_ok=True)
     manifest_path = OUT / 'manifest.json'
     manifest = json.loads(manifest_path.read_text(encoding='utf-8')) if manifest_path.is_file() else {'families': {}}
-    manifest.update(version=5, preparedOn=date.today().isoformat())
+    manifest.update(version=6, preparedOn=date.today().isoformat())
     for spec in FAMILIES:
         key, prefix, renamed = spec['id'], spec['prefix'], spec['family']
         if selected and key not in selected:
@@ -173,7 +178,8 @@ def main(selected: list[str] | None = None, force: bool = False) -> None:
         for weight in (400, 700):
             print(f'Preparing {prefix} {weight}', flush=True)
             source = TTFont(source_paths[weight])
-            regular = instantiateVariableFont(source, {'wght': weight}, inplace=False) if 'fvar' in source else copy.deepcopy(source)
+            source_weight = spec.get('instance_weights', {}).get(weight, weight)
+            regular = instantiateVariableFont(source, {'wght': source_weight}, inplace=False) if 'fvar' in source else copy.deepcopy(source)
             distinct_bullet_glyph(regular)
             coverage = set(regular.getBestCmap())
             points = coverage if points is None else points.intersection(coverage)
@@ -192,6 +198,8 @@ def main(selected: list[str] | None = None, force: bool = False) -> None:
         manifest['families'][key] = {'family': renamed, 'files': files,
             'coverage': ranges(points), 'source': sources[400], 'sources': {str(weight): url for weight, url in sources.items()},
             'license': prefix + '-OFL.txt'}
+        if 'instance_weights' in spec:
+            manifest['families'][key]['sourceWeights'] = {str(weight): value for weight, value in spec['instance_weights'].items()}
         # Publish each complete family so interrupted runs remain resumable.
         manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
