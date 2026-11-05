@@ -3,7 +3,7 @@
   "measurementDate": "2026-11-05",
   "timezone": "Asia/Shanghai",
   "subject": "Browser-local resume import, template preview scheduling and font delivery",
-  "recordStatus": "Predeployment measurements; production verification to be appended separately",
+  "recordStatus": "Local predeployment measurements with separately identified production release verification",
   "source": {
     "renderVersion": "priority-preview-and-font-delivery-17",
     "fontManifestVersion": 7,
@@ -493,5 +493,155 @@
     "Synchronous PDF layout can only stop at its next cooperative cancellation checkpoint.",
     "Font byte reduction and local latency samples do not establish Cloudflare CPU usage, load capacity or end-to-end production speed."
   ],
-  "productionVerification": null
+  "productionVerification": {
+    "releaseDocument": "docs/releases/2026-11-05-preview-performance.md",
+    "origin": "https://sparkshark.sharmoon.cc.cd",
+    "deployment": {
+      "status": "deployed",
+      "workerName": "sparkshark",
+      "configuration": "cloud/wrangler-free.toml",
+      "versionId": "004aa210-6372-4446-b88a-2a948aec204d",
+      "previousVersionId": "ad670fda-2c2d-462a-8521-8fe88b7d0436",
+      "sourceCommit": "b5cd09e3b2a2637f7ec4672e35872cc2a1ec66f9",
+      "codeCommits": [
+        {
+          "shortCommit": "b346881",
+          "scope": "Editor sizing, columns and layout adjustments"
+        },
+        {
+          "shortCommit": "1c5a50a",
+          "scope": "Source Han Sans option and assets"
+        },
+        {
+          "shortCommit": "b5cd09e",
+          "scope": "Import, font delivery and preview performance with measurement records"
+        }
+      ],
+      "assetStage": "output/cloud-assets",
+      "upload": {
+        "connectionInterruptionObserved": true,
+        "retriedUsingExistingProxy": true,
+        "reportedUploadedAssetCount": 40,
+        "reportedUploadSeconds": 1219.56,
+        "metricScope": "Static asset transfer during the successful deployment attempt; not page or application performance"
+      },
+      "confirmedDeploymentAt": "2026-11-05T10:08:40.933Z",
+      "versionTrafficPercent": 100,
+      "githubCodePush": {
+        "status": "verified",
+        "branch": "main",
+        "verifiedCodeCommit": "b5cd09e3b2a2637f7ec4672e35872cc2a1ec66f9",
+        "scope": "All three code commits; branch verified before the subsequent release-document commit"
+      }
+    },
+    "http": {
+      "verifiedAt": "2026-11-05T10:10:13.586Z",
+      "localReport": "output/verification/preview-deployment.json",
+      "scripts": [
+        {
+          "path": "/assets/index-FITkurVq.js",
+          "sha256": "ac6c6e7ea294a82399ddd8ddb01ba11a97a44c406bbe4c5d375e90eccd70e00f",
+          "bytes": 1954039
+        }
+      ],
+      "scriptHashesMatchLocalBuild": true,
+      "compressedFontHeadChecks": {
+        "count": 24,
+        "allStatus200": true,
+        "allCacheControl": "public, max-age=31536000, immutable",
+        "countsByFamily": {
+          "noto-sans-sc": 4,
+          "noto-serif-sc": 4,
+          "lxgw-wenkai": 4,
+          "ibm-plex-sans-sc": 4,
+          "chiron-round-tc": 4,
+          "source-han-sans-sc": 4
+        }
+      },
+      "settingsSamples": {
+        "count": 12,
+        "allStatus200": true
+      },
+      "fullFontDownloads": [
+        {
+          "id": "noto-sans-sc",
+          "file": "sans-400.ttf",
+          "path": "/fonts/compressed/sans-400.4057d5c5a9bae8a3.ttf",
+          "head": 200,
+          "cacheControl": "public, max-age=31536000, immutable",
+          "downloadedBytes": 6303519,
+          "originalBytes": 10595912,
+          "originalSha256": "4057d5c5a9bae8a369fd5e8a55701554d33013688ff48bb1f1358c850096d9f3",
+          "exactBytes": true
+        },
+        {
+          "id": "chiron-round-tc",
+          "file": "round-400.ttf",
+          "path": "/fonts/compressed/round-400.220efc0e887f3a3a.ttf",
+          "head": 200,
+          "cacheControl": "public, max-age=31536000, immutable",
+          "downloadedBytes": 13604269,
+          "originalBytes": 28904336,
+          "originalSha256": "220efc0e887f3a3a0d005591065d6a328ff1862031813ee8373d3abb6b0097e8",
+          "exactBytes": true
+        }
+      ],
+      "anonymousAccountRead": {
+        "path": "/api/auth/me",
+        "status": 200,
+        "cacheControl": "no-store"
+      }
+    },
+    "browser": {
+      "checkedAt": "2026-11-05T10:13:13.486Z",
+      "name": "Chrome",
+      "version": "156.0.8078.80",
+      "dataset": "Synthetic example stored in an isolated browser local workspace",
+      "remoteAccountWrites": false,
+      "remoteResumeWrites": false,
+      "fontOptionsCount": 6,
+      "templateCardsCount": 16,
+      "singleColumnFilterCount": 8,
+      "doubleColumnFilterCount": 8,
+      "mobileViewportWidthPx": 375,
+      "mobileHorizontalOverflow": false,
+      "pdfDownloadPassed": true,
+      "elapsedObservations": {
+        "editorMs": 37084,
+        "sourceHanMs": 67962,
+        "templateMs": 5896
+      },
+      "elapsedObservationCountPerOperation": 1,
+      "templateIdForTimedSwitch": null,
+      "timingScope": "Reported end-to-end operation elapsed times; no request/render stage decomposition was captured.",
+      "concurrentActivity": [
+        "Git large-file upload",
+        "HTTP font downloads"
+      ],
+      "independentNetworkThroughputMeasured": false,
+      "sameConditionProductionBeforeAfterComparison": false,
+      "interpretation": "Cold editor/font preview remains slow in these observations. These results do not establish instant production previews or a production speedup percentage, and the delay cannot be attributed entirely to the network."
+    },
+    "downloadedPdf": {
+      "bytes": 76384,
+      "pages": 2,
+      "sha256": "950de7ee586e6549a4b6b716c43cf5528f5e29f8111b81b984fb960cb9f0619e",
+      "fonts": [
+        "CZZZZZ+MyResumeSourceHanSansSC-Bold",
+        "EZZZZZ+MyResumeSourceHanSansSC-Regular",
+        "DZZZZZ+MyResumeSourceHanSansSC-Regular",
+        "Helvetica"
+      ],
+      "sourceHanEmbedded": true,
+      "localReport": "output/verification/production-pdf.json"
+    },
+    "limits": [
+      "Production timings are one current-version observation per operation, with no same-condition pre-optimization control or repeated distribution.",
+      "Git upload and HTTP font downloads were concurrent; independent network throughput and separate download/decode/layout/canvas timings were not measured.",
+      "First editor preview took 37.084 seconds and first Source Han selection took 67.962 seconds, so first-load latency remains a material limitation.",
+      "Local template timings of 246/793/337 ms used a different network/cache environment and are not a production comparison group.",
+      "Checks used synthetic local examples and anonymous reads; they do not verify remote account/resume write flows or sustained load.",
+      "Static asset upload duration is a deployment transfer metric, not application latency."
+    ]
+  }
 }
