@@ -32,6 +32,8 @@ describe('standalone HTML export', () => {
     expect(attr(company, 'style')).toContain('font-style:italic;'); expect(attr(company, 'style')).toContain('text-decoration:underline;');
     const body = fields.find(node => attr(node, 'data-field-key') === 'summary')!;
     expect(attr(body, 'style')).toContain('font-size:16px;');
+    const inherited = fields.find(node => attr(node, 'data-field-key') === 'position')!;
+    expect(attr(inherited, 'style')).toContain(`font-size:${resume.appearance.fontSizePx}px;`);
     expect(elements(html, 'strong').map(text)).toContain('原有加粗保留'); expect(elements(html, 's').map(text)).toContain('原有删除线保留');
     expect(elements(html, 'a').some(node => attr(node, 'href') === 'https://example.com/format')).toBe(true);
     expect(resume).toEqual(original);

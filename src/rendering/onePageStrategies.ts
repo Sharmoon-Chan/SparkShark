@@ -68,7 +68,7 @@ function sectionHeight(section: Section, width: number, appearance: Appearance):
   const rowGap = section.contentLayout?.rowGapPx ?? 4, itemGap = section.contentLayout?.itemGapPx ?? 8;
   return appearance.fontSizePx * 1.7 + 10 * scale + entries.reduce((total, rows) => total + rows.reduce((height, row) => {
     const natural = row.some(cell => cell.layout.inline) && !row.some(cell => cell.rich);
-    const fonts = row.map(cell => contentFontSize(cell.layout, appearance.fontSizePx, Boolean(cell.rich)));
+    const fonts = row.map(cell => contentFontSize(cell.layout, appearance.fontSizePx));
     const largest = Math.max(...fonts, 0);
     const textHeight = natural ? textLines(row.map(cell => cell.text).join('  '), width, largest) * largest * appearance.lineHeight
       : Math.max(...row.map((cell, index) => textLines(cell.text, width / row.length, fonts[index]) * fonts[index] * appearance.lineHeight), 0);
@@ -85,44 +85,6 @@ export function estimateOnePageCost(resume: Resume): number {
     const usable = width - resume.appearance.columnGapPx;
     return sum + Math.max(height(group.main, usable * resume.layout.mainRatio), height(group.sidebar, usable * (1 - resume.layout.mainRatio)));
   }, 0);
-}
-
-export function onePageLayoutCandidates(original: Resume): { resume: Resume; cost: number; message: string }[] {
-  const candidates: { resume: Resume; cost: number; message: string }[] = [];
-  const group = original.layout.groups[0], order = [...group.main, ...group.sidebar];
-  if (original.layout.mode === 'double') {
-    const single = structuredClone(original); single.layout.mode = 'single'; single.layout.groups[0] = { id: group.id, main: order, sidebar: [] };
-    candidates.push({ resume: single, cost: estimateOnePageCost(single), message: '尝试单栏，给较长正文更多宽度' });
-  }
-  const visible = original.sections.filter(sectionVisibleWithContent);
-  if (visible.length < 3) return candidates;
-  const width = Math.max(100, 794 - original.appearance.marginPx * 2);
-  const wideCosts = new Map(visible.map(section => [section.id, sectionHeight(section, width, original.appearance)]));
-  const total = [...wideCosts.values()].reduce((sum, value) => sum + value, 0);
-  if (Math.max(...wideCosts.values()) > total * .8) return candidates;
-  const shortKinds = new Set(['profiles', 'education', 'skills', 'languages', 'awards', 'certifications', 'interests', 'references', 'custom']);
-  const eligible = visible.filter(section => shortKinds.has(section.kind) && wideCosts.get(section.id)! <= Math.min(500, total * .7));
-  if (!eligible.length) return candidates;
-  const previousHiddenSide = new Set(group.sidebar.filter(id => !wideCosts.has(id)));
-  for (const ratio of [...new Set([.55, .6, .65, .7, .75, ...(original.layout.mode === 'double' ? [original.layout.mainRatio] : [])])]) {
-    const gap = Math.min(original.appearance.columnGapPx, 12), usable = width - gap;
-    const mainCost = new Map(visible.map(section => [section.id, sectionHeight(section, usable * ratio, original.appearance)]));
-    const sideCost = new Map(visible.map(section => [section.id, sectionHeight(section, usable * (1 - ratio), original.appearance)]));
-    const score = (side: Set<string>) => Math.max(visible.reduce((sum, section) => sum + (side.has(section.id) ? 0 : mainCost.get(section.id)!), 0),
-      visible.reduce((sum, section) => sum + (side.has(section.id) ? sideCost.get(section.id)! : 0), 0));
-    const chosen = new Set<string>(); let current = score(chosen);
-    while (chosen.size < visible.length - 1) {
-      const options = eligible.filter(section => !chosen.has(section.id)).map(section => ({ id: section.id, score: score(new Set([...chosen, section.id])) })).sort((a, b) => a.score - b.score);
-      if (!options.length || options[0].score >= current - .1) break;
-      chosen.add(options[0].id); current = options[0].score;
-    }
-    if (!chosen.size) continue;
-    previousHiddenSide.forEach(id => chosen.add(id));
-    const next = structuredClone(original); next.layout.mode = 'double'; next.layout.mainRatio = ratio; next.appearance.columnGapPx = gap;
-    next.layout.groups[0] = { id: group.id, main: order.filter(id => !chosen.has(id)), sidebar: order.filter(id => chosen.has(id)) };
-    candidates.push({ resume: next, cost: estimateOnePageCost(next), message: `按内容长度平衡双栏，主栏 ${Math.round(ratio * 100)}%` });
-  }
-  return candidates;
 }
 
 export function describeOnePageChanges(original: Resume, next: Resume): string[] {

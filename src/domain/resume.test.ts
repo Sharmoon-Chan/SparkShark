@@ -1,9 +1,27 @@
 import { describe, expect, it } from 'vitest';
-import { applyTemplate, createExample, createResume, moveSection, parseResume, remapResume, removePage, uid } from './resume';
+import { applyTemplate, createExample, createResume, layoutPageGroups, moveSection, parseResume, remapResume, removePage, setLayoutMode, uid } from './resume';
 import { parseBackup, parseText, resumeFromText } from '../features/import-export/parsers';
 
 const placed = (resume: ReturnType<typeof createResume>) => resume.layout.groups.flatMap(group => [...group.main, ...group.sidebar]);
 describe('resume invariants', () => {
+  it('uses the displayed single-column indices across former sidebar boundaries', () => {
+    const original = createExample(); original.layout.mode = 'single';
+    const page = layoutPageGroups(original)[0], boundary = original.layout.groups[0].main.length;
+    const moved = moveSection(original, page.main[boundary], page.id, 'main', boundary - 1);
+    const expected = [...page.main]; const [id] = expected.splice(boundary, 1); expected.splice(boundary - 1, 0, id);
+    expect(moved.layout.groups[0]).toEqual({ ...page, main: expected });
+    expect(new Set(placed(moved))).toEqual(new Set(placed(original)));
+    expect(moved.sections).toEqual(original.sections);
+    expect(() => parseResume(moved)).not.toThrow();
+  });
+  it('switches to a continuous single-column order and preserves it when returning to double', () => {
+    const original = createExample(), single = setLayoutMode(original, 'single');
+    original.layout.groups.forEach((group, i) => expect(single.layout.groups[i]).toEqual({ ...group, main: [...group.main, ...group.sidebar], sidebar: [] }));
+    expect(setLayoutMode(single, 'double').layout.groups).toEqual(single.layout.groups);
+    const removed = removePage(single, single.layout.groups[1].id, single.layout.groups[0].id);
+    expect(removed.layout.groups[0].main).toEqual(single.layout.groups.flatMap(group => group.main));
+    expect(removed.layout.groups[0].sidebar).toEqual([]);
+  });
   it('duplicates independently and remaps custom values and every layout reference', () => {
     const original = createExample(), before = structuredClone(original), copy = remapResume(original, '副本');
     expect(copy.id).not.toBe(original.id);

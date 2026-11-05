@@ -1,5 +1,5 @@
 import type { Appearance, Resume } from '../domain/types';
-import { compactUnconfiguredFields, describeOnePageChanges, estimateOnePageCost, mergeOnePageGroups, onePageLayoutCandidates, spacingCandidate } from './onePageStrategies';
+import { compactUnconfiguredFields, describeOnePageChanges, estimateOnePageCost, mergeOnePageGroups, spacingCandidate } from './onePageStrategies';
 import { fillOnePage, onePageUsage, ONE_PAGE_FILL_TARGET, type OnePageMeasurement } from './onePageFill';
 
 export const ONE_PAGE_MINIMUM = { fontSizePx: 12, lineHeight: 1.25, marginPx: 14 };
@@ -90,14 +90,6 @@ async function reduceToOnePage(original: Resume, measure: (candidate: Resume) =>
   for (const amount of [.65, 1]) {
     const result = await inspect(candidate(compact.resume, amount, 'spacing'), compact.message, compact);
     if (result?.pages === 1) return refine(compact, amount, 'spacing', result);
-  }
-  const layouts = onePageLayoutCandidates(compact.resume);
-  const normalLayouts = [...layouts.filter(item => item.resume.layout.mode === 'single'),
-    ...layouts.filter(item => item.resume.layout.mode === 'double').sort((a, b) => a.cost - b.cost).slice(0, 3)];
-  layouts.forEach(item => register(item.resume, item.message));
-  for (const item of normalLayouts) {
-    const structure = register(item.resume, item.message), result = await inspect(candidate(structure.resume, 1, 'spacing'), item.message, structure);
-    if (result?.pages === 1) return refine(structure, 1, 'spacing', result);
   }
   const rank = (a: Structure, b: Structure) => (a.best?.pages ?? Infinity) - (b.best?.pages ?? Infinity)
     || (a.best?.cost ?? estimateOnePageCost(a.resume)) - (b.best?.cost ?? estimateOnePageCost(b.resume));

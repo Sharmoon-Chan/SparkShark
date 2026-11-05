@@ -3,9 +3,17 @@ import { createExample } from '../domain/resume';
 import { defaultContentLayout } from '../domain/contentLayout';
 import { checkGlyphs } from './fonts';
 import { importMarkerFields } from './importMarkers';
-import { moduleContentRows, sectionVisibleWithContent } from './contentLayoutView';
+import { contentFontSize, moduleContentRows, sectionVisibleWithContent } from './contentLayoutView';
 
 describe('configured module content', () => {
+  it('inherits page size for every emphasis and preserves explicit field sizes', () => {
+    const field = defaultContentLayout(createExample().sections.find(section => section.kind === 'work')!).fields[0];
+    for (const emphasis of ['normal', 'bold', 'muted'] as const) {
+      expect(contentFontSize({ ...field, emphasis }, 16)).toBe(16);
+      expect(contentFontSize({ ...field, emphasis }, 18)).toBe(18);
+      expect(contentFontSize({ ...field, emphasis, fontSizePx: 12.75 }, 18)).toBe(12.75);
+    }
+  });
   it('keeps hidden problematic text in the data while excluding it from glyph and marker checks', () => {
     const resume = createExample(), work = resume.sections.find(section => section.kind === 'work')!;
     if (work.kind !== 'work') throw new Error('fixture');

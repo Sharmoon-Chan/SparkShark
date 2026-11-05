@@ -5,8 +5,8 @@ import { hasContent, richText, safeLink, sectionHasContent } from '../domain/res
 type ContentItem = ResumeItem | CustomSection['items'][number];
 export interface ContentCell { layout: ContentFieldLayout; spec: ContentFieldSpec; value: FieldValue; text: string; href?: string; rich?: RichDocument }
 
-export function contentFontSize(layout: ContentFieldLayout, basePx: number, rich = false): number {
-  return layout.fontSizePx ?? basePx * (!rich && layout.emphasis === 'muted' ? .92 : 1);
+export function contentFontSize(layout: ContentFieldLayout, basePx: number): number {
+  return layout.fontSizePx ?? basePx;
 }
 
 export function contentTextDecoration(underline: boolean, strike = false): 'none' | 'underline' | 'line-through' | 'underline line-through' {

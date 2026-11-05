@@ -1,0 +1,43 @@
+/* TalenCat uses equal editing/preview panes and readable 12–14px controls. */
+@media (min-width: 1101px) {
+  .app-shell .editor-shell { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.editor-panel .panel-content { padding: 24px 24px 36px; }
+.editor-panel .section-card { margin-bottom: 28px; padding-bottom: 28px; }
+.editor-panel .panel-heading h2 { font-size: 18px; font-weight: 600; }
+.editor-panel .panel-heading p { font-size: 12px; }
+.editor-panel .section-header { margin-bottom: 18px; min-height: 32px; }
+.editor-panel .section-header h2 { font-size: 16px; font-weight: 600; }
+.editor-panel .field > label { font-size: 12px; margin-bottom: 8px; }
+.editor-panel .field input:not([type=range]):not([type=color]),
+.editor-panel .field select, .editor-panel .field textarea { height: 40px; font-size: 14px; padding: 9px 12px; }
+.editor-panel .field textarea { height: auto; }
+.editor-panel .form-grid { gap: 18px 16px; }
+.editor-panel .item-heading { min-height: 44px; padding: 9px 8px; }
+.editor-panel .item-toggle { font-size: 14px; }
+.editor-panel .item-toggle > small { font-size: 11px; }
+.editor-panel .rich-content { font-size: 14px; line-height: 1.65; padding: 12px 14px; }
+.editor-panel .rich-toolbar { padding: 6px; gap: 2px; }
+.editor-panel .rich-toolbar button { width: 28px; height: 28px; }
+.editor-panel .segmented button { min-height: 34px; font-size: 13px; }
+.editor-panel .setting-block { padding: 24px 0; }
+.editor-panel .setting-block > h3 { font-size: 14px; font-weight: 600; margin-bottom: 18px; }
+.editor-panel .setting-row { font-size: 13px; min-height: 38px; }
+.editor-panel .range-setting { margin-bottom: 22px; }
+.editor-panel .range-setting > label { font-size: 12px; margin-bottom: 10px; }
+.editor-panel .range-setting label > span { font-size: 12px; }
+.editor-panel .range-setting input[type=number] { width: 80px; height: 36px; font-size: 14px; color: #4f6256; }
+.editor-panel .helper-text { font-size: 12px; line-height: 1.65; }
+.editor-panel .theme-palette-label { font-size: 12px; flex-basis: 80px; }
+.editor-panel .theme-color-current { font-size: 12px; }
+.editor-panel .content-layout-trigger { font-size: 12px; padding: 5px 8px; }
+.layout-columns.single { grid-template-columns: minmax(0, 1fr); }
+.editor-panel .layout-column { padding: 14px 12px; }
+.editor-panel .layout-column > h3 { font-size: 13px; }
+.editor-panel .layout-column h3 small { font-size: 11px; }
+.editor-panel .layout-row { min-height: 40px; font-size: 13px; }
+@media (max-width: 700px) {
+  .editor-panel .panel-content { padding: 20px 16px 32px; }
+  .editor-panel .section-header { gap: 6px; }
+  .editor-panel .content-layout-trigger { font-size: 11px; }
+}

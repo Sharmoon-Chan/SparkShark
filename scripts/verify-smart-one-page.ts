@@ -36,6 +36,9 @@ for (const [id, resume] of [['manual-pages', example], ['dense', dense], ['margi
   const original = JSON.stringify(resume), initial = await renderResume(resume, assets, path.join(root, 'public/fonts').replaceAll('\\', '/'));
   const result = await smartOnePage(resume, candidate => renderResume(candidate, assets, path.join(root, 'public/fonts').replaceAll('\\', '/')), { onProgress: (message, attempt) => console.log(`${id}: ${attempt} ${message}`) });
   if (JSON.stringify(resume) !== original) throw new Error('search mutated source');
+  if (result.resume.layout.mode !== resume.layout.mode || result.resume.layout.mainRatio !== resume.layout.mainRatio || result.resume.layout.sidebarSide !== resume.layout.sidebarSide || result.resume.appearance.columnGapPx !== resume.appearance.columnGapPx) throw new Error('one-page changed column settings');
+  const columns = (value: Resume) => value.layout.mode === 'single' ? [value.layout.groups.flatMap(group => [...group.main, ...group.sidebar])] : [value.layout.groups.flatMap(group => group.main), value.layout.groups.flatMap(group => group.sidebar)];
+  if (JSON.stringify(columns(result.resume)) !== JSON.stringify(columns(resume))) throw new Error('one-page reordered or reassigned modules');
   if (JSON.stringify(result.resume.basics) !== JSON.stringify(resume.basics) || result.resume.sections.some(section => { const source = resume.sections.find(item => item.id === section.id)!; return JSON.stringify({ ...source, contentLayout: undefined }) !== JSON.stringify({ ...section, contentLayout: undefined }); })) throw new Error('content changed while fitting');
   if (result.status === 'fit' || result.status === 'filled') {
     const restored = restoreOnePageFormat(result.resume, captureOnePageRestore(resume, result.resume));

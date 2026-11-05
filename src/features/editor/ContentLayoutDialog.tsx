@@ -12,19 +12,17 @@ import './content-layout.css';
 
 const fieldTypes = { text: '文字', url: '链接', rich: '正文', tags: '关键词', level: '等级' };
 
-function LayoutField({ field, spec, first, last, afterRich, prefix, onChange, onMove }: { field: ContentFieldLayout; spec: ContentFieldSpec; first: boolean; last: boolean; afterRich: boolean; prefix: string; onChange: (patch: Partial<ContentFieldLayout>) => void; onMove: (direction: number) => void }) {
+function LayoutField({ field, spec, first, last, afterRich, prefix, pageFontSizePx, onChange, onMove }: { field: ContentFieldLayout; spec: ContentFieldSpec; first: boolean; last: boolean; afterRich: boolean; prefix: string; pageFontSizePx: number; onChange: (patch: Partial<ContentFieldLayout>) => void; onMove: (direction: number) => void }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: field.key });
-  const [sizeText, setSizeText] = useState(field.fontSizePx === undefined ? '' : String(field.fontSizePx));
-  useEffect(() => { setSizeText(field.fontSizePx === undefined ? '' : String(field.fontSizePx)); }, [field.fontSizePx]);
-  const changeSize = (text: string) => {
-    setSizeText(text);
-    if (text === '') onChange({ fontSizePx: undefined });
-    else { const value = Number(text); if (Number.isFinite(value) && value >= 8 && value <= 36) onChange({ fontSizePx: value }); }
-  };
+  const currentSize = field.fontSizePx ?? pageFontSizePx;
+  const [sizeText, setSizeText] = useState(String(currentSize));
+  useEffect(() => { setSizeText(String(currentSize)); }, [field.fontSizePx, pageFontSizePx]);
+  const changeSize = (text: string) => setSizeText(text);
   const finishSize = () => {
-    if (sizeText === '') return;
-    const number = Number(sizeText), value = Number.isFinite(number) ? Math.max(8, Math.min(36, number)) : field.fontSizePx;
-    setSizeText(value === undefined ? '' : String(value)); onChange({ fontSizePx: value });
+    if (sizeText === '') { setSizeText(String(pageFontSizePx)); onChange({ fontSizePx: undefined }); return; }
+    if (Number(sizeText) === currentSize) { setSizeText(String(currentSize)); return; }
+    const number = Number(sizeText), value = Number.isFinite(number) ? Math.max(8, Math.min(36, number)) : currentSize;
+    setSizeText(String(value)); onChange({ fontSizePx: value });
   };
   const rich = spec.type === 'rich';
   const separate = first || rich || afterRich;
@@ -36,11 +34,11 @@ function LayoutField({ field, spec, first, last, afterRich, prefix, onChange, on
     <Field label="文字" htmlFor={`${prefix}-emphasis`}><select id={`${prefix}-emphasis`} aria-label={`${spec.label}文字样式`} value={field.emphasis} disabled={rich} onChange={event => onChange({ emphasis: event.target.value as ContentFieldLayout['emphasis'] })}><option value="normal">正常</option><option value="bold">加粗</option><option value="muted">次要</option></select></Field>
     <div className="content-layout-visible"><span>显示</span><Toggle checked={field.visible} label={`显示${spec.label}字段`} onChange={visible => onChange({ visible })} /></div>
     <div className="content-layout-move"><IconButton label={`上移${spec.label}字段`} disabled={first} onClick={() => onMove(-1)}><ArrowUp size={13} /></IconButton><IconButton label={`下移${spec.label}字段`} disabled={last} onClick={() => onMove(1)}><ArrowDown size={13} /></IconButton></div>
-    <div className="content-layout-typography"><Field label="字号（px）" htmlFor={`${prefix}-font-size`}><input id={`${prefix}-font-size`} type="number" min={8} max={36} step={.25} aria-label={`${spec.label}字号`} placeholder="跟随页面" value={sizeText} onChange={event => changeSize(event.currentTarget.value)} onBlur={finishSize} /></Field><div className="content-layout-decoration" role="group" aria-label={`${spec.label}格式`}><button type="button" aria-label={`${spec.label}斜体`} aria-pressed={Boolean(field.italic)} onClick={() => onChange({ italic: !field.italic })}><Italic size={14} />斜体</button><button type="button" aria-label={`${spec.label}下划线`} aria-pressed={Boolean(field.underline)} onClick={() => onChange({ underline: !field.underline })}><Underline size={14} />下划线</button></div><small>留空跟随页面字号</small></div>
+    <div className="content-layout-typography"><Field label="字号（px）" htmlFor={`${prefix}-font-size`}><input id={`${prefix}-font-size`} type="number" min={8} max={36} step={.25} aria-label={`${spec.label}字号`} value={sizeText} onChange={event => changeSize(event.currentTarget.value)} onBlur={finishSize} /></Field><div className="content-layout-decoration" role="group" aria-label={`${spec.label}格式`}><button type="button" aria-label={`${spec.label}斜体`} aria-pressed={Boolean(field.italic)} onClick={() => onChange({ italic: !field.italic })}><Italic size={14} />斜体</button><button type="button" aria-label={`${spec.label}下划线`} aria-pressed={Boolean(field.underline)} onClick={() => onChange({ underline: !field.underline })}><Underline size={14} />下划线</button></div>{field.fontSizePx === undefined ? <small>跟随页面 · {pageFontSizePx}px</small> : <button type="button" className="text-button content-layout-inherit" aria-label={`${spec.label}字号跟随页面`} onClick={() => { setSizeText(String(pageFontSizePx)); onChange({ fontSizePx: undefined }); }}>跟随页面 · {pageFontSizePx}px</button>}</div>
   </div>;
 }
 
-export function ContentLayoutDialog({ section, open, onClose }: { section: Section; open: boolean; onClose: () => void }) {
+export function ContentLayoutDialog({ section, pageFontSizePx, open, onClose }: { section: Section; pageFontSizePx: number; open: boolean; onClose: () => void }) {
   const update = useApp(state => state.update);
   const [draft, setDraft] = useState<SectionContentLayout>(() => resolveContentLayout(section));
   const [templateMode, setTemplateMode] = useState(!section.contentLayout);
@@ -63,11 +61,11 @@ export function ContentLayoutDialog({ section, open, onClose }: { section: Secti
       <div className="content-layout-intro"><strong>字段排列</strong><span>{templateMode ? '模板排版方案' : '自定义方案'}</span></div>
       <p className="content-layout-help">拖动左侧手柄或使用上下箭头排序。字号、斜体和下划线按字段设置；正文的局部格式会保留。</p>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={({ active, over }) => { if (!over || active.id === over.id) return; move(resolved.fields.findIndex(field => field.key === active.id), resolved.fields.findIndex(field => field.key === over.id)); }}>
-        <SortableContext items={resolved.fields.map(field => field.key)} strategy={verticalListSortingStrategy}><div className="content-layout-fields">{resolved.fields.map((field, index) => <LayoutField key={field.key} field={field} spec={specs.get(field.key)!} first={index === 0} last={index === resolved.fields.length - 1} afterRich={specs.get(resolved.fields[index - 1]?.key)?.type === 'rich'} prefix={`content-layout-${section.id}-${field.key}`} onChange={changes => patch(field.key, changes)} onMove={direction => move(index, index + direction)} />)}</div></SortableContext>
+        <SortableContext items={resolved.fields.map(field => field.key)} strategy={verticalListSortingStrategy}><div className="content-layout-fields">{resolved.fields.map((field, index) => <LayoutField key={field.key} field={field} spec={specs.get(field.key)!} first={index === 0} last={index === resolved.fields.length - 1} afterRich={specs.get(resolved.fields[index - 1]?.key)?.type === 'rich'} prefix={`content-layout-${section.id}-${field.key}`} pageFontSizePx={pageFontSizePx} onChange={changes => patch(field.key, changes)} onMove={direction => move(index, index + direction)} />)}</div></SortableContext>
       </DndContext>
       {resolved.fields.length === 0 && <p className="content-layout-help">先在模块中添加可显示的字段。</p>}
       <div className="content-layout-spacing"><Field label="行间距（px）" htmlFor={`content-layout-${section.id}-row-gap`}><input id={`content-layout-${section.id}-row-gap`} type="number" min={0} max={24} step={1} value={resolved.rowGapPx} onChange={event => setGap('rowGapPx', event.currentTarget.valueAsNumber)} /></Field><Field label="条目间距（px）" htmlFor={`content-layout-${section.id}-item-gap`}><input id={`content-layout-${section.id}-item-gap`} type="number" min={0} max={48} step={1} value={resolved.itemGapPx} onChange={event => setGap('itemGapPx', event.currentTarget.valueAsNumber)} /></Field></div>
-      <section className="content-layout-preview" aria-label="字段排列示意"><h3>字段排列示意</h3><div className="content-layout-sketch" style={{ gap: resolved.rowGapPx }}>{rows.map((row, index) => <div className="content-layout-sketch-row" key={index} data-layout-row={index + 1}>{row.map(field => <span key={field.key} className={`layout-emphasis-${field.emphasis}`} style={{ textAlign: specs.get(field.key)?.type === 'rich' ? 'left' : field.align, fontSize: field.fontSizePx, fontStyle: field.italic ? 'italic' : undefined, textDecoration: field.underline ? 'underline' : undefined }}>{specs.get(field.key)?.label || '未命名字段'}</span>)}</div>)}{rows.length === 0 && <p>所有字段均已隐藏，原始内容仍会保留。</p>}</div><small>示意显示行、对齐和文字样式；未填写的字段不会占位置。应用后可在简历预览中查看效果。</small></section>
+      <section className="content-layout-preview" aria-label="字段排列示意"><h3>字段排列示意</h3><div className="content-layout-sketch" style={{ gap: resolved.rowGapPx }}>{rows.map((row, index) => <div className="content-layout-sketch-row" key={index} data-layout-row={index + 1}>{row.map(field => <span key={field.key} className={`layout-emphasis-${field.emphasis}`} style={{ textAlign: specs.get(field.key)?.type === 'rich' ? 'left' : field.align, fontSize: field.fontSizePx ?? pageFontSizePx, fontStyle: field.italic ? 'italic' : undefined, textDecoration: field.underline ? 'underline' : undefined }}>{specs.get(field.key)?.label || '未命名字段'}</span>)}</div>)}{rows.length === 0 && <p>所有字段均已隐藏，原始内容仍会保留。</p>}</div><small>示意显示行、对齐和文字样式；未填写的字段不会占位置。应用后可在简历预览中查看效果。</small></section>
     </div>
     <div className="content-layout-footer"><Button secondary onClick={() => { setDraft(defaultContentLayout(section)); setTemplateMode(true); }}><RotateCcw size={14} />恢复模板排版</Button><div className="content-layout-actions"><Button secondary onClick={onClose}>取消</Button><Button onClick={apply}>应用排版</Button></div></div>
   </Modal>;

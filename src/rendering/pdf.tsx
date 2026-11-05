@@ -190,7 +190,7 @@ function CustomItemPdf({ section, item, first, context }: { section: CustomSecti
 }
 
 function contextForCell(context: Context, cell: ContentCell): Context {
-  return { ...context, size: pt(contentFontSize(cell.layout, context.size / .75, Boolean(cell.rich))), italic: cell.layout.italic, underline: cell.layout.underline };
+  return { ...context, size: pt(contentFontSize(cell.layout, context.size / .75)), italic: cell.layout.italic, underline: cell.layout.underline };
 }
 
 function ContentRowPdf({ row, gap, context, sectionId, itemId }: { row: ContentCell[]; gap: number; context: Context; sectionId: string; itemId: string }) {

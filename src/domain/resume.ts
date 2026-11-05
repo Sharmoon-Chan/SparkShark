@@ -154,11 +154,22 @@ export function defaultAppearanceForTemplate(templateId: string): Appearance {
 }
 export function snapshotOf(resume: Resume): ResumeSnapshot { const { id: _id, createdAt: _created, updatedAt: _updated, revision: _revision, ...data } = structuredClone(resume); return data; }
 export function changeResume(resume: Resume, edit: (next: Resume) => void): Resume { const next = structuredClone(resume); edit(next); next.updatedAt = new Date().toISOString(); return next; }
+/** Older single-column resumes can still contain sidebar assignments. */
+export function layoutPageGroups(resume: Resume): Resume['layout']['groups'] {
+  return resume.layout.mode === 'double' ? resume.layout.groups : resume.layout.groups.map(group => ({ ...group, main: [...group.main, ...group.sidebar], sidebar: [] }));
+}
+export function setLayoutMode(resume: Resume, mode: Resume['layout']['mode']): Resume {
+  return changeResume(resume, next => {
+    next.layout.mode = mode;
+    next.layout.groups = layoutPageGroups(next);
+  });
+}
 export function moveSection(resume: Resume, id: string, pageId: string, column: Column, index: number): Resume {
   if (!resume.sections.some(section => section.id === id) || !resume.layout.groups.some(group => group.id === pageId)) throw new Error('移动目标不存在');
   return changeResume(resume, next => {
+    next.layout.groups = layoutPageGroups(next);
     next.layout.groups.forEach(group => { group.main = group.main.filter(value => value !== id); group.sidebar = group.sidebar.filter(value => value !== id); });
-    const target = next.layout.groups.find(group => group.id === pageId)![column];
+    const target = next.layout.groups.find(group => group.id === pageId)![next.layout.mode === 'single' ? 'main' : column];
     target.splice(Math.max(0, Math.min(index, target.length)), 0, id);
   });
 }
@@ -166,7 +177,13 @@ export function removePage(resume: Resume, pageId: string, targetId: string): Re
   if (pageId === targetId || resume.layout.groups.length === 1) throw new Error('请保留至少一个布局页');
   const page = resume.layout.groups.find(group => group.id === pageId), target = resume.layout.groups.find(group => group.id === targetId);
   if (!page || !target) throw new Error('接收页不存在');
-  return changeResume(resume, next => { const receiver = next.layout.groups.find(group => group.id === targetId)!; receiver.main.push(...page.main); receiver.sidebar.push(...page.sidebar); next.layout.groups = next.layout.groups.filter(group => group.id !== pageId); });
+  return changeResume(resume, next => {
+    next.layout.groups = layoutPageGroups(next);
+    const source = next.layout.groups.find(group => group.id === pageId)!;
+    const receiver = next.layout.groups.find(group => group.id === targetId)!;
+    receiver.main.push(...source.main); receiver.sidebar.push(...source.sidebar);
+    next.layout.groups = next.layout.groups.filter(group => group.id !== pageId);
+  });
 }
 export function applyTemplate(resume: Resume, templateId: string): Resume {
   const template = templateFor(templateId);

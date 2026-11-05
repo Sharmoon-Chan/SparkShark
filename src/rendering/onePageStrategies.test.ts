@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { createResume, newItem, parseResume, plainRich } from '../domain/resume';
-import { onePageLayoutCandidates, spacingCandidate } from './onePageStrategies';
+import { createResume, parseResume } from '../domain/resume';
+import { mergeOnePageGroups, spacingCandidate } from './onePageStrategies';
 
-describe('one-page column eligibility', () => {
+describe('one-page structure preservation', () => {
   it('keeps every spacing interpolation candidate schema-valid, including the minimum endpoint', () => {
     for (const scale of [undefined, 1, .9, .7, .45]) {
       const original = createResume(); if (scale !== undefined) original.appearance.spacingScale = scale;
@@ -15,16 +15,15 @@ describe('one-page column eligibility', () => {
       expect(spacingCandidate(original, 1).appearance.spacingScale).toBe(.45);
     }
   });
-  it('does not narrow a long dominant module just to create a sidebar', () => {
-    const resume = createResume(); resume.layout.mode = 'single';
-    resume.layout.groups[0].main.push(...resume.layout.groups[0].sidebar); resume.layout.groups[0].sidebar = [];
-    resume.sections.forEach(section => { section.visible = false; });
-    const work = resume.sections.find(section => section.kind === 'work')!;
-    if (work.kind === 'work') { work.visible = true; work.items = [{ ...newItem('work'), fields: { ...newItem('work').fields, company: '公司', summary: plainRich('长正文应保持充分阅读宽度。'.repeat(200)) } }]; }
-    for (const kind of ['skills', 'languages'] as const) {
-      const section = resume.sections.find(item => item.kind === kind)!;
-      if (section.kind === kind) { section.visible = true; section.items = [{ ...newItem(kind), fields: { ...newItem(kind).fields, name: kind } }]; }
+  it('merges breaks and tightens gaps without reallocating double-column modules or widths', () => {
+    const resume = createResume();
+    const before = structuredClone(resume);
+    const merged = mergeOnePageGroups(resume);
+    for (const amount of [0, .65, 1]) {
+      const candidate = spacingCandidate(merged, amount);
+      expect(candidate.layout).toEqual(resume.layout);
+      expect(candidate.appearance.columnGapPx).toBe(resume.appearance.columnGapPx);
     }
-    expect(onePageLayoutCandidates(resume).some(candidate => candidate.resume.layout.mode === 'double')).toBe(false);
+    expect(resume).toEqual(before);
   });
 });

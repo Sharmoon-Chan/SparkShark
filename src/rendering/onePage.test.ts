@@ -97,15 +97,23 @@ describe('smart one-page search', () => {
     expect(unchangedData(result.resume)).toEqual(unchangedData(original)); expect(() => parseResume(result.resume)).not.toThrow();
   });
 
-  it('uses actual PDF feedback to balance multiple modules before font reduction', async () => {
+  it.each(['single', 'double'] as const)('retains %s columns, module assignments and widths through every measurement', async mode => {
     const original = fitExample(), measured: Resume[] = [];
+    original.layout.mode = mode;
+    if (mode === 'double') {
+      const skill = original.sections.find(section => section.kind === 'skills')!;
+      original.layout.groups[0].main = original.layout.groups[0].main.filter(id => id !== skill.id);
+      original.layout.groups[0].sidebar = [skill.id];
+    }
     const result = await smartOnePage(original, async candidate => {
       measured.push(candidate);
-      const side = candidate.layout.groups[0].sidebar;
-      return { pages: candidate.layout.mode === 'double' && side.some(id => candidate.sections.find(section => section.id === id)?.visible) ? 1 : 2 };
+      return { pages: candidate.appearance.fontSizePx <= 13 ? 1 : 2 };
     });
-    expect(result.status).toBe('fit'); expect(result.resume.layout.mode).toBe('double');
-    expect(measured.every(candidate => candidate.appearance.fontSizePx === original.appearance.fontSizePx)).toBe(true);
+    expect(result.status).toBe('fit'); expect(result.resume.layout.mode).toBe(mode);
+    for (const candidate of measured) {
+      expect(candidate.layout).toEqual(original.layout);
+      expect(candidate.appearance.columnGapPx).toBe(original.appearance.columnGapPx);
+    }
     const placed = result.resume.layout.groups.flatMap(group => [...group.main, ...group.sidebar]);
     expect(new Set(placed).size).toBe(placed.length); expect(new Set(placed)).toEqual(new Set(original.sections.map(section => section.id)));
     expect(result.resume.appearance.templateId).toBe(original.appearance.templateId);

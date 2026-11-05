@@ -26,6 +26,7 @@ import { CloudStatus } from '../../cloud/CloudStatus';
 import { StorageChoice } from '../../cloud/AccountUI';
 import { accountScope, useCloud } from '../../cloud/account';
 import { saveChosenResumes, type StorageLocation } from '../../cloud/sync';
+import './editor-settings.css';
 
 export function Editor() {
   const { id = '' } = useParams(), navigate = useNavigate(), { mode, setMode } = useNavigation();

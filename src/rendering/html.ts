@@ -4,7 +4,7 @@ import { sectionTitle } from '../domain/registry';
 import { basicsView, compactItemView, inlineBasicsView, visiblePageGroups } from './viewModel';
 import { readableThemeColor } from './colors';
 import { resolveContentLayout } from '../domain/contentLayout';
-import { moduleContentRows, type ContentCell } from './contentLayoutView';
+import { contentFontSize, moduleContentRows, type ContentCell } from './contentLayoutView';
 import { avatarFrame } from '../domain/avatar';
 import { fontOptionFor } from '../domain/fonts';
 
@@ -49,7 +49,7 @@ function configuredSectionHtml(section: Section, resume: Resume): string {
   const cellHtml = (cell: ContentCell, inlineRow: boolean) => {
     const { layout } = cell;
     const natural = inlineRow && cell.spec.type !== 'level' && (layout.inline || layout.align === 'right');
-    const fontSize = layout.fontSizePx !== undefined ? `${layout.fontSizePx}px` : !cell.rich && layout.emphasis === 'muted' ? '.92em' : '1em';
+    const fontSize = `${contentFontSize(layout, resume.appearance.fontSizePx)}px`;
     const typography = `font-size:${fontSize};font-style:${layout.italic ? 'italic' : 'normal'};text-decoration:${layout.underline ? 'underline' : 'none'};`;
     const style = cell.rich ? `flex:1;min-width:0;${typography}` : `flex:${natural ? '0 1 auto' : '1'};min-width:0;max-width:100%;${natural && layout.align === 'right' ? 'margin-left:auto;' : ''}text-align:${layout.align};${typography}font-weight:${layout.emphasis === 'bold' ? 700 : 400};${layout.emphasis === 'muted' ? 'color:#59635d;' : ''}`;
     const levelStyle = `margin-left:${layout.align === 'left' ? '0' : 'auto'};margin-right:${layout.align === 'right' ? '0' : 'auto'}`;
