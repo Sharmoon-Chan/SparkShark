@@ -24,7 +24,7 @@ function ResumeCard({ row, trashed }: { row: StoredResume; trashed?: boolean }) 
   useEffect(() => {
     if (row.thumbnail && row.thumbnailRevision === row.revision) { setImage(row.thumbnail); return; }
     const controller = new AbortController();
-    void (async () => { try { const assets = await repository.assetsFor(row.resume).catch(() => ({})); const pdf = await renderPdf(row.resume, assets, controller.signal); const blob = await thumbnail(pdf.bytes); if (!controller.signal.aborted) { setImage(blob); await repository.setThumbnail(row.id, row.revision, blob); } } catch { if (!controller.signal.aborted) setImageError(true); } })();
+    void (async () => { try { const assets = await repository.assetsFor(row.resume).catch(() => ({})); const pdf = await renderPdf(row.resume, assets, controller.signal, { priority: 'background' }); const blob = await thumbnail(pdf.bytes, controller.signal); if (!controller.signal.aborted) { setImage(blob); await repository.setThumbnail(row.id, row.revision, blob); } } catch { if (!controller.signal.aborted) setImageError(true); } })();
     return () => controller.abort();
   }, [row.id, row.revision, row.thumbnailRevision]);
   const run = async (action: () => Promise<unknown>, message: string) => { setBusy(true); try { await action(); await useApp.getState().refresh(); useApp.getState().notify({ message }); } catch (error) { useApp.getState().notify({ message: error instanceof Error ? error.message : String(error), error: true }); } finally { setBusy(false); } };

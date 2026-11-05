@@ -1,0 +1,7 @@
+/fonts/compressed/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+/fonts/samples/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff

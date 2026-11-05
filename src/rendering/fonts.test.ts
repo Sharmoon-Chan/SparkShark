@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import manifest from '../../public/fonts/manifest.json';
 import { FONT_IDS, FONT_OPTIONS, fontOptionFor } from '../domain/fonts';
 import { createExample, parseResume, plainRich } from '../domain/resume';
-import { checkGlyphs, fontFamily } from './fonts';
+import { checkGlyphs, fontFamily, needsItalicFonts } from './fonts';
 
 describe('self-hosted resume font catalog', () => {
   it('offers only complete registered families with their licenses and four real faces', () => {
@@ -30,5 +30,21 @@ describe('self-hosted resume font catalog', () => {
   it('uses the existing sans family for unknown presentation lookups', () => {
     expect(fontFamily('missing-family')).toBe(manifest.families['noto-sans-sc'].family);
     expect(fontOptionFor('missing-family')).toBe(FONT_OPTIONS[0]);
+  });
+
+  it('loads oblique faces only when visible content uses italic', () => {
+    const resume = createExample();
+    expect(needsItalicFonts(resume)).toBe(false);
+    const summary = resume.sections.find(section => section.kind === 'summary')!;
+    if (summary.kind !== 'summary') throw new Error('Missing fixture summary');
+    summary.content = { type: 'doc', content: [{ type: 'paragraph', content: [{ type: 'text', text: '正文', marks: [{ type: 'italic' }] }] }] };
+    expect(needsItalicFonts(resume)).toBe(true);
+    summary.visible = false;
+    expect(needsItalicFonts(resume)).toBe(false);
+    summary.visible = true; summary.content = plainRich('正文');
+    summary.contentLayout = { rowGapPx: 0, itemGapPx: 0, fields: [{ key: 'summary', newLine: true, align: 'left', emphasis: 'normal', visible: true, italic: true }] };
+    expect(needsItalicFonts(resume)).toBe(true);
+    summary.contentLayout.fields[0].visible = false;
+    expect(needsItalicFonts(resume)).toBe(false);
   });
 });

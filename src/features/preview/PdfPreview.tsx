@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { CircleDot, Download, FileDown, GripVertical, LoaderCircle, Maximize2, Minus, Plus, RotateCcw } from 'lucide-react';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 import type { PreviewFieldDrop, PreviewFieldRegion, PreviewRegion, RenderResult } from '../../domain/types';
-import { loadPdf } from '../../rendering/client';
+import { openPdf } from '../../rendering/pdfRuntime';
 import { A4 } from '../../rendering/constants';
 import { Button, IconButton } from '../../components/ui';
 import { PreviewFieldDragProvider, PreviewFieldLayer } from './PreviewFieldLayer';
@@ -10,8 +10,10 @@ import './preview-interaction.css';
 
 const EMPTY_FIELDS: PreviewFieldRegion[] = [];
 
-function PdfPage({ pdf, index, zoom, regions, fields, activeTarget, onHover, onFocusTarget, onSelect }: { pdf: PDFDocumentProxy; index: number; zoom: number; regions: PreviewRegion[]; fields: readonly PreviewFieldRegion[]; activeTarget: string | null; onHover: (target: string | null) => void; onFocusTarget: (target: string | null) => void; onSelect?: (target: string) => void }) {
+function PdfPage({ pdf, index, zoom, regions, fields, activeTarget, onHover, onFocusTarget, onSelect, onRendered, onError }: { pdf: PDFDocumentProxy; index: number; zoom: number; regions: PreviewRegion[]; fields: readonly PreviewFieldRegion[]; activeTarget: string | null; onHover: (target: string | null) => void; onFocusTarget: (target: string | null) => void; onSelect?: (target: string) => void; onRendered?: () => void; onError?: (message: string) => void }) {
   const canvas = useRef<HTMLCanvasElement>(null), [links, setLinks] = useState<{ rect: number[]; url: string }[]>([]);
+  const errorCallback = useRef(onError); errorCallback.current = onError;
+  const renderedCallback = useRef(onRendered); renderedCallback.current = onRendered;
   const scale = zoom * 96 / 72;
   useEffect(() => {
     let render: { cancel: () => void } | undefined; let cancelled = false;
@@ -23,10 +25,10 @@ function PdfPage({ pdf, index, zoom, regions, fields, activeTarget, onHover, onF
       canvas.current.width = Math.ceil(viewport.width * ratio); canvas.current.height = Math.ceil(viewport.height * ratio);
       const task = page.render({ canvas: canvas.current, viewport: page.getViewport({ scale: zoom * ratio * 96 / 72 }) }); render = task;
       await task.promise;
-      if (!cancelled && canvas.current) canvas.current.dataset.rendered = 'true';
+      if (!cancelled && canvas.current) { canvas.current.dataset.rendered = 'true'; renderedCallback.current?.(); }
       const annotations = await page.getAnnotations();
       if (!cancelled) setLinks(annotations.filter(a => a.subtype === 'Link' && a.url).map(a => { const t = viewport.transform; const point = (x: number, y: number) => [t[0] * x + t[2] * y + t[4], t[1] * x + t[3] * y + t[5]]; return { rect: [...point(a.rect[0], a.rect[1]), ...point(a.rect[2], a.rect[3])], url: a.url as string }; }));
-    }).catch(() => undefined);
+    }).catch(error => { if (!cancelled) errorCallback.current?.(error instanceof Error ? error.message : String(error)); });
     return () => { cancelled = true; render?.cancel(); };
   }, [pdf, index, zoom]);
   return <div className="pdf-paper" style={{ width: A4.width * scale, height: A4.height * scale }} data-page={index + 1} onPointerMove={event => { if (!onSelect) return; const box = event.currentTarget.getBoundingClientRect(); const x = (event.clientX - box.left) / scale, y = (event.clientY - box.top) / scale; onHover(regions.find(region => x >= region.x && x <= region.x + region.width && y >= region.y && y <= region.y + region.height)?.target ?? null); }} onPointerLeave={() => onHover(null)}>
@@ -36,10 +38,15 @@ function PdfPage({ pdf, index, zoom, regions, fields, activeTarget, onHover, onF
     <PreviewFieldLayer fields={fields} page={index + 1} scale={scale} />
   </div>;
 }
-export function PdfPreview({ result, pending, error, warnings = [], onRetry, onPdf, onPng, onFit, fitting, fitProgress, onUndoFit, exporting, onSectionSelect, onFieldDrop, title = '实时预览' }: { result: RenderResult | null; pending: boolean; error: string | null; warnings?: string[]; onRetry: () => void; onPdf?: () => void; onPng?: () => void; onFit?: () => void; fitting?: boolean; fitProgress?: string; onUndoFit?: () => void; exporting?: boolean; onSectionSelect?: (target: string) => void; onFieldDrop?: (drop: PreviewFieldDrop) => void; title?: string }) {
+export function PdfPreview({ result, pending: rendering, error, warnings = [], onRetry, onPdf, onPng, onFit, fitting, fitProgress, onUndoFit, exporting, onSectionSelect, onFieldDrop, onReady, title = '实时预览' }: { result: RenderResult | null; pending: boolean; error: string | null; warnings?: string[]; onRetry: () => void; onPdf?: () => void; onPng?: () => void; onFit?: () => void; fitting?: boolean; fitProgress?: string; onUndoFit?: () => void; exporting?: boolean; onSectionSelect?: (target: string) => void; onFieldDrop?: (drop: PreviewFieldDrop) => void; onReady?: (key: string) => void; title?: string }) {
   const container = useRef<HTMLDivElement>(null), [width, setWidth] = useState(650), [loadedPdf, setLoadedPdf] = useState<{ document: PDFDocumentProxy; result: RenderResult } | null>(null);
   const [hoveredTarget, setHoveredTarget] = useState<string | null>(null), [focusedTarget, setFocusedTarget] = useState<string | null>(null);
   const [fieldMode, setFieldMode] = useState(false);
+  const [paintedKey, setPaintedKey] = useState('');
+  const [displayError, setDisplayError] = useState<string | null>(null), [displayRetry, setDisplayRetry] = useState(0);
+  const visibleError = error ?? displayError;
+  const retryDisplay = () => { setDisplayError(null); setDisplayRetry(value => value + 1); onRetry(); };
+  const pending = rendering || Boolean(result && result.key !== paintedKey);
   const pdf = loadedPdf?.document;
   const fields = loadedPdf?.result.fields ?? EMPTY_FIELDS;
   const interactive = !pending && result?.key === loadedPdf?.result.key;
@@ -48,16 +55,18 @@ export function PdfPreview({ result, pending, error, warnings = [], onRetry, onP
   const zoom = manual ?? fitZoom;
   useEffect(() => { const element = container.current; if (!element) return; const observer = new ResizeObserver(entries => { const w = entries[0].contentRect.width; if (w > 0) setWidth(w); }); observer.observe(element); return () => observer.disconnect(); }, []);
   useEffect(() => {
-    if (!result) return; let destroyed = false; let document: PDFDocumentProxy | undefined;
-    loadPdf(result.bytes).then(value => { document = value; if (!destroyed) { setLoadedPdf({ document: value, result }); setHoveredTarget(null); setFocusedTarget(null); } else void value.loadingTask.destroy(); }).catch(() => undefined);
-    return () => { destroyed = true; if (document) void document.loadingTask.destroy(); };
-  }, [result]);
+    if (!result) return; let destroyed = false;
+    setDisplayError(null);
+    const loading = openPdf(result.bytes);
+    loading.promise.then(value => { if (!destroyed) { setLoadedPdf({ document: value, result }); setHoveredTarget(null); setFocusedTarget(null); } }).catch(error => { if (!destroyed) setDisplayError(error instanceof Error ? error.message : String(error)); });
+    return () => { destroyed = true; void loading.destroy().catch(() => undefined); };
+  }, [result, displayRetry]);
   return <section className="preview" aria-label="简历预览"><div className="preview-heading"><span>{title}</span><div className="preview-layout-controls">{onFieldDrop && <button type="button" className="preview-layout-toggle" aria-label="拖动布局" aria-pressed={fieldMode} disabled={!pdf || pending} onClick={() => { setFieldMode(value => !value); setHoveredTarget(null); setFocusedTarget(null); }}><GripVertical size={13} />拖动布局</button>}<span>{result ? `${result.pages} 页 · A4` : 'A4'}</span></div></div>{fieldMode && onFieldDrop && <div className="preview-layout-help" role="status">{fields.length ? '拖动文字到另一字段的左右可同行，上下可换行；点击字段也可选择位置。' : '当前没有可拖动字段，请先填写模块内容。'}</div>}<div className="preview-scroll" ref={container}>
     {warnings.length > 0 && <div className="preview-notice" role="status"><strong>部分内容待核对</strong><p>{warnings.slice(0, 3).join('；')}{warnings.length > 3 ? `等 ${warnings.length} 个字段` : ''}含有 PDF 校对标记。预览以“?”显示，请在内容编辑中对照原文补齐。</p></div>}
-    {error && <div className="preview-error" role="alert"><strong>预览暂未生成</strong><p>{error}</p><Button secondary onClick={onRetry}>重新生成</Button></div>}
+    {visibleError && <div className="preview-error" role="alert"><strong>预览暂未生成</strong><p>{visibleError}</p><Button secondary onClick={retryDisplay}>重新生成</Button></div>}
     {!pdf && <div className="pdf-paper placeholder"><div className="preview-placeholder">{pending ? <><LoaderCircle className="spin" size={24} /><span>正在排版简历</span><small>首次载入中文字体可能需要一些时间</small></> : <span>在左侧填写内容，预览会自动更新</span>}</div></div>}
     {fitting && <div className="preview-fit-status" role="status"><LoaderCircle size={14} className="spin" /><span>{fitProgress || '正在智能排版'}</span></div>}
-    {pdf && <PreviewFieldDragProvider enabled={fieldMode && interactive && !fitting && Boolean(onFieldDrop)} fields={fields} scale={zoom * 96 / 72} scrollContainer={container} onDrop={onFieldDrop}><div className={`pdf-pages ${pending ? 'updating' : ''}`} style={{ minWidth: A4.width * 96 / 72 * zoom + 56 }}>{Array.from({ length: pdf.numPages }, (_, index) => <PdfPage key={`${loadedPdf?.result.key}-${index}`} pdf={pdf} index={index} zoom={zoom} regions={(loadedPdf?.result.regions ?? []).filter(region => region.target !== 'basics' && region.page === index + 1)} fields={fields.filter(field => field.page === index + 1)} activeTarget={hoveredTarget ?? focusedTarget} onHover={setHoveredTarget} onFocusTarget={setFocusedTarget} onSelect={interactive && !fieldMode && !fitting ? onSectionSelect : undefined} />)}</div></PreviewFieldDragProvider>}
+    {pdf && <PreviewFieldDragProvider enabled={fieldMode && interactive && !fitting && Boolean(onFieldDrop)} fields={fields} scale={zoom * 96 / 72} scrollContainer={container} onDrop={onFieldDrop}><div className={`pdf-pages ${pending ? 'updating' : ''}`} style={{ minWidth: A4.width * 96 / 72 * zoom + 56 }}>{Array.from({ length: pdf.numPages }, (_, index) => <PdfPage onError={setDisplayError} onRendered={index === 0 ? () => { const key = loadedPdf!.result.key; setPaintedKey(key); onReady?.(key); } : undefined} key={`${loadedPdf?.result.key}-${index}`} pdf={pdf} index={index} zoom={zoom} regions={(loadedPdf?.result.regions ?? []).filter(region => region.target !== 'basics' && region.page === index + 1)} fields={fields.filter(field => field.page === index + 1)} activeTarget={hoveredTarget ?? focusedTarget} onHover={setHoveredTarget} onFocusTarget={setFocusedTarget} onSelect={interactive && !fieldMode && !fitting ? onSectionSelect : undefined} />)}</div></PreviewFieldDragProvider>}
     {pdf && pending && <div className="preview-updating" role="status"><LoaderCircle size={13} className="spin" />预览更新中</div>}
   </div><div className="preview-toolbar"><div className="zoom-controls"><IconButton label="缩小预览" onClick={() => setManual(Math.max(.15, zoom - .1))}><Minus size={16} /></IconButton><select aria-label="预览缩放" value={manual === null ? 'fit' : String(Math.round(manual * 100))} onChange={event => setManual(event.target.value === 'fit' ? null : Number(event.target.value) / 100)}><option value="fit">适应宽度</option>{[30, 50, 70, 75, 100, 125, 150, 200].map(value => <option key={value} value={value}>{value}%</option>)}{manual !== null && ![30, 50, 70, 75, 100, 125, 150, 200].includes(Math.round(manual * 100)) && <option value={Math.round(manual * 100)}>{Math.round(manual * 100)}%</option>}</select><IconButton label="放大预览" onClick={() => setManual(Math.min(2, zoom + .1))}><Plus size={16} /></IconButton></div><div className="toolbar-divider" /><IconButton label="适应宽度" onClick={() => setManual(null)}><Maximize2 size={16} /></IconButton><IconButton label="回到第一页并居中" onClick={() => container.current?.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}><CircleDot size={16} /></IconButton>
     {onFit && <><div className="toolbar-divider" /><IconButton label={fitting ? '取消智能一页' : '智能一页'} title={fitting ? '取消智能一页' : '智能一页：多页自动收紧，不满一页自动铺满'} disabled={!fitting && (!pdf || pending || exporting)} onClick={onFit}>{fitting ? <LoaderCircle size={16} className="spin" /> : <FileDown size={16} />}</IconButton></>}

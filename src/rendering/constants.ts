@@ -1,3 +1,3 @@
 export const A4 = { width: 595.2756, height: 841.8898 };
 export const pt = (px: number) => px * .75;
-export const RENDER_VERSION = 'expanded-templates-and-fonts-16';
+export const RENDER_VERSION = 'priority-preview-and-font-delivery-17';

@@ -111,3 +111,5 @@ HTML 下载包含可见内容、样式和裁剪后的头像，可离线打开，
 字段排列与保存、导出检查见 [模块内部排版](docs/module-content-layout.md)。
 
 直接拖动字段的操作与核验见 [预览拖动字段](docs/preview-field-drag.md)。
+
+导入、首次预览和模板切换的优化过程、字体压缩与测量边界见 [性能优化记录](docs/preview-performance.md)，结构化结果见 [量化记录](docs/measurements/preview-performance-2026-11-05.json)。

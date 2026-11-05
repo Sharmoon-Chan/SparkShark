@@ -8,10 +8,14 @@ const scope = self as unknown as { onmessage: ((event: MessageEvent) => void) | 
 (globalThis as unknown as { Buffer: typeof Buffer }).Buffer = Buffer;
 const renderer = import('../rendering/pdf');
 let queue = Promise.resolve();
+const controllers = new Map<string, AbortController>();
 scope.onmessage = event => {
+  if (event.data.cancel) { controllers.get(event.data.cancel)?.abort(); return; }
   const { id, resume, assets, fontBase } = event.data as { id: string; resume: Resume; assets: Record<string, PreparedAsset>; fontBase: string };
+  const controller = new AbortController(); controllers.set(id, controller);
   queue = queue.then(async () => {
-    try { const { renderResume } = await renderer; const result = await renderResume(resume, assets, fontBase); scope.postMessage({ id, ...result }, [result.bytes.buffer as ArrayBuffer]); }
+    try { const { renderResume } = await renderer; const result = await renderResume(resume, assets, fontBase, undefined, controller.signal); scope.postMessage({ id, ...result }, [result.bytes.buffer as ArrayBuffer]); }
     catch (error) { scope.postMessage({ id, error: error instanceof Error ? error.message : String(error) }); }
+    finally { controllers.delete(id); }
   });
 };

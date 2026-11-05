@@ -1,4 +1,5 @@
 import type { PDFPageProxy } from 'pdfjs-dist';
+import type { PDFDict as PdfResourceDictionary } from 'pdf-lib';
 import { openPdf, pdfjs } from '../../rendering/pdfRuntime';
 import { candidateFromPdf, pdfTextSize, type PdfCandidate, type PdfPageText, type PdfSpan } from './pdfLayout';
 
@@ -9,6 +10,46 @@ const identity = () => [1, 0, 0, 1, 0, 0];
 function multiply(a: Matrix, b: Matrix): Matrix { return [a[0] * b[0] + a[2] * b[1], a[1] * b[0] + a[3] * b[1], a[0] * b[2] + a[2] * b[3], a[1] * b[2] + a[3] * b[3], a[0] * b[4] + a[2] * b[5] + a[4], a[1] * b[4] + a[3] * b[5] + a[5]]; }
 function point(matrix: Matrix, x: number, y: number) { return [matrix[0] * x + matrix[2] * y + matrix[4], matrix[1] * x + matrix[3] * y + matrix[5]]; }
 function abortIfNeeded(signal?: AbortSignal) { if (signal?.aborted) throw new DOMException('读取已取消', 'AbortError'); }
+
+// Text extraction does not require font outlines or image decoding. Inspect the
+// first page's resources before requesting its expensive display operator list.
+export async function mayHavePhoto(bytes: Uint8Array): Promise<boolean> {
+  try {
+    const { PDFDocument, PDFArray, PDFDict, PDFName, PDFRawStream, decodePDFRawStream } = await import('pdf-lib');
+    const pdf = await PDFDocument.load(bytes, { updateMetadata: false });
+    const first = pdf.getPages()[0];
+    if (!first) return false;
+    const annotations = first.node.Annots();
+    for (let i = 0; i < (annotations?.size() ?? 0); i++) {
+      const annotation = annotations!.lookup(i, PDFDict);
+      if (annotation.has(PDFName.of('AP'))) return true;
+    }
+    const visited = new Set<object>();
+    const inspect = (contents: unknown, resources: PdfResourceDictionary | undefined, depth = 0): boolean => {
+      if (depth > 16) return true;
+      const object = pdf.context.lookup(contents as Parameters<typeof pdf.context.lookup>[0]);
+      if (object instanceof PDFArray) {
+        for (let i = 0; i < object.size(); i++) if (inspect(object.get(i), undefined, depth + 1)) return true;
+      } else if (object instanceof PDFRawStream) {
+        // Inline images have no XObject resource. Unknown filters fall back to
+        // PDF.js rather than incorrectly declaring an image-free page.
+        const data = decodePDFRawStream(object).decode();
+        if (/(?:^|\s)BI\s/.test(new TextDecoder('latin1').decode(data))) return true;
+      }
+      const xobjects = resources?.lookupMaybe(PDFName.of('XObject'), PDFDict);
+      for (const name of xobjects?.keys() ?? []) {
+        const entry = xobjects!.lookup(name);
+        if (!(entry instanceof PDFRawStream) || visited.has(entry)) continue;
+        visited.add(entry);
+        const subtype = entry.dict.lookupMaybe(PDFName.of('Subtype'), PDFName);
+        if (subtype === PDFName.of('Image')) return true;
+        if (subtype === PDFName.of('Form') && inspect(entry, entry.dict.lookupMaybe(PDFName.of('Resources'), PDFDict) ?? resources, depth + 1)) return true;
+      }
+      return false;
+    };
+    return inspect(first.node.Contents(), first.node.Resources());
+  } catch { return true; }
+}
 
 async function detectPhoto(page: PDFPageProxy, signal?: AbortSignal): Promise<ImportedPhoto | null> {
   abortIfNeeded(signal);
@@ -32,15 +73,14 @@ async function detectPhoto(page: PDFPageProxy, signal?: AbortSignal): Promise<Im
   if (!best) return null;
   abortIfNeeded(signal);
   const canvas = document.createElement('canvas'), scale = Math.min(3, 2400 / Math.max(viewport.width, viewport.height)); const full = page.getViewport({ scale });
-  canvas.width = Math.ceil(full.width); canvas.height = Math.ceil(full.height);
-  const task = page.render({ canvas, viewport: full }); const cancel = () => task.cancel(); signal?.addEventListener('abort', cancel, { once: true });
+  canvas.width = Math.max(1, Math.round(best.width * scale)); canvas.height = Math.max(1, Math.round(best.height * scale));
+  const width = canvas.width, height = canvas.height;
+  const task = page.render({ canvas, viewport: full, transform: [1, 0, 0, 1, -best.x * scale, -best.y * scale] }); const cancel = () => task.cancel(); signal?.addEventListener('abort', cancel, { once: true });
   try { await task.promise; } finally { signal?.removeEventListener('abort', cancel); }
   abortIfNeeded(signal);
-  const crop = document.createElement('canvas'); crop.width = Math.max(1, Math.round(best.width * scale)); crop.height = Math.max(1, Math.round(best.height * scale));
-  crop.getContext('2d')!.drawImage(canvas, best.x * scale, best.y * scale, best.width * scale, best.height * scale, 0, 0, crop.width, crop.height);
-  const blob = await new Promise<Blob | null>(resolve => crop.toBlob(resolve, 'image/png'));
+  const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/png'));
   canvas.width = 0; canvas.height = 0;
-  return blob ? { blob, width: crop.width, height: crop.height } : null;
+  return blob ? { blob, width, height } : null;
 }
 
 export async function readPdfResume(file: File, options: { signal?: AbortSignal; onProgress?: (page: number, total: number) => void } = {}): Promise<PdfImportResult> {
@@ -56,20 +96,17 @@ export async function readPdfResume(file: File, options: { signal?: AbortSignal;
     for (let number = 1; number <= pdf.numPages; number++) {
       abortIfNeeded(options.signal); options.onProgress?.(number, pdf.numPages);
       const page = await pdf.getPage(number), viewport = page.getViewport({ scale: 1 });
-      const text = await page.getTextContent({ disableNormalization: true });
-      const annotations = await page.getAnnotations();
+      const [text, annotations] = await Promise.all([page.getTextContent({ disableNormalization: true }), page.getAnnotations()]);
       const links = annotations.filter(annotation => annotation.subtype === 'Link' && annotation.url).map(annotation => { const a = point(viewport.transform, annotation.rect[0], annotation.rect[1]), b = point(viewport.transform, annotation.rect[2], annotation.rect[3]); return { url: annotation.url as string, left: Math.min(a[0], b[0]), right: Math.max(a[0], b[0]), top: Math.min(a[1], b[1]), bottom: Math.max(a[1], b[1]) }; });
-      // Loading the operator list also makes available readable embedded-font
-      // names used to identify titles, while all processing stays local.
-      await page.getOperatorList();
+      // PDF.js does not export font.name with its default options. Rendering
+      // every page merely to read that absent property delayed text-only import.
       const spans: PdfSpan[] = [];
       for (const item of text.items) {
         if (!('str' in item) || !item.str.trim()) continue;
         const transformed = multiply(viewport.transform, item.transform), height = Math.max(item.height, Math.hypot(transformed[2], transformed[3]), 1);
         const x = transformed[4], y = transformed[5];
-        const font = page.commonObjs.has(item.fontName) ? page.commonObjs.get(item.fontName) as { name?: string } : null;
         const url = links.find(link => x + item.width / 2 >= link.left - 2 && x + item.width / 2 <= link.right + 2 && y - height * .35 >= link.top - 3 && y - height * .35 <= link.bottom + 3)?.url;
-        spans.push({ text: item.str.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, '�'), x, y, width: item.width, height, page: number, bold: /bold|black|heavy|semibold/i.test(font?.name ?? text.styles[item.fontName]?.fontFamily ?? ''), ...(url ? { url } : {}) });
+        spans.push({ text: item.str.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, '�'), x, y, width: item.width, height, page: number, bold: /bold|black|heavy|semibold/i.test(text.styles[item.fontName]?.fontFamily ?? ''), ...(url ? { url } : {}) });
       }
       pages.push({ number, width: viewport.width, height: viewport.height, spans });
     }
@@ -77,7 +114,7 @@ export async function readPdfResume(file: File, options: { signal?: AbortSignal;
     if (pdfTextSize(candidate) < 8) throw new Error('没有读取到可编辑文字。这可能是扫描件或图片型 PDF；请使用带文字的 PDF，或粘贴简历正文。');
     if (candidate.sourceText.length > 1_000_000) throw new Error('PDF 文字内容过多，请使用较短的简历文件');
     let photo: ImportedPhoto | null = null;
-    try { photo = await detectPhoto(await pdf.getPage(1), options.signal); }
+    try { if (await mayHavePhoto(bytes)) photo = await detectPhoto(await pdf.getPage(1), options.signal); }
     catch { if (!options.signal?.aborted) candidate.warnings.push({ kind: 'image', message: '照片未能自动提取，导入后可以重新选择照片。' }); }
     abortIfNeeded(options.signal);
     return { candidate, bytes, photo };

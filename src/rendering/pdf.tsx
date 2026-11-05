@@ -4,7 +4,7 @@ import { PDFArray, PDFDict, PDFDocument, PDFHexString, PDFName, PDFString, Stand
 import type { CustomSection, PreparedAsset, PreviewFieldRegion, PreviewRegion, Resume, ResumeItem, RichNode, Section } from '../domain/types';
 import { hasContent, richText, safeLink } from '../domain/resume';
 import { sectionTitle } from '../domain/registry';
-import { checkGlyphs, fontFamily, registerFonts } from './fonts';
+import { checkGlyphs, fontFamily, prepareFonts } from './fonts';
 import { basicsView, compactItemView, inlineBasicsView, primaryKeyFor, visiblePageGroups } from './viewModel';
 import { preparePdfImportMarkers } from './importMarkers';
 import { extractPreviewRegions, type PreviewLayoutNode } from './previewRegions';
@@ -270,10 +270,16 @@ function copyLinks(source: ReturnType<PDFDocument['getPages']>[number], destinat
 }
 function color(hex: string) { return rgb(parseInt(hex.slice(1, 3), 16) / 255, parseInt(hex.slice(3, 5), 16) / 255, parseInt(hex.slice(5, 7), 16) / 255); }
 
-export async function renderResume(resume: Resume, assets: PdfAssetMap = {}, fontBase = '/fonts', profile?: (stage: string, ms: number) => void): Promise<{ bytes: Uint8Array; pages: number; regions: PreviewRegion[]; fields: PreviewFieldRegion[] }> {
+export async function renderResume(resume: Resume, assets: PdfAssetMap = {}, fontBase = '/fonts', profile?: (stage: string, ms: number) => void, signal?: AbortSignal): Promise<{ bytes: Uint8Array; pages: number; regions: PreviewRegion[]; fields: PreviewFieldRegion[] }> {
+  const checkpoint = async () => {
+    // Yield to worker cancellation messages between the expensive PDF stages.
+    if (signal) await new Promise<void>(resolve => setTimeout(resolve, 0));
+    if (signal?.aborted) throw new DOMException('操作已取消', 'AbortError');
+  };
+  await checkpoint();
   let stageStart = performance.now();
   const prepared = preparePdfImportMarkers(resume); resume = prepared.resume;
-  registerFonts(fontBase); checkGlyphs(resume);
+  checkGlyphs(resume); await prepareFonts(resume, fontBase, signal);
   profile?.('font-check', performance.now() - stageStart);
   const context = makeContext(resume, prepared.blockedLinks), margin = pt(resume.appearance.marginPx);
   const footerY = Math.max(pt(32), margin / 2);
@@ -291,6 +297,7 @@ export async function renderResume(resume: Resume, assets: PdfAssetMap = {}, fon
   stageStart = performance.now();
   const header = hasBasics ? await renderDocument(<Document><Page size="A4" style={{ ...baseStyle, padding: margin, paddingBottom: margin + footer }}><BasicsPdf resume={resume} assets={assets} context={context} /></Page></Document>) : null;
   profile?.('header', performance.now() - stageStart);
+  await checkpoint();
   const headerHeight = header?.layout?.children?.[0]?.children?.[0]?.box?.height ?? 0;
   const headerSeparate = Boolean(header && (header.document.getPageCount() > 1 || headerHeight > availableHeight - context.size * context.line * 4));
   if (header) regions.push(...extractPreviewRegions(header.layout, { labels, clipWidth: A4.width, clipHeight: A4.height }));
@@ -310,6 +317,7 @@ export async function renderResume(resume: Resume, assets: PdfAssetMap = {}, fon
       const columnContext = { ...context, width, height: availableHeight };
       const result = await renderDocument(<Document><Page size={{ width, height: availableHeight }} style={baseStyle}>{reserve > 0 && <View style={{ height: reserve, flexShrink: 0 }} />}{sections.map((section, index) => <SectionPdf key={section.id} section={section} context={columnContext} last={index === sections.length - 1} />)}</Page></Document>);
       profile?.('column', performance.now() - start);
+      await checkpoint();
       return result;
     };
     const main = await makeColumn(isDouble ? group.main : [...group.main, ...group.sidebar], mainWidth);
@@ -339,5 +347,6 @@ export async function renderResume(resume: Resume, assets: PdfAssetMap = {}, fon
     const footerFont = await output.embedFont(StandardFonts.Helvetica);
     output.getPages().forEach((page, index) => { const label = String(index + 1); if (templateDesign(resume.appearance.templateId).classic) page.drawLine({ start: { x: margin, y: footerY + 11 }, end: { x: A4.width - margin, y: footerY + 11 }, thickness: .7, color: color(tint(context.theme, .7)) }); page.drawText(label, { font: footerFont, size: 8, x: (A4.width - footerFont.widthOfTextAtSize(label, 8)) / 2, y: footerY, color: rgb(.4, .45, .42) }); });
   }
+  await checkpoint();
   return { bytes: await output.save(), pages: output.getPageCount(), regions, fields };
 }

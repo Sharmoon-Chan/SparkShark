@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Check, CircleAlert, LoaderCircle, RotateCcw } from 'lucide-react';
 import type { Asset, Resume } from '../../domain/types';
 import { TEMPLATES } from '../../domain/registry';
@@ -12,10 +12,17 @@ type TemplateFilter = 'all' | 'single' | 'double';
 type Preview = { status: 'queued' | 'loading' | 'ready' | 'error'; image?: Blob; error?: string };
 type PreviewState = { signature: string; previews: Record<string, Preview> };
 
-function TemplateCard({ template, selected, preview, onSelect }: { template: typeof TEMPLATES[number]; selected: boolean; preview?: Preview; onSelect: () => void }) {
+function TemplateCard({ template, selected, preview, onSelect, onVisibility }: { template: typeof TEMPLATES[number]; selected: boolean; preview?: Preview; onSelect: () => void; onVisibility: (id: string, visible: boolean) => void }) {
+  const card = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!card.current) return;
+    const observer = new IntersectionObserver(entries => onVisibility(template.id, entries[0].isIntersecting), { rootMargin: '80px' });
+    observer.observe(card.current);
+    return () => { observer.disconnect(); onVisibility(template.id, false); };
+  }, [template.id, onVisibility]);
   const url = useObjectUrl(preview?.image);
   const failed = preview?.status === 'error';
-  return <button type="button" className={`template-card ${selected ? 'selected' : ''}`} onClick={onSelect} aria-label={`应用${template.name}模板`} aria-pressed={selected} title={failed ? preview.error : undefined}>
+  return <button ref={card} type="button" className={`template-card ${selected ? 'selected' : ''}`} onClick={onSelect} aria-label={`应用${template.name}模板`} aria-pressed={selected} title={failed ? preview.error : undefined}>
     <div className="template-paper">
       {url ? <img src={url} alt={`${template.name}模板的当前简历预览`} loading="lazy" decoding="async" /> : <div className={`template-loading ${failed ? 'template-preview-error' : ''}`}>
         {failed ? <CircleAlert size={20} aria-hidden="true" /> : <LoaderCircle size={20} className={preview?.status === 'loading' ? 'spin' : ''} aria-hidden="true" />}
@@ -29,13 +36,20 @@ function TemplateCard({ template, selected, preview, onSelect }: { template: typ
   </button>;
 }
 
-export function Templates({ resume, assets }: { resume: Resume; assets: Record<string, Asset> }) {
+export function Templates({ resume, assets, paused = false }: { resume: Resume; assets: Record<string, Asset>; paused?: boolean }) {
   const update = useApp(state => state.update);
   const [filter, setFilter] = useState<TemplateFilter>('all');
   const [retry, setRetry] = useState(0);
   const [state, setState] = useState<PreviewState>({ signature: '', previews: {} });
   const imageCache = useRef(new Map<string, Blob>());
   const previousAssets = useRef(assets);
+  const activeController = useRef<AbortController | null>(null);
+  const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
+  const onVisibility = useCallback((id: string, visible: boolean) => setVisibleIds(previous => {
+    if (previous.has(id) === visible) return previous;
+    const next = new Set(previous); if (visible) next.add(id); else next.delete(id); return next;
+  }), []);
+  const visibilityKey = [...visibleIds].sort().join(',');
   const priority = useRef({ filter, selected: resume.appearance.templateId });
   priority.current = { filter, selected: resume.appearance.templateId };
 
@@ -48,18 +62,20 @@ export function Templates({ resume, assets }: { resume: Resume; assets: Record<s
 
   useEffect(() => {
     const controller = new AbortController();
+    activeController.current = controller;
     if (previousAssets.current !== assets) { imageCache.current.clear(); previousAssets.current = assets; }
     const initial: Record<string, Preview> = {};
     const pending = candidates.filter(candidate => {
       const image = imageCache.current.get(candidate.key);
       initial[candidate.template.id] = image ? { status: 'ready', image } : { status: 'queued' };
-      return !image;
+      return !image && (candidate.template.id === resume.appearance.templateId || (visibleIds.has(candidate.template.id) && (filter === 'all' || candidate.template.mode === filter)));
     });
     setState({ signature, previews: initial });
+    if (paused) return () => controller.abort();
     const setPreview = (id: string, preview: Preview) => {
       if (!controller.signal.aborted) setState(previous => ({ ...previous, previews: { ...previous.previews, [id]: preview } }));
     };
-    void (async () => {
+    const timer = window.setTimeout(() => { void (async () => {
       while (pending.length && !controller.signal.aborted) {
         // Prioritize the selected card and whichever filter is currently visible.
         const selected = pending.findIndex(candidate => candidate.template.id === priority.current.selected);
@@ -68,9 +84,9 @@ export function Templates({ resume, assets }: { resume: Resume; assets: Record<s
         const { template, key } = candidate;
         setPreview(template.id, { status: 'loading' });
         try {
-          const result = await renderPdf(candidate.resume, assets, controller.signal);
+          const result = await renderPdf(candidate.resume, assets, controller.signal, { priority: 'background' });
           if (controller.signal.aborted) break;
-          const image = await thumbnail(result.bytes);
+          const image = await thumbnail(result.bytes, controller.signal);
           if (controller.signal.aborted) break;
           imageCache.current.set(key, image);
           // Retain recent complete sets so switching templates can reuse their real previews.
@@ -81,9 +97,9 @@ export function Templates({ resume, assets }: { resume: Resume; assets: Record<s
           setPreview(template.id, { status: 'error', error: error instanceof Error ? error.message : String(error) });
         }
       }
-    })();
-    return () => controller.abort();
-  }, [signature, assets, retry]);
+    })(); }, 120);
+    return () => { window.clearTimeout(timer); controller.abort(); };
+  }, [signature, assets, retry, visibilityKey, filter, paused, resume.appearance.templateId]);
 
   const previews = state.signature === signature ? state.previews : {};
   const visible = TEMPLATES.filter(template => filter === 'all' || template.mode === filter);
@@ -104,10 +120,10 @@ export function Templates({ resume, assets }: { resume: Resume; assets: Record<s
     <div className="segmented template-filters" role="group" aria-label="按栏数筛选模板">{filters.map(item => <button type="button" key={item.id} className={filter === item.id ? 'active' : ''} aria-pressed={filter === item.id} onClick={() => setFilter(item.id)}>{item.label}<span className="template-filter-count">{item.count}</span></button>)}</div>
     <div className="template-preview-status" role="status" aria-live="polite">
       <span>{pending ? `预览已生成 ${ready} / ${visible.length}` : failed.length ? `${ready} 款预览可用` : `${visible.length} 款模板可选`}</span>
-      {pending > 0 && <small>可在生成过程中选择模板</small>}
+      {pending > 0 && <small>{paused ? '正在更新当前简历' : '滚动时按需生成，可直接选择模板'}</small>}
     </div>
     {failed.length > 0 && <div className="template-error-notice"><div><CircleAlert size={14} aria-hidden="true" /><span>{failed.length} 款预览生成失败，可重试。{!pending && failed[0] && <small>{previews[failed[0].id]?.error}</small>}</span></div><button type="button" className="text-button" onClick={() => setRetry(value => value + 1)}><RotateCcw size={13} aria-hidden="true" />重试预览</button></div>}
-    <div className="template-grid">{visible.map(template => <TemplateCard key={template.id} template={template} preview={previews[template.id]} selected={resume.appearance.templateId === template.id} onSelect={() => update(next => Object.assign(next, applyTemplate(next, template.id)))} />)}</div>
+    <div className="template-grid">{visible.map(template => <TemplateCard key={template.id} template={template} preview={previews[template.id]} selected={resume.appearance.templateId === template.id} onVisibility={onVisibility} onSelect={() => { if (resume.appearance.templateId === template.id) return; activeController.current?.abort(); update(next => Object.assign(next, applyTemplate(next, template.id))); }} />)}</div>
     <p className="helper-text">预览使用当前简历内容。模板会应用对应的字体、配色与分栏，之后可在页面设置中继续调整。</p>
   </section>;
 }

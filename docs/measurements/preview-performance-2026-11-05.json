@@ -1,0 +1,497 @@
+{
+  "schemaVersion": 1,
+  "measurementDate": "2026-11-05",
+  "timezone": "Asia/Shanghai",
+  "subject": "Browser-local resume import, template preview scheduling and font delivery",
+  "recordStatus": "Predeployment measurements; production verification to be appended separately",
+  "source": {
+    "renderVersion": "priority-preview-and-font-delivery-17",
+    "fontManifestVersion": 7,
+    "baselineAndOptimizedCommitIds": null,
+    "commitIdNote": "Measurements were taken in the working tree; exact paired Git revisions were not recorded."
+  },
+  "environment": {
+    "operatingSystem": "Windows",
+    "browser": "Chrome controlled with Playwright CLI",
+    "browserVersion": null,
+    "cpu": null,
+    "memory": null,
+    "templateAndCancellationBuild": "Vite production build served at loopback origin",
+    "importComparisonBuild": "Before and after TypeScript import modules loaded through the local Vite development server",
+    "dataset": "Synthetic resume fixtures only",
+    "publicNetworkBenchmark": false,
+    "cloudflareCpuMeasurement": false
+  },
+  "diagnosis": [
+    "Interactive previews and eagerly generated template thumbnails shared one serial render chain.",
+    "Large uncompressed Chinese TTF files dominated cold font transfer; unused thumbnail work could continue after a selection change.",
+    "The PDF import path requested display operator lists on every page to inspect a font.name field absent with the default PDF.js export options.",
+    "PDF.js document creation restarted its worker, and thumbnail generation could resume before the main canvas finished drawing."
+  ],
+  "implementedChanges": [
+    "Priority serial render queue, shared identical requests, independent subscriber cancellation and cooperative render checkpoints.",
+    "Cancellable font downloads; only the selected family and needed styles are prepared; parsed TTFs are reused.",
+    "Visible/selected template thumbnails only, resumed after the main first page has actually painted.",
+    "PDF result cache keyed by content and avatar hash, with 40-entry and 24 MiB budgets while retaining at least the newest result.",
+    "Shared PDF.js worker with document-specific cleanup; display failures expose a retry that reloads PDF.js even for the same cached render result.",
+    "Immediate first/template/font preview submission, with 250 ms debounce retained for content editing.",
+    "Text import avoids per-page display decoding; conservative first-page image preflight and direct rendering into the avatar crop.",
+    "Lossless gzip font delivery, original TTF SHA256 verification, fixed-text settings samples and immutable content-addressed resource caching."
+  ],
+  "fontDelivery": {
+    "unitDefinitions": {
+      "MiB": 1048576,
+      "KiB": 1024
+    },
+    "method": "Aggregate exact originalBytes and compressedBytes from the generated delivery report. The generator verifies decompression against the original TTF. The loader verifies the original TTF SHA256. All 24 original file sizes were rechecked while recording these metrics.",
+    "includes": {
+      "families": 6,
+      "facesPerFamily": 4,
+      "totalFaces": 24
+    },
+    "allFamiliesAndFaces": {
+      "originalBytes": 353806112,
+      "gzipBytes": 199474533,
+      "originalMiB": 337.42,
+      "gzipMiB": 190.23,
+      "reductionPercent": 43.62
+    },
+    "families": [
+      {
+        "id": "noto-sans-sc",
+        "label": "MyResume Sans / Noto Sans SC",
+        "allFourFaces": {
+          "originalBytes": 43118116,
+          "gzipBytes": 26233382,
+          "originalMiB": 41.12,
+          "gzipMiB": 25.02,
+          "reductionPercent": 39.16
+        },
+        "normal400And700": {
+          "originalBytes": 21181356,
+          "gzipBytes": 12685625,
+          "originalMiB": 20.2,
+          "gzipMiB": 12.1,
+          "reductionPercent": 40.11
+        },
+        "settingsSampleBytes": 71308,
+        "settingsSampleKiB": 69.64,
+        "faces": [
+          {
+            "file": "sans-400.ttf",
+            "originalBytes": 10595912,
+            "compressedBytes": 6303519,
+            "sampleBytes": 35332
+          },
+          {
+            "file": "sans-400-oblique.ttf",
+            "originalBytes": 10973468,
+            "compressedBytes": 6728352,
+            "sampleBytes": 0
+          },
+          {
+            "file": "sans-700.ttf",
+            "originalBytes": 10585444,
+            "compressedBytes": 6382106,
+            "sampleBytes": 35976
+          },
+          {
+            "file": "sans-700-oblique.ttf",
+            "originalBytes": 10963292,
+            "compressedBytes": 6819405,
+            "sampleBytes": 0
+          }
+        ]
+      },
+      {
+        "id": "noto-serif-sc",
+        "label": "MyResume Serif / Noto Serif SC",
+        "allFourFaces": {
+          "originalBytes": 60464176,
+          "gzipBytes": 35652847,
+          "originalMiB": 57.66,
+          "gzipMiB": 34.0,
+          "reductionPercent": 41.03
+        },
+        "normal400And700": {
+          "originalBytes": 29708232,
+          "gzipBytes": 17279682,
+          "originalMiB": 28.33,
+          "gzipMiB": 16.48,
+          "reductionPercent": 41.84
+        },
+        "settingsSampleBytes": 104120,
+        "settingsSampleKiB": 101.68,
+        "faces": [
+          {
+            "file": "serif-400.ttf",
+            "originalBytes": 14854624,
+            "compressedBytes": 8543172,
+            "sampleBytes": 51872
+          },
+          {
+            "file": "serif-400-oblique.ttf",
+            "originalBytes": 15376996,
+            "compressedBytes": 9090697,
+            "sampleBytes": 0
+          },
+          {
+            "file": "serif-700.ttf",
+            "originalBytes": 14853608,
+            "compressedBytes": 8736510,
+            "sampleBytes": 52248
+          },
+          {
+            "file": "serif-700-oblique.ttf",
+            "originalBytes": 15378948,
+            "compressedBytes": 9282468,
+            "sampleBytes": 0
+          }
+        ]
+      },
+      {
+        "id": "lxgw-wenkai",
+        "label": "LXGW WenKai TC",
+        "allFourFaces": {
+          "originalBytes": 53566812,
+          "gzipBytes": 31497167,
+          "originalMiB": 51.09,
+          "gzipMiB": 30.04,
+          "reductionPercent": 41.2
+        },
+        "normal400And700": {
+          "originalBytes": 25991456,
+          "gzipBytes": 15159717,
+          "originalMiB": 24.79,
+          "gzipMiB": 14.46,
+          "reductionPercent": 41.67
+        },
+        "settingsSampleBytes": 64348,
+        "settingsSampleKiB": 62.84,
+        "faces": [
+          {
+            "file": "wenkai-400.ttf",
+            "originalBytes": 13110452,
+            "compressedBytes": 7518001,
+            "sampleBytes": 32240
+          },
+          {
+            "file": "wenkai-400-oblique.ttf",
+            "originalBytes": 13870680,
+            "compressedBytes": 8106582,
+            "sampleBytes": 0
+          },
+          {
+            "file": "wenkai-700.ttf",
+            "originalBytes": 12881004,
+            "compressedBytes": 7641716,
+            "sampleBytes": 32108
+          },
+          {
+            "file": "wenkai-700-oblique.ttf",
+            "originalBytes": 13704676,
+            "compressedBytes": 8230868,
+            "sampleBytes": 0
+          }
+        ]
+      },
+      {
+        "id": "ibm-plex-sans-sc",
+        "label": "IBM Plex Sans SC",
+        "allFourFaces": {
+          "originalBytes": 34822652,
+          "gzipBytes": 22437834,
+          "originalMiB": 33.21,
+          "gzipMiB": 21.4,
+          "reductionPercent": 35.57
+        },
+        "normal400And700": {
+          "originalBytes": 16857616,
+          "gzipBytes": 10669768,
+          "originalMiB": 16.08,
+          "gzipMiB": 10.18,
+          "reductionPercent": 36.71
+        },
+        "settingsSampleBytes": 65004,
+        "settingsSampleKiB": 63.48,
+        "faces": [
+          {
+            "file": "plex-400.ttf",
+            "originalBytes": 8443424,
+            "compressedBytes": 5323290,
+            "sampleBytes": 32704
+          },
+          {
+            "file": "plex-400-oblique.ttf",
+            "originalBytes": 8992904,
+            "compressedBytes": 5874549,
+            "sampleBytes": 0
+          },
+          {
+            "file": "plex-700.ttf",
+            "originalBytes": 8414192,
+            "compressedBytes": 5346478,
+            "sampleBytes": 32300
+          },
+          {
+            "file": "plex-700-oblique.ttf",
+            "originalBytes": 8972132,
+            "compressedBytes": 5893517,
+            "sampleBytes": 0
+          }
+        ]
+      },
+      {
+        "id": "chiron-round-tc",
+        "label": "Chiron GoRound TC",
+        "allFourFaces": {
+          "originalBytes": 118729208,
+          "gzipBytes": 57325158,
+          "originalMiB": 113.23,
+          "gzipMiB": 54.67,
+          "reductionPercent": 51.72
+        },
+        "normal400And700": {
+          "originalBytes": 57784076,
+          "gzipBytes": 27414676,
+          "originalMiB": 55.11,
+          "gzipMiB": 26.14,
+          "reductionPercent": 52.56
+        },
+        "settingsSampleBytes": 126564,
+        "settingsSampleKiB": 123.6,
+        "faces": [
+          {
+            "file": "round-400.ttf",
+            "originalBytes": 28904336,
+            "compressedBytes": 13604269,
+            "sampleBytes": 63364
+          },
+          {
+            "file": "round-400-oblique.ttf",
+            "originalBytes": 30482388,
+            "compressedBytes": 14848592,
+            "sampleBytes": 0
+          },
+          {
+            "file": "round-700.ttf",
+            "originalBytes": 28879740,
+            "compressedBytes": 13810407,
+            "sampleBytes": 63200
+          },
+          {
+            "file": "round-700-oblique.ttf",
+            "originalBytes": 30462744,
+            "compressedBytes": 15061890,
+            "sampleBytes": 0
+          }
+        ]
+      },
+      {
+        "id": "source-han-sans-sc",
+        "label": "Source Han Sans option",
+        "allFourFaces": {
+          "originalBytes": 43105148,
+          "gzipBytes": 26328145,
+          "originalMiB": 41.11,
+          "gzipMiB": 25.11,
+          "reductionPercent": 38.92
+        },
+        "normal400And700": {
+          "originalBytes": 21174652,
+          "gzipBytes": 12729119,
+          "originalMiB": 20.19,
+          "gzipMiB": 12.14,
+          "reductionPercent": 39.89
+        },
+        "settingsSampleBytes": 71452,
+        "settingsSampleKiB": 69.78,
+        "faces": [
+          {
+            "file": "sourcehan-400.ttf",
+            "originalBytes": 10589152,
+            "compressedBytes": 6346999,
+            "sampleBytes": 35468
+          },
+          {
+            "file": "sourcehan-400-oblique.ttf",
+            "originalBytes": 10967152,
+            "compressedBytes": 6779615,
+            "sampleBytes": 0
+          },
+          {
+            "file": "sourcehan-700.ttf",
+            "originalBytes": 10585500,
+            "compressedBytes": 6382120,
+            "sampleBytes": 35984
+          },
+          {
+            "file": "sourcehan-700-oblique.ttf",
+            "originalBytes": 10963344,
+            "compressedBytes": 6819411,
+            "sampleBytes": 0
+          }
+        ]
+      }
+    ],
+    "interpretation": "These totals compare font payloads, not the deployed site package or one page load. Original compatibility TTFs are still shipped; a normal preview loads only its selected family normal 400/700 faces, and italics load when used."
+  },
+  "fontLayoutExperiment": {
+    "script": "scripts/benchmark-fonts.ts",
+    "runs": 1,
+    "layoutsPerResource": 30,
+    "resources": [
+      {
+        "file": ".tools/font-sources/old-woff/sans-400.woff",
+        "format": "WOFF",
+        "elapsedMs": 4955
+      },
+      {
+        "file": "public/fonts/sans-400.ttf",
+        "format": "TTF",
+        "elapsedMs": 27
+      }
+    ],
+    "timer": "performance.now around 30 fontkit.layout calls after font creation",
+    "decision": "Use gzip for transfer, then decode once to the complete static TTF before PDF layout. Reserve WOFF subsets for the small fixed settings sample.",
+    "limitations": [
+      "Single recorded run using two existing resource files.",
+      "No statistical distribution, controlled format-only conversion, full-font-equivalence check or hardware profile was recorded.",
+      "This is fontkit layout time, not first-preview or network latency."
+    ]
+  },
+  "pdfImport": {
+    "runsPerFixtureAndVersion": 1,
+    "method": "Construct a File from each synthetic PDF, time readPdfResume with performance.now, running the before module then the after module. Compare full candidates after removing generated id fields; check photo presence and dimensions, and compare RGBA pixels where present.",
+    "ordering": "Before then after; no counterbalancing or separate-cache isolation",
+    "cases": [
+      {
+        "file": "m0-example.pdf",
+        "pages": 1,
+        "beforeMs": 511,
+        "afterMs": 477,
+        "sameCandidate": true,
+        "elapsedChangeMs": -34,
+        "elapsedReductionPercent": 6.65,
+        "observation": "Lower elapsed time in this observation"
+      },
+      {
+        "file": "m0-long.pdf",
+        "pages": 9,
+        "beforeMs": 641,
+        "afterMs": 652,
+        "sameCandidate": true,
+        "elapsedChangeMs": 11,
+        "elapsedReductionPercent": -1.72,
+        "observation": "No improvement in this observation"
+      },
+      {
+        "file": "resume-export.pdf",
+        "pages": 1,
+        "beforeMs": 4252,
+        "afterMs": 2995,
+        "sameCandidate": true,
+        "samePhotoDimensions": true,
+        "photoMeanAbsoluteChannelDifference": 0.637033617181355,
+        "elapsedChangeMs": -1257,
+        "elapsedReductionPercent": 29.56,
+        "observation": "Lower elapsed time in this observation"
+      }
+    ],
+    "photoDifferenceUnit": "Mean absolute RGBA channel difference on the 0-255 scale",
+    "photoDifferenceAcceptanceThreshold": 3,
+    "limitations": [
+      "Both import modules ran in the same browser environment and used shared runtime dependencies.",
+      "File transfer into the test harness was outside the timed readPdfResume calls.",
+      "These are three single observations, not a median, p95 or a complete old-site/new-site benchmark.",
+      "The nine-page fixture took 641 ms before and 652 ms after, so this observation shows no speed improvement."
+    ]
+  },
+  "templateSwitchSamples": {
+    "build": "Local production build",
+    "viewport": {
+      "width": 1440,
+      "height": 980
+    },
+    "method": "Time the template button click until the main preview contains a different canvas marked rendered=true and is no longer updating.",
+    "sequence": [
+      {
+        "templateId": "clean",
+        "elapsedMs": 246
+      },
+      {
+        "templateId": "aurora",
+        "elapsedMs": 793
+      },
+      {
+        "templateId": "clean",
+        "elapsedMs": 337
+      }
+    ],
+    "runs": 1,
+    "cacheState": "Sequential interactive session; fonts/results may be warm, and the third selection revisits an earlier template.",
+    "strictPairedAB": false,
+    "limitations": [
+      "Different templates and changing cache state; no speedup percentage is derived.",
+      "The loopback server does not reproduce public Cloudflare network latency.",
+      "No distributions or worst-case latency were measured."
+    ]
+  },
+  "cancellationScenario": {
+    "build": "Local production build",
+    "artificialFontResponseDelayMs": 5000,
+    "fontBeingLoaded": "lxgw-wenkai",
+    "switchBackToFont": "noto-sans-sc",
+    "returnToPreviousPreviewMs": 1920,
+    "assertionLimitMs": 4000,
+    "cancelledFontCouldBeLoadedAgain": true,
+    "method": "Hold the WenKai compressed-font route for five seconds, wait until the font request begins, select the prior font, wait two animation frames and then wait for the main rendered canvas to leave its updating state. Remove interception and select WenKai again.",
+    "interpretation": "One functional cancellation check under a delayed-response scenario, not a bandwidth-throttled or public-network benchmark."
+  },
+  "validation": {
+    "unitTestFiles": 29,
+    "unitTests": 174,
+    "buildCloud": true,
+    "wranglerDryRun": true,
+    "templates": 16,
+    "filters": [
+      8,
+      8
+    ],
+    "initialVisibleThumbnails": 1,
+    "cancelledFontDelayMs": 5000,
+    "returnToPreviousFontMs": 1920,
+    "retryCancelledFont": true,
+    "mobileViewportPx": 375,
+    "mobileOverflow": false
+  },
+  "reproduction": {
+    "durableChecks": [
+      "pnpm test",
+      "pnpm build:cloud",
+      "npm run dry-run:free --prefix cloud"
+    ],
+    "fontRegeneration": "python scripts/prepare-font-delivery.py",
+    "fontLayoutBenchmark": "pnpm exec tsx scripts/benchmark-fonts.ts (the older WOFF resource must already exist in the local cache)",
+    "syntheticPdfGenerator": "pnpm verify:pdf",
+    "browserRegression": "tests/browser/pdf-import.js, with its local origin set to the chosen test server",
+    "originalLocalArtifacts": [
+      "output/performance/report.json",
+      "output/performance/measure-import.js",
+      "output/performance/measure-templates.js",
+      "output/performance/verify-final-preview.js",
+      "output/font-performance/delivery-report.json"
+    ],
+    "artifactPolicy": "Structured metrics and explanatory documentation are committed with reusable browser/HTTP validation scripts. Raw local outputs and synthetic PDFs remain under ignored output/. The original A/B comparison modules remain local.",
+    "previewBrowserRegression": "tests/browser/preview-performance.js, run against an isolated target-origin browser session with its synthetic example",
+    "productionAssetVerification": "node scripts/verify-preview-deployment.mjs https://sparkshark.sharmoon.cc.cd"
+  },
+  "measurementLimitations": [
+    "No exact hardware or Chrome version was captured for the original timings.",
+    "No repeated randomized measurements, cold-cache matrix, CPU/memory profile, slow-device matrix or network throughput sweep was collected.",
+    "Functional correctness passed for the listed synthetic cases; this does not establish identical layout or latency for every user PDF.",
+    "Synchronous PDF layout can only stop at its next cooperative cancellation checkpoint.",
+    "Font byte reduction and local latency samples do not establish Cloudflare CPU usage, load capacity or end-to-end production speed."
+  ],
+  "productionVerification": null
+}
