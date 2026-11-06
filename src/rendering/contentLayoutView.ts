@@ -1,12 +1,13 @@
 import type { CustomSection, FieldValue, ResumeItem, RichDocument, Section, ContentFieldLayout } from '../domain/types';
 import { contentFieldSpecs, contentLayoutRows, type ContentFieldSpec } from '../domain/contentLayout';
 import { hasContent, richText, safeLink, sectionHasContent } from '../domain/resume';
+import { resumeTypeSize } from '../domain/typography';
 
 type ContentItem = ResumeItem | CustomSection['items'][number];
 export interface ContentCell { layout: ContentFieldLayout; spec: ContentFieldSpec; value: FieldValue; text: string; href?: string; rich?: RichDocument }
 
-export function contentFontSize(layout: ContentFieldLayout, basePx: number): number {
-  return layout.fontSizePx ?? basePx;
+export function contentFontSize(layout: ContentFieldLayout, basePx: number, spec?: Pick<ContentFieldSpec, 'primary'>): number {
+  return layout.fontSizePx ?? resumeTypeSize(basePx, spec?.primary ? 'entry' : 'body');
 }
 
 export function contentTextDecoration(underline: boolean, strike = false): 'none' | 'underline' | 'line-through' | 'underline line-through' {

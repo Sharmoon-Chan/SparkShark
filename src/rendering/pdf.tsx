@@ -12,6 +12,7 @@ import { templateDesign } from '../domain/templates';
 import { readableThemeColor } from './colors';
 import { contentFieldSpecs, resolveContentLayout } from '../domain/contentLayout';
 import { contentFontSize, contentTextDecoration, moduleContentRows, type ContentCell } from './contentLayoutView';
+import { RESUME_TYPE_SCALE, resumeTypeSize } from '../domain/typography';
 import { extractPreviewFields, previewFieldId } from './previewFields';
 import { avatarFrame } from '../domain/avatar';
 
@@ -90,11 +91,11 @@ function BasicsPdf({ resume, assets, context }: { resume: Resume; assets: PdfAss
     <View style={{ flex: design.centeredHeader ? undefined : 1, width: design.centeredHeader ? '100%' : undefined, minWidth: 0, textAlign: design.centeredHeader ? 'center' : 'left' }}>
       {basics.name && <Text style={{ fontSize: context.size * (design.editorial ? 2.65 : 2.1), fontWeight: 700, color: nameColor, marginBottom: 3 * context.spacing, lineHeight: 1.15 }}>{basics.name}</Text>}
       {basics.headline && <Text style={{ fontSize: context.size * 1.4, marginBottom: 5 * context.spacing, fontWeight: 700, lineHeight: 1.2, color: design.darkHeader ? '#FFFFFF' : context.theme }}>{basics.headline}</Text>}
-      {design.classic ? <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{classicContacts.filter(contact => contact.text.trim()).map((contact, index, all) => <View key={index} style={{ maxWidth: '100%', marginBottom: 3 * context.spacing, paddingRight: index < all.length - 1 ? 7 : 0, marginRight: index < all.length - 1 ? 7 : 0, borderRightWidth: index < all.length - 1 ? .5 : 0, borderRightColor: '#CBD5E1' }}><Text style={{ color: contactColor, fontSize: context.size * .86 }}>{contact.href && !context.blockedLinks.has(contact.value) ? <Link src={contact.href} style={{ color: contactColor, textDecoration: resume.appearance.underlineLinks ? 'underline' : 'none' }}>{contact.text}</Link> : contact.text}</Text></View>)}</View> : <><View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: design.centeredHeader ? 'center' : undefined }}>{contacts.filter(contact => contact.value.trim()).map((contact, index) => <View key={index} style={{ flexDirection: 'row', marginRight: 10, marginBottom: 3 * context.spacing, maxWidth: '100%' }}>
+      {design.classic ? <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{classicContacts.filter(contact => contact.text.trim()).map((contact, index, all) => <View key={index} style={{ maxWidth: '100%', marginBottom: 3 * context.spacing, paddingRight: index < all.length - 1 ? 7 : 0, marginRight: index < all.length - 1 ? 7 : 0, borderRightWidth: index < all.length - 1 ? .5 : 0, borderRightColor: '#CBD5E1' }}><Text style={{ color: contactColor, fontSize: context.size }}>{contact.href && !context.blockedLinks.has(contact.value) ? <Link src={contact.href} style={{ color: contactColor, textDecoration: resume.appearance.underlineLinks ? 'underline' : 'none' }}>{contact.text}</Link> : contact.text}</Text></View>)}</View> : <><View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: design.centeredHeader ? 'center' : undefined }}>{contacts.filter(contact => contact.value.trim()).map((contact, index) => <View key={index} style={{ flexDirection: 'row', marginRight: 10, marginBottom: 3 * context.spacing, maxWidth: '100%' }}>
         {!resume.appearance.hideIcons && <ContactIcon kind={contact.icon} size={context.size * .85} color={design.darkHeader ? '#CBD5E1' : '#616B66'} />}
-        {contact.href && !context.blockedLinks.has(contact.value) ? <Link src={contact.href} style={{ color: contactColor, fontSize: context.size * .86, textDecoration: resume.appearance.underlineLinks ? 'underline' : 'none' }}>{contact.value}</Link> : <Text style={{ color: contactColor, fontSize: context.size * .86 }}>{contact.value}</Text>}
+        {contact.href && !context.blockedLinks.has(contact.value) ? <Link src={contact.href} style={{ color: contactColor, fontSize: context.size, textDecoration: resume.appearance.underlineLinks ? 'underline' : 'none' }}>{contact.value}</Link> : <Text style={{ color: contactColor, fontSize: context.size }}>{contact.value}</Text>}
       </View>)}</View>
-      {customFields.map(field => <Text key={field.id} style={{ color: contactColor, fontSize: context.size * .86, marginTop: 2 * context.spacing }}>{field.label ? `${field.label}：` : ''}{field.value}</Text>)}</>}
+      {customFields.map(field => <Text key={field.id} style={{ color: contactColor, fontSize: context.size, marginTop: 2 * context.spacing }}>{field.label ? `${field.label}：` : ''}{field.value}</Text>)}</>}
     </View>
   </View></View>;
 }
@@ -104,7 +105,7 @@ function SectionTitlePdf({ section, context }: { section: Section; context: Cont
   const design = templateDesign(template);
   const title = sectionTitle(section, resume.locale);
   const enclosed = design.titleFill || design.titleSolid || design.titleOutline || design.titleDoubleRule;
-  const titleStyle = { fontSize: size * (design.classic ? 10 / 7 : design.editorial ? 1.22 : 1.16), fontWeight: design.classic ? 400 : 700, color: design.titleSolid ? '#FFFFFF' : design.classic ? '#1E293B' : template === 'clean' ? '#222D26' : theme, lineHeight: design.classic ? 10 / 7 : undefined, marginBottom: enclosed ? 0 : 3 * context.spacing, flexShrink: design.titleDot ? 1 : undefined, flexGrow: design.titleDot ? 1 : undefined, minWidth: 0 };
+  const titleStyle = { fontSize: resumeTypeSize(size, 'section'), fontWeight: design.classic ? 600 : 700, color: design.titleSolid ? '#FFFFFF' : design.classic ? '#1E293B' : template === 'clean' ? '#222D26' : theme, lineHeight: design.classic ? 10 / 7 : undefined, marginBottom: enclosed ? 0 : 3 * context.spacing, flexShrink: design.titleDot ? 1 : undefined, flexGrow: design.titleDot ? 1 : undefined, minWidth: 0 };
   return title ? <View minPresenceAhead={size * context.line * (context.spacing < 1 ? 2 : 3)} style={{
     borderTopWidth: design.titleDoubleRule || design.titleOutline ? .65 : 0, borderTopColor: theme,
     borderBottomWidth: design.titleDoubleRule || design.titleOutline || design.titleRule ? .65 : 0, borderBottomColor: design.titleDoubleRule || design.titleOutline ? theme : '#CBD8D0',
@@ -140,8 +141,8 @@ function ItemPdf({ section, item, first, context }: { section: Exclude<Section, 
   const single = resume.layout.mode === 'single';
   const rightLabel = display.date || (single && display.level !== null ? `${display.level} / 5` : '');
   const title = first ? <SectionTitlePdf section={section} context={context} /> : null;
-  const titleHeight = first ? textHeightBound(sectionTitle(section, resume.locale), context, context.width, 1.16) + 12 : 0;
-  const headerHeight = titleHeight + Math.max(textHeightBound(display.primary, context, context.width * .4), textHeightBound(rightLabel, context, context.width * .4))
+  const titleHeight = first ? textHeightBound(sectionTitle(section, resume.locale), context, context.width, RESUME_TYPE_SCALE.section) + 12 : 0;
+  const headerHeight = titleHeight + Math.max(textHeightBound(display.primary, context, context.width * .4, RESUME_TYPE_SCALE.entry), textHeightBound(rightLabel, context, context.width * .4))
     + textHeightBound(display.caption, context) + display.links.reduce((height, link) => height + textHeightBound(link.value, context), 0) + 12;
   const protectHeader = headerHeight < context.height * .45;
   const summary = display.summary && hasContent(display.summary) ? display.summary : null;
@@ -150,11 +151,11 @@ function ItemPdf({ section, item, first, context }: { section: Exclude<Section, 
   const header = <>
     {title}
     {(display.primary || rightLabel) && <View style={{ flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 2 * context.spacing }}>
-      {display.primary && <Text id={fieldId(primaryKeyFor(section.kind))} style={{ fontWeight: 700, flexShrink: 1, flexGrow: 1, minWidth: 0 }}>{display.primary}</Text>}
-      {rightLabel && <Text id={fieldId(display.date ? 'dateText' : 'level')} style={{ fontSize: size * .88, color: '#59635D', textAlign: 'right', marginLeft: display.primary ? 8 : 0, maxWidth: display.primary ? '46%' : '100%', flexShrink: 0 }}>{rightLabel}</Text>}
+      {display.primary && <Text id={fieldId(primaryKeyFor(section.kind))} style={{ fontSize: resumeTypeSize(size, 'entry'), fontWeight: 700, flexShrink: 1, flexGrow: 1, minWidth: 0 }}>{display.primary}</Text>}
+      {rightLabel && <Text id={fieldId(display.date ? 'dateText' : 'level')} style={{ fontSize: size, color: '#59635D', textAlign: 'right', marginLeft: display.primary ? 8 : 0, maxWidth: display.primary ? '46%' : '100%', flexShrink: 0 }}>{rightLabel}</Text>}
     </View>}
-    {display.caption && (classicCaption ? <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 3 * context.spacing }}>{leftCaption && <Text id={fieldId('position')} style={{ fontSize: size * .92, color: '#64748B', flex: 1 }}>{leftCaption}</Text>}{location && <Text id={fieldId('location')} style={{ fontSize: size * .92, color: '#64748B', textAlign: 'right', maxWidth: leftCaption ? '46%' : '100%', marginLeft: leftCaption ? 8 : 0 }}>{location}</Text>}</View> : <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: (compactSkill ? 2 : 3) * context.spacing }}>{captionFields.map((field, index) => <Text id={fieldId(field.key)} key={field.key} style={{ maxWidth: '100%', fontSize: size * .92, color: '#59635D' }}>{field.value}{index < captionFields.length - 1 ? ' · ' : ''}</Text>)}</View>)}
-    {display.links.map(link => <Text id={fieldId(link.key)} key={link.key} style={{ fontSize: size * .87, marginBottom: 3 * context.spacing }}>{link.href && !context.blockedLinks.has(link.value) ? <Link src={link.href} style={{ color: theme, textDecoration: resume.appearance.underlineLinks ? 'underline' : 'none' }}>{link.value}</Link> : link.value}</Text>)}
+    {display.caption && (classicCaption ? <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 3 * context.spacing }}>{leftCaption && <Text id={fieldId('position')} style={{ fontSize: size, color: '#64748B', flex: 1 }}>{leftCaption}</Text>}{location && <Text id={fieldId('location')} style={{ fontSize: size, color: '#64748B', textAlign: 'right', maxWidth: leftCaption ? '46%' : '100%', marginLeft: leftCaption ? 8 : 0 }}>{location}</Text>}</View> : <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: (compactSkill ? 2 : 3) * context.spacing }}>{captionFields.map((field, index) => <Text id={fieldId(field.key)} key={field.key} style={{ maxWidth: '100%', fontSize: size, color: '#59635D' }}>{field.value}{index < captionFields.length - 1 ? ' · ' : ''}</Text>)}</View>)}
+    {display.links.map(link => <Text id={fieldId(link.key)} key={link.key} style={{ fontSize: size, marginBottom: 3 * context.spacing }}>{link.href && !context.blockedLinks.has(link.value) ? <Link src={link.href} style={{ color: theme, textDecoration: resume.appearance.underlineLinks ? 'underline' : 'none' }}>{link.value}</Link> : link.value}</Text>)}
     {!single && display.level !== null && <View id={fieldId('level')} style={{ marginTop: (compactSkill ? 2 : 3) * context.spacing, marginBottom: (compactSkill ? 2 : 4) * context.spacing, height: 3, backgroundColor: '#E6EAE7', width: '55%' }}><View style={{ height: 3, width: `${display.level * 20}%`, backgroundColor: theme }} /></View>}
   </>;
   const marginBottom = size * (compactSkill ? .25 : .6) * context.spacing;
@@ -173,10 +174,10 @@ function CustomItemPdf({ section, item, first, context }: { section: CustomSecti
     const value = item.values[field.id];
     if (value && typeof value === 'object' && !Array.isArray(value)) return <Rich id={previewFieldId(section.id, item.id, field.id)} key={field.id} node={value} context={context} />;
     if (field.type === 'url' && typeof value === 'string' && !context.blockedLinks.has(value) && safeLink(value)) return <Text id={previewFieldId(section.id, item.id, field.id)} key={field.id}><Link src={safeLink(value)!} style={{ color: theme, textDecoration: resume.appearance.underlineLinks ? 'underline' : 'none' }}>{value}</Link></Text>;
-    return <Text id={previewFieldId(section.id, item.id, field.id)} key={field.id} style={{ fontWeight: field.type === 'name' ? 700 : 400, marginBottom: 3 * context.spacing }}>{fieldText(field)}</Text>;
+    return <Text id={previewFieldId(section.id, item.id, field.id)} key={field.id} style={{ fontSize: resumeTypeSize(size, field.type === 'name' ? 'entry' : 'body'), fontWeight: field.type === 'name' ? 700 : 400, marginBottom: 3 * context.spacing }}>{fieldText(field)}</Text>;
   };
   const title = first ? <SectionTitlePdf section={section} context={context} /> : null;
-  const titleHeight = first ? textHeightBound(sectionTitle(section, resume.locale), context, context.width, 1.16) + 12 : 0;
+  const titleHeight = first ? textHeightBound(sectionTitle(section, resume.locale), context, context.width, RESUME_TYPE_SCALE.section) + 12 : 0;
   const allHeight = fields.reduce((height, field) => height + textHeightBound(fieldText(field), context, context.width, 1.5) + size, titleHeight);
   const short = allHeight < context.height * .35 && fields.length <= 8;
   const firstField = fields[0];
@@ -190,7 +191,7 @@ function CustomItemPdf({ section, item, first, context }: { section: CustomSecti
 }
 
 function contextForCell(context: Context, cell: ContentCell): Context {
-  return { ...context, size: pt(contentFontSize(cell.layout, context.size / .75)), italic: cell.layout.italic, underline: cell.layout.underline };
+  return { ...context, size: pt(contentFontSize(cell.layout, context.size / .75, cell.spec)), italic: cell.layout.italic, underline: cell.layout.underline };
 }
 
 function ContentRowPdf({ row, gap, context, sectionId, itemId }: { row: ContentCell[]; gap: number; context: Context; sectionId: string; itemId: string }) {
@@ -235,7 +236,7 @@ function SectionPdf({ section, context, last }: { section: Section; context: Con
   if (section.kind === 'summary') {
     const first = section.content.content?.[0];
     const keepFirst = first && richNodeCount(first) <= 8 && textHeightBound(richText(first), context, context.width, 1.5)
-      + textHeightBound(sectionTitle(section, context.resume.locale), context, context.width, 1.16) + 12 < context.height * .35;
+      + textHeightBound(sectionTitle(section, context.resume.locale), context, context.width, RESUME_TYPE_SCALE.section) + 12 < context.height * .35;
     return <View id={`preview-section-${section.id}`} style={{ marginBottom }}>{keepFirst ? <>
       <View wrap={false}><SectionTitlePdf section={section} context={context} /><Rich id={previewFieldId(section.id, section.id, 'summary')} node={first} context={context} /></View>
       <Rich id={previewFieldId(section.id, section.id, 'summary')} node={{ ...section.content, content: section.content.content?.slice(1) }} context={context} />

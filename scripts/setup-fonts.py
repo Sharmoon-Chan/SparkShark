@@ -1,7 +1,8 @@
 """Prepare self-hosted static CJK fonts from their upstream SIL OFL sources.
 
 Existing verified outputs are kept. Use --family ID to prepare one family,
-or --force to rebuild all selected families from cached upstream sources.
+or --force to rebuild selected families from cached upstream sources.
+Add --weight 400 or --weight 700 to rebuild only those faces of a complete family.
 """
 from __future__ import annotations
 
@@ -41,10 +42,10 @@ FAMILIES = [
     {'id': 'chiron-round-tc', 'prefix': 'round', 'family': 'MyResumeRoundTC',
      'variable': GOOGLE + 'chirongoroundtc/ChironGoRoundTC%5Bwght%5D.ttf', 'license': GOOGLE + 'chirongoroundtc/OFL.txt'},
     # TalenCat's 思源黑体 is Noto Sans SC, from the same Source Han / Noto project.
-    # Map the native Medium outlines to the regular face for a more solid body.
+    # Keep native Regular outlines for body text; Medium made it too heavy.
     {'id': 'source-han-sans-sc', 'prefix': 'sourcehan', 'family': 'MyResumeSourceHanSansSC',
      'variable': GOOGLE + 'notosanssc/NotoSansSC%5Bwght%5D.ttf', 'license': GOOGLE + 'notosanssc/OFL.txt',
-     'instance_weights': {400: 500, 700: 700}},
+     'instance_weights': {400: 400, 700: 700}},
 ]
 
 def download(url: str, path: Path) -> None:
@@ -122,7 +123,7 @@ def repair_prepared_fonts() -> None:
                 font.save(target)
                 file['sha256'] = hashlib.sha256(target.read_bytes()).hexdigest()
                 print('Repaired ' + file['file'], flush=True)
-    manifest['version'] = 5
+    manifest['version'] = max(manifest.get('version', 0), 8)
     manifest['preparedOn'] = date.today().isoformat()
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     write_preview_css(manifest)
@@ -157,17 +158,25 @@ def write_preview_css(manifest: dict) -> None:
     (ROOT / 'src' / 'features' / 'appearance' / 'fonts.css').write_text('\n'.join(lines) + '\n', encoding='utf-8')
 
 
-def main(selected: list[str] | None = None, force: bool = False) -> None:
+def main(selected: list[str] | None = None, force: bool = False, weights: list[int] | None = None) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     CACHE.mkdir(parents=True, exist_ok=True)
     manifest_path = OUT / 'manifest.json'
     manifest = json.loads(manifest_path.read_text(encoding='utf-8')) if manifest_path.is_file() else {'families': {}}
-    manifest.update(version=6, preparedOn=date.today().isoformat())
+    manifest.update(version=max(manifest.get('version', 0), 8), preparedOn=date.today().isoformat())
     for spec in FAMILIES:
         key, prefix, renamed = spec['id'], spec['prefix'], spec['family']
         if selected and key not in selected:
             continue
-        if not force and prepared(manifest['families'].get(key)):
+        previous = manifest['families'].get(key)
+        if weights and not prepared(previous):
+            raise ValueError('Partial weight rebuild requires a complete verified family: ' + key)
+        if weights:
+            expected = spec.get('instance_weights', {400: 400, 700: 700})
+            actual = previous.get('sourceWeights', {'400': 400, '700': 700})
+            if any(actual.get(str(weight)) != expected[weight] for weight in (400, 700) if weight not in weights):
+                raise ValueError('Rebuild every weight whose source mapping changed: ' + key)
+        if not force and prepared(previous):
             print('Already prepared ' + key, flush=True)
             continue
         sources = {400: spec['variable'], 700: spec['variable']} if 'variable' in spec else spec['static']
@@ -181,6 +190,16 @@ def main(selected: list[str] | None = None, force: bool = False) -> None:
         files = []
         points = None
         for weight in (400, 700):
+            if weights and weight not in weights:
+                retained = [copy.deepcopy(file) for file in previous['files'] if file['weight'] == weight]
+                files.extend(retained)
+                for file in retained:
+                    existing_font = TTFont(OUT / file['file'])
+                    coverage = set(existing_font.getBestCmap())
+                    points = coverage if points is None else points.intersection(coverage)
+                    existing_font.close()
+                print(f'Keeping {prefix} {weight}', flush=True)
+                continue
             print(f'Preparing {prefix} {weight}', flush=True)
             source = TTFont(source_paths[weight])
             source_weight = spec.get('instance_weights', {}).get(weight, weight)
@@ -215,9 +234,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--family', action='append', choices=[spec['id'] for spec in FAMILIES])
     parser.add_argument('--force', action='store_true')
+    parser.add_argument('--weight', action='append', type=int, choices=[400, 700])
     parser.add_argument('--repair-bullet', action='store_true')
     args = parser.parse_args()
+    if args.weight and not args.family:
+        parser.error('--weight requires --family so other families are not rebuilt')
     if args.repair_bullet:
         repair_prepared_fonts()
     else:
-        main(args.family, args.force)
+        main(args.family, args.force, args.weight)

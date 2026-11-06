@@ -4,15 +4,21 @@ import { defaultContentLayout } from '../domain/contentLayout';
 import { checkGlyphs } from './fonts';
 import { importMarkerFields } from './importMarkers';
 import { contentFontSize, moduleContentRows, sectionVisibleWithContent } from './contentLayoutView';
+import { resumeTypeSize } from '../domain/typography';
 
 describe('configured module content', () => {
-  it('inherits page size for every emphasis and preserves explicit field sizes', () => {
+  it('inherits the field role independently of emphasis and preserves explicit sizes', () => {
     const field = defaultContentLayout(createExample().sections.find(section => section.kind === 'work')!).fields[0];
     for (const emphasis of ['normal', 'bold', 'muted'] as const) {
-      expect(contentFontSize({ ...field, emphasis }, 16)).toBe(16);
-      expect(contentFontSize({ ...field, emphasis }, 18)).toBe(18);
-      expect(contentFontSize({ ...field, emphasis, fontSizePx: 12.75 }, 18)).toBe(12.75);
+      expect(contentFontSize({ ...field, emphasis }, 14, { primary: true })).toBe(16);
+      expect(contentFontSize({ ...field, emphasis }, 14, { primary: false })).toBe(14);
+      expect(contentFontSize({ ...field, emphasis }, 17, { primary: true })).toBeCloseTo(19.428571);
+      expect(contentFontSize({ ...field, emphasis, fontSizePx: 12.75 }, 18, { primary: true })).toBe(12.75);
+      expect(contentFontSize({ ...field, emphasis, fontSizePx: 12.75 }, 18, { primary: false })).toBe(12.75);
     }
+    expect(resumeTypeSize(14, 'section')).toBe(20);
+    expect(resumeTypeSize(10.5, 'section')).toBe(15);
+    expect(resumeTypeSize(10.5, 'entry')).toBe(12);
   });
   it('keeps hidden problematic text in the data while excluding it from glyph and marker checks', () => {
     const resume = createExample(), work = resume.sections.find(section => section.kind === 'work')!;

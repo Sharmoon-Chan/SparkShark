@@ -1,5 +1,5 @@
 {
-  "version": 7,
+  "version": 8,
   "preparedOn": "2026-11-05",
   "families": {
     "noto-sans-sc": {
@@ -41546,17 +41546,17 @@
           "file": "sourcehan-400.ttf",
           "weight": 400,
           "style": "normal",
-          "sha256": "cd1dd63283a478e088af7a47891baed1ba96feee8d15d78b9f411088765d55dc",
+          "sha256": "ff30fbebe3a8ab594f6608b8be4768a7d0b052b749f093a7bab0d1354e3ae52d",
           "compressed": {
-            "file": "compressed/sourcehan-400.cd1dd63283a478e0.ttf",
-            "sha256": "fed172c1ae73fb52edc17acd8dd7a494d2d7005b08619a3d0696f345ee605636",
-            "bytes": 6346999,
-            "originalBytes": 10589152
+            "file": "compressed/sourcehan-400.ff30fbebe3a8ab59.ttf",
+            "sha256": "cc39a5071a184edc9cf441ea940fd4014ae63bbc2789ecf9759ac7e053f5ec09",
+            "bytes": 6303517,
+            "originalBytes": 10595964
           },
           "preview": {
-            "file": "samples/sourcehan-400.42243a1119ce7327.woff",
-            "sha256": "5261ee7e61b0f0a11b7e6e5a1c9f6cdf76ed285534b9354a786786c18d1bdf6d",
-            "bytes": 35468,
+            "file": "samples/sourcehan-400.2a92b7297f368d69.woff",
+            "sha256": "bd96e609b38e36ca0fae895a10d5ca7c5342b49b9477c8f8efff5364f86aa451",
+            "bytes": 35336,
             "unicodeRange": "U+20,U+21,U+22,U+23,U+24,U+25,U+26,U+27,U+28,U+29,U+2A,U+2B,U+2C,U+2D,U+2E,U+2F,U+30,U+31,U+32,U+33,U+34,U+35,U+36,U+37,U+38,U+39,U+3A,U+3B,U+3C,U+3D,U+3E,U+3F,U+40,U+41,U+42,U+43,U+44,U+45,U+46,U+47,U+48,U+49,U+4A,U+4B,U+4C,U+4D,U+4E,U+4F,U+50,U+51,U+52,U+53,U+54,U+55,U+56,U+57,U+58,U+59,U+5A,U+5B,U+5C,U+5D,U+5E,U+5F,U+60,U+61,U+62,U+63,U+64,U+65,U+66,U+67,U+68,U+69,U+6A,U+6B,U+6C,U+6D,U+6E,U+6F,U+70,U+71,U+72,U+73,U+74,U+75,U+76,U+77,U+78,U+79,U+7A,U+7B,U+7C,U+7D,U+7E,U+B7,U+4E13,U+4E1A,U+4F5C,U+5386,U+5448,U+5DE5,U+6280,U+6670,U+6E05,U+73B0,U+7ECF,U+80FD,U+8BA9"
           }
         },
@@ -41564,12 +41564,12 @@
           "file": "sourcehan-400-oblique.ttf",
           "weight": 400,
           "style": "italic",
-          "sha256": "1bd91d86deacabff310ec22fc2d1a125e86523a7e5374cc37cf12824beb80949",
+          "sha256": "dc63c0a130928717e5d2fddef85d13363309390bf19c51d47f32d0927dbe1e10",
           "compressed": {
-            "file": "compressed/sourcehan-400-oblique.1bd91d86deacabff.ttf",
-            "sha256": "6a7a6584321d1f22a1f4d4f2c767d04d5c52bd98efff3e368f8857e8fa09bffc",
-            "bytes": 6779615,
-            "originalBytes": 10967152
+            "file": "compressed/sourcehan-400-oblique.dc63c0a130928717.ttf",
+            "sha256": "379e0a4644a902ff79ff0b15741be2273c187915aeb2d0a7c5d41ef487ea6d47",
+            "bytes": 6728363,
+            "originalBytes": 10973520
           }
         },
         {
@@ -43404,7 +43404,7 @@
       },
       "license": "sourcehan-OFL.txt",
       "sourceWeights": {
-        "400": 500,
+        "400": 400,
         "700": 700
       }
     }

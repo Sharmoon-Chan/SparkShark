@@ -1,8 +1,20 @@
 import { describe, expect, it } from 'vitest';
-import { createResume, parseResume } from '../domain/resume';
-import { mergeOnePageGroups, spacingCandidate } from './onePageStrategies';
+import { createExample, createResume, parseResume } from '../domain/resume';
+import { defaultContentLayout } from '../domain/contentLayout';
+import { estimateOnePageCost, mergeOnePageGroups, spacingCandidate } from './onePageStrategies';
 
 describe('one-page structure preservation', () => {
+  it('estimates primary titles at their inherited size while keeping weight separate', () => {
+    const resume = createExample(), work = resume.sections.find(section => section.kind === 'work')!;
+    work.contentLayout = defaultContentLayout(work);
+    const primary = work.contentLayout.fields.find(field => field.key === 'company')!;
+    const normal = estimateOnePageCost(resume);
+    primary.emphasis = 'normal';
+    work.contentLayout.fields.find(field => field.key === 'position')!.emphasis = 'bold';
+    expect(estimateOnePageCost(resume)).toBe(normal);
+    primary.fontSizePx = resume.appearance.fontSizePx;
+    expect(estimateOnePageCost(resume)).toBeLessThan(normal);
+  });
   it('keeps every spacing interpolation candidate schema-valid, including the minimum endpoint', () => {
     for (const scale of [undefined, 1, .9, .7, .45]) {
       const original = createResume(); if (scale !== undefined) original.appearance.spacingScale = scale;

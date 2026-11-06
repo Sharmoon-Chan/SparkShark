@@ -32,6 +32,10 @@ describe('self-hosted resume font catalog', () => {
     expect(fontOptionFor('missing-family')).toBe(FONT_OPTIONS[0]);
   });
 
+  it('keeps Source Han body text at native Regular weight', () => {
+    expect(manifest.families['source-han-sans-sc'].sourceWeights).toEqual({ '400': 400, '700': 700 });
+  });
+
   it('loads oblique faces only when visible content uses italic', () => {
     const resume = createExample();
     expect(needsItalicFonts(resume)).toBe(false);

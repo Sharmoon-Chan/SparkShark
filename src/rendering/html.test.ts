@@ -6,6 +6,7 @@ import { FIELD_SPECS, ITEM_KINDS } from '../domain/registry';
 import { renderResumeHtml } from './html';
 import { defaultContentLayout } from '../domain/contentLayout';
 import { TEMPLATES } from '../domain/templates';
+import { RESUME_TYPE_SCALE } from '../domain/typography';
 
 type HtmlNode = DefaultTreeAdapterTypes.Node;
 const nodes = (node: HtmlNode): HtmlNode[] => [node, ...('childNodes' in node ? node.childNodes.flatMap(nodes) : [])];
@@ -14,6 +15,25 @@ const attr = (node: DefaultTreeAdapterTypes.Element, name: string) => node.attrs
 const text = (node: HtmlNode): string => 'value' in node ? node.value : 'childNodes' in node ? node.childNodes.map(text).join('') : '';
 
 describe('standalone HTML export', () => {
+  it('uses title hierarchy for inherited field sizes without enlarging arbitrary bold text', () => {
+    const resume = createExample(), work = resume.sections.find(section => section.kind === 'work')!;
+    work.contentLayout = defaultContentLayout(work);
+    work.contentLayout.fields.find(field => field.key === 'company')!.emphasis = 'normal';
+    work.contentLayout.fields.find(field => field.key === 'position')!.emphasis = 'bold';
+    const fields = elements(renderResumeHtml(resume), 'div').filter(node => attr(node, 'data-field-key'));
+    const company = fields.find(node => attr(node, 'data-field-key') === 'company')!;
+    const position = fields.find(node => attr(node, 'data-field-key') === 'position')!;
+    expect(attr(company, 'style')).toContain('font-size:16px;');
+    expect(attr(company, 'style')).toContain('font-weight:400;');
+    expect(attr(position, 'style')).toContain('font-size:14px;');
+    expect(attr(position, 'style')).toContain('font-weight:700;');
+    for (const template of TEMPLATES) {
+      const html = renderResumeHtml(applyTemplate(resume, template.id));
+      expect(html).toContain(`.resume-section h2{font-size:${RESUME_TYPE_SCALE.section}em;`);
+      expect(html).toContain(`.item-name{font-size:${RESUME_TYPE_SCALE.entry}em;`);
+      expect(html).not.toMatch(/font-size:1\.(?:16|22)em/);
+    }
+  });
   it('applies field typography without changing content, links or rich inline formatting', () => {
     const resume = createExample(), work = resume.sections.find(section => section.kind === 'work')!;
     if (work.kind !== 'work') throw new Error('fixture');
