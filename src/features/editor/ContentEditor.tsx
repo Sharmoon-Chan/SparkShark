@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useId, useLayoutEffect, useRef, useState } from 'react';
 import { DndContext, KeyboardSensor, PointerSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, arrayMove, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Award, BadgeCheck, BookOpen, Briefcase, Building2, ChevronDown, ChevronRight, Contact, Copy, Folder, GraduationCap, GripVertical, Heart, Languages, Layers, Pencil, Plus, SlidersHorizontal, Trash2, UserRound, Wrench, X } from 'lucide-react';
+import { ArrowDown, ArrowUp, Award, BadgeCheck, BookOpen, Briefcase, Building2, ChevronDown, ChevronRight, Contact, Copy, Folder, GraduationCap, GripVertical, Heart, Languages, Layers, Pencil, Plus, SlidersHorizontal, Trash2, UserRound, Wrench, X } from 'lucide-react';
 import type { Basics, CustomSection, FieldValue, ItemKind, Resume, RichDocument, Section, SectionKind } from '../../domain/types';
 import { CUSTOM_FIELD_TYPES, FIELD_SPECS, LEVEL_LABELS, SECTION_ORDER, sectionTitle } from '../../domain/registry';
 import { emptyRich, itemName, newItem, newSection, uid } from '../../domain/resume';
@@ -12,6 +12,7 @@ import { RichEditor } from './RichEditor';
 import { AvatarDialog } from './AvatarDialog';
 import { ContentLayoutDialog } from './ContentLayoutDialog';
 import { addSchoolAndMajor, basicFieldKind, COMMON_SCHOOLS } from '../../domain/basicFields';
+import './content-actions.css';
 
 const icons = { summary: UserRound, profiles: Contact, education: GraduationCap, work: Briefcase, projects: Folder, internships: Building2, skills: Wrench, languages: Languages, awards: Award, certifications: BadgeCheck, interests: Heart, publications: BookOpen, volunteer: Heart, references: Contact, custom: Layers };
 export function SectionIcon({ kind, size = 18 }: { kind: SectionKind; size?: number }) { const Icon = icons[kind]; return <Icon size={size} />; }
@@ -59,21 +60,73 @@ export function BasicsEditor({ resume, idPrefix = 'basics', highlighted = false 
     <AvatarDialog open={photoOpen} onClose={() => setPhotoOpen(false)} resume={resume} />
   </section>;
 }
-function ItemEditor({ section, itemId, open, onToggle }: { section: Exclude<Section, { kind: 'summary' }>; itemId: string; open: boolean; onToggle: () => void }) {
+function ItemEditor({ section, resumeId, itemId, open, onOpen, onToggle, onClose }: { section: Exclude<Section, { kind: 'summary' }>; resumeId: string; itemId: string; open: boolean; onOpen: (id: string) => void; onToggle: () => void; onClose: () => void }) {
   const update = useApp(state => state.update), epoch = useApp(state => state.contentEpoch);
   const item = section.items.find(item => item.id === itemId)!;
+  const index = section.items.findIndex(item => item.id === itemId);
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: itemId });
-  const [deleteOpen, setDeleteOpen] = useState(false);
-  const setValue = (key: string, value: FieldValue) => update(next => editSection(next, section.id, current => { if (current.kind === 'summary') return; const found = current.items.find(item => item.id === itemId)!; if ('fields' in found) found.fields[key] = value; else found.values[key] = value as string | string[] | RichDocument; }));
-  const duplicate = () => { const clone = structuredClone(item); clone.id = uid('item'); update(next => editSection(next, section.id, current => { if (current.kind === 'summary') return; (current.items as typeof item[]).splice(current.items.findIndex(item => item.id === itemId) + 1, 0, clone); })); useApp.getState().notify({ message: '已复制这条经历' }); };
+  const [deleteOpen, setDeleteOpen] = useState(false), [finishing, setFinishing] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null), focusAfterClose = useRef(false);
+  const bodyId = useId(), toggleId = useId();
+  useLayoutEffect(() => { if (!open && focusAfterClose.current) { focusAfterClose.current = false; toggle.current?.focus({ preventScroll: true }); } }, [open]);
+  const editItem = (edit: (found: typeof item) => void) => {
+    if (useApp.getState().current?.id !== resumeId) return;
+    update(next => editSection(next, section.id, current => { if (current.kind === 'summary') return; const found = current.items.find(item => item.id === itemId); if (found) edit(found as typeof item); }));
+  };
+  const setValue = (key: string, value: FieldValue) => editItem(found => { if ('fields' in found) found.fields[key] = value; else found.values[key] = value as string | string[] | RichDocument; });
+  const duplicate = () => {
+    const clone = structuredClone(item); clone.id = uid('item');
+    update(next => { if (next.id !== resumeId) return; editSection(next, section.id, current => { if (current.kind === 'summary') return; const index = current.items.findIndex(item => item.id === itemId); if (index >= 0) (current.items as typeof item[]).splice(index + 1, 0, clone); }); });
+    onOpen(clone.id);
+    useApp.getState().notify({ message: '已复制条目，可直接修改副本' });
+  };
+  const move = (direction: number) => {
+    update(next => { if (next.id !== resumeId) return; editSection(next, section.id, current => {
+      if (current.kind === 'summary') return;
+      const from = current.items.findIndex(item => item.id === itemId), to = from + direction;
+      if (from >= 0 && to >= 0 && to < current.items.length) current.items = arrayMove(current.items as typeof item[], from, to) as never;
+    }); });
+    useApp.getState().notify({ message: direction < 0 ? '条目已上移' : '条目已下移' });
+  };
+  const changeVisibility = () => {
+    const previous = item.visible;
+    editItem(found => { found.visible = !previous; });
+    useApp.getState().notify({ message: previous ? '条目已隐藏，内容保留' : '条目已显示', action: { label: '撤销', run: () => editItem(found => { found.visible = previous; }) } });
+  };
+  const finish = async () => {
+    setFinishing(true);
+    try {
+      const success = await useApp.getState().flush();
+      if (useApp.getState().current?.id !== resumeId) return;
+      if (!success) { useApp.getState().notify({ message: '内容尚未保存，已保留当前编辑。请重试保存或下载草稿。', error: true }); return; }
+      if (useApp.getState().dirty) { useApp.getState().notify({ message: '新修改正在保存，稍后可完成编辑。' }); return; }
+      focusAfterClose.current = true; onClose();
+    } catch {
+      if (useApp.getState().current?.id === resumeId) useApp.getState().notify({ message: '内容尚未保存，已保留当前编辑。请重试保存或下载草稿。', error: true });
+    } finally { setFinishing(false); }
+  };
   const specs = section.kind === 'custom' ? section.fieldDefinitions.filter(field => field.visible).map(field => ({ key: field.id, label: field.label, type: CUSTOM_FIELD_TYPES.find(type => type.value === field.type)!.editor, placeholder: undefined })) : FIELD_SPECS[section.kind];
   const values = 'fields' in item ? item.fields : item.values;
-  return <div ref={setNodeRef} style={{ transform: CSS.Transform.toString(transform), transition }} className={`item-card ${!item.visible ? 'is-hidden' : ''}`}><div className="item-heading"><button type="button" className="drag-handle" aria-label={`拖动 ${itemName(section, itemId)}`} {...attributes} {...listeners}><GripVertical size={16} /></button><button type="button" className="item-toggle" onClick={onToggle} aria-expanded={open}>{open ? <ChevronDown size={15} /> : <ChevronRight size={15} />}<span>{itemName(section, itemId)}</span>{!item.visible && <small>已隐藏</small>}</button><Menu label={`条目操作 ${itemName(section, itemId)}`} items={[
-    { label: '复制条目', icon: <Copy size={14} />, onClick: duplicate }, { label: item.visible ? '隐藏条目' : '显示条目', onClick: () => update(next => editSection(next, section.id, current => { if (current.kind !== 'summary') current.items.find(item => item.id === itemId)!.visible = !item.visible; })) }, { label: '删除条目', icon: <Trash2 size={14} />, danger: true, onClick: () => setDeleteOpen(true) },
-  ]} /></div>{open && <div className="item-body"><div className="form-grid">{specs.map(spec => <ValueEditor key={spec.key} label={spec.label} type={spec.type} placeholder={spec.placeholder} value={values[spec.key]} id={`item-${itemId}-${spec.key}`} epoch={epoch} onChange={value => setValue(spec.key, value)} />)}</div><div className="item-actions"><Button secondary onClick={() => { onToggle(); void useApp.getState().flush(); }}>完成编辑</Button></div></div>}
-    <Modal open={deleteOpen} onClose={() => setDeleteOpen(false)} title="删除这条经历？" description="删除前会保存历史版本，也可以立即撤销。"><div className="modal-body"><div className="modal-actions"><Button secondary onClick={() => setDeleteOpen(false)}>取消</Button><Button onClick={async () => { const index = section.items.indexOf(item as never); const success = await useApp.getState().tracked('删除条目', next => editSection(next, section.id, current => { if (current.kind !== 'summary') current.items = current.items.filter(item => item.id !== itemId) as never; })); if (!success) return; setDeleteOpen(false); useApp.getState().notify({ message: '条目已删除', action: { label: '撤销', run: () => update(next => editSection(next, section.id, current => { if (current.kind !== 'summary') (current.items as typeof item[]).splice(index, 0, item); })) } }); }}>删除条目</Button></div></div></Modal>
+  return <div ref={setNodeRef} data-item-id={itemId} style={{ transform: CSS.Transform.toString(transform), transition }} className={`item-card ${!item.visible ? 'is-hidden' : ''}`}>
+    <div className="item-heading"><button type="button" className="drag-handle" aria-label={`拖动 ${itemName(section, itemId)}`} {...attributes} {...listeners}><GripVertical size={16} /></button><button ref={toggle} id={toggleId} type="button" className="item-toggle" onClick={onToggle} aria-expanded={open} aria-controls={bodyId} title={`${open ? '收起' : '展开'} ${itemName(section, itemId)}`}>{open ? <ChevronDown size={15} /> : <ChevronRight size={15} />}<span>{itemName(section, itemId)}</span>{!item.visible && <small>已隐藏</small>}</button><Menu label={`条目操作 ${itemName(section, itemId)}`} items={[
+      { label: '复制条目', icon: <Copy size={14} />, onClick: duplicate },
+      { label: '上移条目', icon: <ArrowUp size={14} />, disabled: index === 0, onClick: () => move(-1) },
+      { label: '下移条目', icon: <ArrowDown size={14} />, disabled: index === section.items.length - 1, onClick: () => move(1) },
+      { label: item.visible ? '隐藏条目' : '显示条目', onClick: changeVisibility },
+      { label: '删除条目', icon: <Trash2 size={14} />, danger: true, onClick: () => setDeleteOpen(true) },
+    ]} /></div>
+    <div id={bodyId} className="item-body" hidden={!open} aria-labelledby={toggleId}>{open && <><div className="form-grid">{specs.map(spec => <ValueEditor key={spec.key} label={spec.label} type={spec.type} placeholder={spec.placeholder} value={values[spec.key]} id={`item-${itemId}-${spec.key}`} epoch={epoch} onChange={value => setValue(spec.key, value)} />)}</div><div className="item-actions"><Button secondary loading={finishing} onClick={() => void finish()}>完成编辑</Button></div></>}</div>
+    <Modal open={deleteOpen} onClose={() => setDeleteOpen(false)} title="删除这条经历？" description="删除前会保存历史版本，也可以立即撤销。"><div className="modal-body"><div className="modal-actions"><Button secondary onClick={() => setDeleteOpen(false)}>取消</Button><Button onClick={async () => {
+      const removed = structuredClone(item);
+      const index = section.items.findIndex(item => item.id === itemId);
+      const success = await useApp.getState().tracked('删除条目', next => { if (next.id !== resumeId) return; editSection(next, section.id, current => { if (current.kind !== 'summary') current.items = current.items.filter(item => item.id !== itemId) as never; }); });
+      if (!success) return;
+      setDeleteOpen(false);
+      useApp.getState().notify({ message: '条目已删除', action: { label: '撤销', run: () => update(next => { if (next.id !== resumeId) return; editSection(next, section.id, current => { if (current.kind !== 'summary' && !current.items.some(item => item.id === itemId)) (current.items as typeof item[]).splice(Math.max(0, index), 0, removed); }); }) } });
+    }}>删除条目</Button></div></div></Modal>
   </div>;
 }
+
 function CustomFieldsDialog({ section, open, onClose }: { section: CustomSection; open: boolean; onClose: () => void }) {
   const update = useApp(state => state.update);
   return <Modal open={open} onClose={onClose} title="配置自定义字段" description="隐藏字段保留内容，修改名称不会改变已有数据。"><div className="modal-body"><div className="custom-definition-list">{section.fieldDefinitions.map(field => <div className="custom-definition" key={field.id}><input aria-label="字段显示名称" value={field.label} onChange={event => update(next => editSection(next, section.id, current => { if (current.kind === 'custom') current.fieldDefinitions.find(item => item.id === field.id)!.label = event.target.value; }))} /><span>{CUSTOM_FIELD_TYPES.find(type => type.value === field.type)?.label}</span><Toggle label={`显示字段 ${field.label}`} checked={field.visible} onChange={visible => update(next => editSection(next, section.id, current => { if (current.kind === 'custom') current.fieldDefinitions.find(item => item.id === field.id)!.visible = visible; }))} /><IconButton label={`删除字段 ${field.label}`} onClick={async () => { const index = section.fieldDefinitions.indexOf(field), oldValues = new Map(section.items.map(item => [item.id, item.values[field.id]])); const success = await useApp.getState().tracked('删除自定义字段', next => editSection(next, section.id, current => { if (current.kind === 'custom') { current.fieldDefinitions = current.fieldDefinitions.filter(item => item.id !== field.id); current.items.forEach(item => { delete item.values[field.id]; }); } })); if (!success) return; useApp.getState().notify({ message: '自定义字段已移除', action: { label: '撤销', run: () => update(next => editSection(next, section.id, current => { if (current.kind === 'custom') { current.fieldDefinitions.splice(index, 0, field); current.items.forEach(item => { const value = oldValues.get(item.id); if (value !== undefined) item.values[field.id] = value; }); } })) } }); }}><X size={15} /></IconButton></div>)}</div><Field label="新增字段"><select defaultValue="" onChange={event => { if (!event.target.value) return; const type = CUSTOM_FIELD_TYPES.find(type => type.value === event.target.value)!; update(next => editSection(next, section.id, current => { if (current.kind === 'custom') current.fieldDefinitions.push({ id: uid('field'), type: type.value, label: type.label, visible: true }); })); event.target.value = ''; }}><option value="">选择字段类型</option>{CUSTOM_FIELD_TYPES.map(type => <option key={type.value} value={type.value}>{type.label}</option>)}</select></Field><div className="modal-actions"><Button onClick={onClose}>完成</Button></div></div></Modal>;
@@ -81,24 +134,52 @@ function CustomFieldsDialog({ section, open, onClose }: { section: CustomSection
 function SectionEditor({ section, resume, highlighted = false }: { section: Section; resume: Resume; highlighted?: boolean }) {
   const update = useApp(state => state.update), epoch = useApp(state => state.contentEpoch);
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
+  const element = useRef<HTMLElement>(null);
+  const [focusRequest, setFocusRequest] = useState<{ itemId: string } | null>(null);
+  const openAndFocus = (itemId: string) => { setOpenItems(previous => new Set([...previous, itemId])); setFocusRequest({ itemId }); };
+  useLayoutEffect(() => {
+    if (!focusRequest || !element.current) return;
+    const root = element.current;
+    let frame = 0, observer: MutationObserver | undefined, done = false;
+    const focusField = () => {
+      if (done || !root.isConnected) return;
+      const card = Array.from(root.querySelectorAll<HTMLElement>('[data-item-id]')).find(card => card.dataset.itemId === focusRequest.itemId);
+      const field = card?.querySelector<HTMLElement>('.item-body input:not([disabled]),.item-body textarea:not([disabled]),.item-body select:not([disabled]),.item-body [contenteditable="true"]');
+      if (!field || !field.getClientRects().length) return;
+      done = true; observer?.disconnect(); card?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+      field.focus({ preventScroll: true }); setFocusRequest(null);
+    };
+    // Dropdowns return focus to their trigger while closing. Defer the new
+    // field focus until that transition has finished; rich editors may mount later.
+    frame = requestAnimationFrame(() => { frame = requestAnimationFrame(focusField); });
+    observer = new MutationObserver(() => { if (!done) { cancelAnimationFrame(frame); frame = requestAnimationFrame(focusField); } });
+    observer.observe(root, { childList: true, subtree: true });
+    return () => { done = true; cancelAnimationFrame(frame); observer?.disconnect(); };
+  }, [focusRequest, openItems]);
   const [renaming, setRenaming] = useState(false), [configure, setConfigure] = useState(false), [deleteOpen, setDeleteOpen] = useState(false);
   const [layoutOpen, setLayoutOpen] = useState(false);
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }), useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }));
   const title = sectionTitle(section);
+  const changeVisibility = (visible: boolean) => {
+    const previous = section.visible;
+    const setVisibility = (value: boolean) => update(next => { if (next.id === resume.id) editSection(next, section.id, current => { current.visible = value; }); });
+    setVisibility(visible);
+    useApp.getState().notify({ message: visible ? `${title || '模块'}已显示` : `${title || '模块'}已隐藏，内容保留`, action: { label: '撤销', run: () => setVisibility(previous) } });
+  };
   const addItem = () => {
     if (section.kind === 'summary') return;
     const item = section.kind === 'custom' ? { id: uid('item'), visible: true, values: Object.fromEntries(section.fieldDefinitions.map(field => [field.id, field.type === 'summary' ? emptyRich() : field.type === 'keywords' ? [] : ''])) } : newItem(section.kind);
     update(next => editSection(next, section.id, current => { if (current.kind !== 'summary') (current.items as typeof item[]).push(item); }));
-    setOpenItems(previous => new Set([...previous, item.id]));
+    openAndFocus(item.id);
   };
-  return <section className={`section-card ${!section.visible ? 'is-hidden' : ''} ${highlighted ? 'preview-edit-target' : ''}`} id={section.kind === "custom" ? `section-custom-${section.id}` : `section-${section.kind}`} data-section-id={section.id}><div className="section-header"><SectionIcon kind={section.kind} />{renaming ? <input className="title-edit" aria-label="模块标题" autoFocus value={section.titleOverride ?? title} onChange={event => update(next => editSection(next, section.id, current => { current.titleOverride = event.target.value; }))} onBlur={() => setRenaming(false)} onKeyDown={event => { if (event.key === 'Enter' || event.key === 'Escape') setRenaming(false); }} /> : <h2>{title || '未命名模块'}</h2>}<IconButton label={`重命名${title}`} className="header-edit" onClick={() => setRenaming(true)}><Pencil size={13} /></IconButton><span className="header-spacer" /><button type="button" className={`content-layout-trigger ${section.contentLayout ? 'has-layout' : ''}`} aria-label={`${title}模块内排版`} title="模块内排版" onClick={() => setLayoutOpen(true)}><SlidersHorizontal size={12} />模块内排版</button><Toggle label={`显示${title}`} checked={section.visible} onChange={visible => update(next => editSection(next, section.id, current => { current.visible = visible; }))} /><Menu label={`${title}模块操作`} items={[
+  return <section ref={element} className={`section-card ${!section.visible ? 'is-hidden' : ''} ${highlighted ? 'preview-edit-target' : ''}`} id={section.kind === "custom" ? `section-custom-${section.id}` : `section-${section.kind}`} data-section-id={section.id}><div className="section-header"><SectionIcon kind={section.kind} />{renaming ? <input className="title-edit" aria-label="模块标题" autoFocus value={section.titleOverride ?? title} onChange={event => update(next => editSection(next, section.id, current => { current.titleOverride = event.target.value; }))} onBlur={() => setRenaming(false)} onKeyDown={event => { if (event.key === 'Enter' || event.key === 'Escape') setRenaming(false); }} /> : <h2>{title || '未命名模块'}</h2>}<IconButton label={`重命名${title}`} className="header-edit" onClick={() => setRenaming(true)}><Pencil size={13} /></IconButton><span className="header-spacer" />{section.kind !== 'summary' && <button type="button" className="section-add-item" aria-label={`新增${title || '模块'}条目`} title={`新增${title || '模块'}条目`} onClick={addItem}><Plus size={14} /><span>新增</span></button>}<button type="button" className={`content-layout-trigger ${section.contentLayout ? 'has-layout' : ''}`} aria-label={`${title}模块内排版`} title="模块内排版" onClick={() => setLayoutOpen(true)}><SlidersHorizontal size={12} /><span>模块内排版</span></button><Toggle label={`显示${title}`} checked={section.visible} onChange={changeVisibility} /><Menu label={`${title}模块操作`} items={[
       ...(section.kind === 'summary' ? [] : [{ label: '新增条目', icon: <Plus size={14} />, onClick: addItem }]),
       { label: '修改标题', icon: <Pencil size={14} />, onClick: () => setRenaming(true) },
       { label: '模块内排版', icon: <SlidersHorizontal size={14} />, onClick: () => setLayoutOpen(true) },
       ...(section.kind === 'custom' ? [{ label: '配置字段', onClick: () => setConfigure(true) }] : []),
       { label: '删除模块', icon: <Trash2 size={14} />, danger: true, onClick: () => setDeleteOpen(true) },
     ]} /></div>
-    {section.kind === 'summary' ? <RichEditor value={section.content} label="个人总结" epoch={epoch} onChange={content => update(next => editSection(next, section.id, current => { if (current.kind === 'summary') current.content = content; }))} /> : <><DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={({ active, over }) => { if (!over || active.id === over.id) return; update(next => editSection(next, section.id, current => { if (current.kind !== 'summary') { const items = current.items; current.items = arrayMove(items as { id: string; visible: boolean }[], items.findIndex(item => item.id === active.id), items.findIndex(item => item.id === over.id)) as never; } })); }}><SortableContext items={section.items.map(item => item.id)} strategy={verticalListSortingStrategy}>{section.items.map(item => <ItemEditor key={item.id} section={section} itemId={item.id} open={openItems.has(item.id)} onToggle={() => setOpenItems(previous => { const next = new Set(previous); if (next.has(item.id)) next.delete(item.id); else next.add(item.id); return next; })} />)}</SortableContext></DndContext><button type="button" className="add-dashed" onClick={addItem}><Plus size={15} />新增{title.replace(/背景|经历/g, '') || '条目'}</button></>}
+    {section.kind === 'summary' ? <RichEditor value={section.content} label="个人总结" epoch={epoch} onChange={content => update(next => editSection(next, section.id, current => { if (current.kind === 'summary') current.content = content; }))} /> : <><DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={({ active, over }) => { if (!over || active.id === over.id) return; update(next => editSection(next, section.id, current => { if (current.kind !== 'summary') { const items = current.items; current.items = arrayMove(items as { id: string; visible: boolean }[], items.findIndex(item => item.id === active.id), items.findIndex(item => item.id === over.id)) as never; } })); }}><SortableContext items={section.items.map(item => item.id)} strategy={verticalListSortingStrategy}>{section.items.map(item => <ItemEditor key={item.id} section={section} resumeId={resume.id} itemId={item.id} open={openItems.has(item.id)} onOpen={openAndFocus} onClose={() => setOpenItems(previous => { const next = new Set(previous); next.delete(item.id); return next; })} onToggle={() => setOpenItems(previous => { const next = new Set(previous); if (next.has(item.id)) next.delete(item.id); else next.add(item.id); return next; })} />)}</SortableContext></DndContext><button type="button" className="add-dashed" onClick={addItem}><Plus size={15} />新增{title.replace(/背景|经历/g, '') || '条目'}</button></>}
     {section.kind === 'custom' && <CustomFieldsDialog section={section} open={configure} onClose={() => setConfigure(false)} />}
     <ContentLayoutDialog section={section} pageFontSizePx={resume.appearance.fontSizePx} open={layoutOpen} onClose={() => setLayoutOpen(false)} />
     <Modal open={deleteOpen} onClose={() => setDeleteOpen(false)} title={`删除${title || '模块'}？`} description="模块内容会被移除，删除前保存历史版本。"><div className="modal-body"><div className="modal-actions"><Button secondary onClick={() => setDeleteOpen(false)}>取消</Button><Button onClick={async () => {

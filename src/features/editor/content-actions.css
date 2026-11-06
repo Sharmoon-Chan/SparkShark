@@ -1,0 +1,7 @@
+.section-header .section-add-item{display:inline-flex;align-items:center;justify-content:center;gap:4px;flex-shrink:0;min-height:28px;padding:4px 8px;border:1px solid #dce7e0;border-radius:5px;background:#f6faf7;color:#176b50;font-size:12px;line-height:1.4;white-space:nowrap}
+.section-header .section-add-item:hover{background:#eaf4ed;border-color:#9dc5af}
+.section-header .content-layout-trigger{white-space:nowrap}
+.item-heading .item-toggle:focus-visible{outline:2px solid #16885d;outline-offset:3px;border-radius:3px}
+.item-body[hidden]{display:none}
+.item-card[data-item-id]{scroll-margin-block:14px}
+@container(max-width:480px){.section-header .section-add-item{padding:5px;min-width:28px}.section-header .section-add-item>span,.section-header .content-layout-trigger>span{display:none}.section-header .content-layout-trigger{width:28px;min-width:28px;height:28px;padding:5px;justify-content:center}.section-header h2{overflow-wrap:anywhere}}
