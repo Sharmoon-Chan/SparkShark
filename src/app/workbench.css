@@ -1,0 +1,82 @@
+/* The workbench uses neutral surfaces; resume colors live in its own renderer. */
+.app-shell {
+  --workbench-text: #263240;
+  --workbench-muted: #657181;
+  --border: #e2e6ea;
+  --muted: #657181;
+  color: var(--workbench-text);
+  background: #fff;
+}
+.app-shell .sidebar { background: #f8f9fa; border-color: var(--border); }
+.app-shell .sidebar nav>a, .app-shell .sidebar nav>button { color: #536170; }
+.app-shell .sidebar nav>a:hover, .app-shell .sidebar nav>button:hover { background: #edf0f2; }
+.app-shell .sidebar nav .active { color: #126c4e; background: #e8f2ed; }
+.app-shell .nav-label, .app-shell .sidebar-note span { color: #74808c; }
+.app-shell .sidebar-note { color: #657181; }
+.app-shell .sidebar-note strong { color: #536170; }
+.app-shell .cloud-sidebar-account { border-color: var(--border); }
+.app-shell .cloud-sidebar-account strong { color: #263240; }
+.app-shell .cloud-sidebar-account small { color: #657181; }
+.app-shell .sidebar-account-avatar { background: #e8efeb; color: #176f52; }
+
+.app-shell .editor-topbar { border-color: var(--border); gap: 10px; }
+.app-shell .resume-title-input { color: #263240; font-size: 14px; font-weight: 600; }
+.app-shell .locale-select { background: #fff; color: #536170; border-color: var(--border); }
+.app-shell .save-indicator { font-size: 11px; }
+.app-shell .save-indicator.saved { color: #26735a; }
+.app-shell .save-indicator.pending, .app-shell .save-indicator.saving { color: #657181; }
+.app-shell .save-indicator.failed, .app-shell .save-indicator.conflict { color: #a06018; }
+.app-shell .cloud-status.local, .app-shell .cloud-status.syncing { color: #657181; }
+.app-shell .editor-panel { border-color: var(--border); }
+.app-shell .panel-content { scrollbar-color: #cbd2d9 transparent; }
+.app-shell .compact-completeness { display:flex; align-items:center; gap:12px; min-height:46px; padding:8px 24px; border-bottom:1px solid #edf0f2; color:#657181; font-size:12px; }
+.app-shell .compact-completeness>span { white-space:nowrap; }
+.app-shell .compact-completeness strong { color:#263240; font-weight:600; font-size:12px; margin-left:4px; }
+.app-shell .compact-completeness .completeness-track { flex:1; max-width:100px; margin:0; height:3px; background:#e9edf0; }
+.app-shell .compact-completeness .completeness-track>span { background:#48a880; }
+.app-shell .compact-completeness .check-button { margin-left:auto; padding:5px 0 5px 8px; color:#536170; background:transparent; font-size:12px; }
+.app-shell .compact-completeness .check-button:hover { color:#126c4e; }
+.app-shell .check-count { display:inline-flex; align-items:center; justify-content:center; min-width:18px; height:18px; border-radius:9px; background:#fff3df; color:#8a5717; font-size:10px; }
+
+.app-shell .editor-panel .section-card { border-color:#e8ecef; }
+.app-shell .editor-panel .panel-heading h2, .app-shell .editor-panel .section-header h2 { color:#263240; }
+.app-shell .editor-panel .panel-heading p, .app-shell .editor-panel .helper-text { color:#657181; }
+.app-shell .editor-panel .field>label, .app-shell .editor-panel .range-setting>label, .app-shell .editor-panel .setting-row { color:#536170; }
+.app-shell .editor-panel .field input:not([type=range]):not([type=color]), .app-shell .editor-panel .field select, .app-shell .editor-panel .field textarea { color:#263240; border-color:#dfe4e9; background:#fff; }
+.app-shell .editor-panel input::placeholder, .app-shell .editor-panel textarea::placeholder { color:#7a8590; }
+.app-shell .editor-panel .rich-content { color:#263240; }
+.app-shell .editor-panel .rich-toolbar { background:#f7f8fa; border-color:#e5e9ed; }
+.app-shell .editor-panel .rich-toolbar button { color:#657181; }
+.app-shell .editor-panel .rich-toolbar button.active { background:#e6f2eb; color:#126c4e; }
+.app-shell .editor-panel .item-card, .app-shell .editor-panel .rich-editor { border-color:#e2e6ea; }
+.app-shell .editor-panel .item-toggle { color:#354352; }
+.app-shell .editor-panel .item-toggle>small { color:#74808c; }
+.app-shell .editor-panel .setting-block>h3 { color:#354352; }
+.app-shell .editor-panel .segmented { background:#f1f3f5; }
+.app-shell .editor-panel .segmented button { color:#596777; }
+.app-shell .editor-panel .segmented button.active { color:#146c50; background:#fff; }
+.app-shell .editor-panel .range-setting input[type=number] { color:#354352; border-color:#dfe4e9; }
+.app-shell .editor-panel .text-button { color:#536d61; }
+.app-shell .editor-panel .layout-column { border-color:#e1e6eb; background:#fafbfc; }
+.app-shell .editor-panel .layout-column>h3, .app-shell .editor-panel .layout-row { color:#354352; }
+.app-shell .editor-panel .layout-column h3 small { color:#657181; }
+
+.app-shell .preview-pane, .app-shell .preview-pane>.preview { background:#f1f3f5; }
+.app-shell .preview-scroll { scrollbar-color:#cbd2d9 transparent; }
+.app-shell .preview-toolbar { background:#fff; border-color:#e1e6eb; }
+.app-shell .preview-toolbar .icon-button { color:#536170; }
+.app-shell .preview-toolbar .icon-button:hover { background:#edf2ef; color:#126c4e; }
+.app-shell .zoom-controls select { color:#536170; font-size:11px; }
+.app-shell .toolbar-divider { background:#e1e6eb; }
+.app-shell .pdf-paper { border-color:#e2e6ea; box-shadow:0 2px 12px #15253514; }
+.app-shell .preview-placeholder { color:#657181; }
+.app-shell .preview-placeholder small { color:#74808c; }
+.app-shell .mobile-view-tabs { background:#fff; border-color:#e2e6ea; }
+.app-shell .mobile-view-tabs button { color:#657181; font-size:12px; }
+.app-shell .mobile-view-tabs button.active { color:#126c4e; border-color:#16885d; }
+.app-shell>.mobile-menu { background:#fff; border-color:#e1e6eb; color:#536170; }
+@media(max-width:700px) {
+  .app-shell .editor-topbar { gap:6px; }
+  .app-shell .resume-title-input { font-size:12px; }
+  .app-shell .compact-completeness { padding:8px 17px; gap:10px; }
+}

@@ -13,6 +13,7 @@ import { AuthDialog } from '../cloud/AccountUI';
 import { CloudPage } from '../cloud/CloudPage';
 import { AdminPage } from '../cloud/AdminPage';
 import '../cloud/cloud.css';
+import './workbench.css';
 
 export default function App() {
   const ownershipReady = useCloud(state => state.ownershipReady);

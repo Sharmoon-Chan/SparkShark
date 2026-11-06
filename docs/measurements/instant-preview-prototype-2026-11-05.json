@@ -1,0 +1,53 @@
+{
+  "recordedOn": "2026-11-05",
+  "status": "Locally verified; committed in functional batches on 2026-11-06; not deployed",
+  "baselineCommit": "28aafb7536b8fcc28f52a89edac114fd254f5135",
+  "environment": "Local Chrome against Vite production preview; synthetic browser-local example; PDF-specific scripts and full font requests intercepted and denied during instant-mode test",
+  "sampleCountPerTiming": 1,
+  "timingsMs": {
+    "openEditor": 316,
+    "textEdit": 151,
+    "templateSwitch": 180
+  },
+  "requestCountsBeforeExplicitPdf": {
+    "pdfEngineAndFullFonts": 0
+  },
+  "staticTemplatePreviews": {
+    "count": 16,
+    "format": "WebP",
+    "width": 480,
+    "height": 679,
+    "totalBytes": 241572
+  },
+  "computedTypography": {
+    "body": {
+      "px": 14,
+      "weight": 400
+    },
+    "entry": {
+      "px": 16,
+      "weight": 700
+    },
+    "sectionEssential": {
+      "px": 20,
+      "weight": 600
+    }
+  },
+  "validation": {
+    "unitTestFiles": 30,
+    "unitTests": 181,
+    "staticImagesIndependentOfData": true,
+    "exactPdfMode": true,
+    "pdfDownload": true,
+    "mobileViewportPx": 375,
+    "mobileHorizontalOverflow": false,
+    "sourceHanNativeRegular": 400,
+    "sourceHanBold": 700
+  },
+  "limitations": [
+    "Not a production-network benchmark or controlled before/after study.",
+    "Instant preview uses system fonts and continuous logical layout groups, not exact PDF pagination.",
+    "Field dragging, final fonts and final page counts are checked in explicit PDF mode."
+  ],
+  "script": "tests/browser/preview-performance.js"
+}

@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-06",
+  "stage": 1,
+  "status": "Locally verified; committed in functional batches on 2026-11-06; not deployed",
+  "environment": "Vite production preview, isolated Chrome session, same synthetic resume",
+  "desktopViewport": {
+    "width": 1440,
+    "height": 980
+  },
+  "geometry": {
+    "before": {
+      "paperTopPx": 229,
+      "templateTopPx": 386.7,
+      "templateColumns": 2,
+      "completenessHeightPx": 91.8
+    },
+    "after": {
+      "paperTopPx": 136,
+      "templateTopPx": 217.2,
+      "templateColumns": 3,
+      "completenessHeightPx": 46
+    }
+  },
+  "responsiveTemplateColumns": {
+    "1920": 5,
+    "1440": 3,
+    "1024": 5,
+    "768": 4,
+    "375": 2
+  },
+  "checks": {
+    "templateCount": 16,
+    "filterCounts": [
+      8,
+      8
+    ],
+    "keyboardTemplateSelection": true,
+    "helpDialogEscapeAndFocusReturn": true,
+    "localSaveAndCompletenessDialog": true,
+    "pdfRequestsDuringInstantMode": 0,
+    "explicitPdfMode": true,
+    "pdfFieldDragModeEntry": true,
+    "horizontalPageOverflow": false,
+    "buildAndTypecheck": true
+  },
+  "scopeLimitations": [
+    "Geometry comparison, not a latency benchmark.",
+    "No new remote account, cloud conflict, or export content regression was exercised for this presentation-only stage.",
+    "HTML/PDF pagination and system font differences remain for stage 2."
+  ],
+  "script": "tests/browser/workbench-stage1.js",
+  "screenshots": [
+    "output/playwright/polish-stage1-before.png",
+    "output/playwright/polish-stage1-after.png",
+    "output/playwright/polish-stage1-mobile-preview.png",
+    "output/playwright/polish-stage1-mobile-templates.png"
+  ]
+}

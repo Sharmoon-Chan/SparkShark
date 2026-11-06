@@ -26,6 +26,7 @@ PDF 引擎仍使用完整静态 TTF。浏览器通过 gzip 压缩资源传输，
 
 ## 网络交付
 
+当前即时预览使用 `browser/` 中的原生 WOFF2 字形分片与 `browser-manifest.json`，按内容和样式渐进加载，生成脚本为 `scripts/prepare-browser-fonts.py`，覆盖核验为 `scripts/verify-browser-fonts.py`。下述完整压缩 TTF 用于精确 PDF 及导出；页面设置的固定示例继续使用小型 `samples/` 字体。
 
 更新源字体后执行 `python scripts/prepare-font-delivery.py`，生成 `compressed/` 的无损压缩资源与 `samples/` 的页面设置示例子集，并更新 manifest 和 CSS。普通构建直接使用生成好的文件。压缩资源文件带内容哈希，扩展名为 `.ttf`，实际内容为 gzip，由 `src/rendering/fontDelivery.ts` 解压；不能直接交给 CSS 或 PDF 字体引擎。`public/_headers` 设置这些资源的长期缓存。
 
