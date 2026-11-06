@@ -28,6 +28,7 @@ async (page) => {
   await page.screenshot({ path: 'output/playwright/stage3-content-desktop.png', scale: 'css', animations: 'disabled' });
   await page.setViewportSize({ width: 375, height: 812 });
   await work.scrollIntoViewIfNeeded();
+  assert(await work.locator('.content-layout-trigger>svg').isVisible(), 'Mobile module layout button lost its icon');
   await page.screenshot({ path: 'output/playwright/stage3-content-mobile.png', scale: 'css', animations: 'disabled' });
   assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Narrow item controls overflow');
   await page.setViewportSize({ width: 1440, height: 980 });

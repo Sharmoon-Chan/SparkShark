@@ -4,4 +4,4 @@
 .item-heading .item-toggle:focus-visible{outline:2px solid #16885d;outline-offset:3px;border-radius:3px}
 .item-body[hidden]{display:none}
 .item-card[data-item-id]{scroll-margin-block:14px}
-@container(max-width:480px){.section-header .section-add-item{padding:5px;min-width:28px}.section-header .section-add-item>span,.section-header .content-layout-trigger>span{display:none}.section-header .content-layout-trigger{width:28px;min-width:28px;height:28px;padding:5px;justify-content:center}.section-header h2{overflow-wrap:anywhere}}
+@container(max-width:480px){.section-header .section-add-item{padding:5px;min-width:28px}.section-header .section-add-item>span,.section-header .content-layout-trigger>span{display:none}.section-header .content-layout-trigger{width:28px;min-width:28px;height:28px;padding:5px;justify-content:center}.section-header .content-layout-trigger>svg{display:block;flex-shrink:0}.section-header h2{overflow-wrap:anywhere}}
