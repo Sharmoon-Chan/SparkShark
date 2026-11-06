@@ -1,4 +1,3 @@
-import { openPdf, pdfjs } from './pdfRuntime';
 import type { Asset, RenderResult, Resume } from '../domain/types';
 import { contentHash } from '../persistence/repository';
 import { prepareAssets } from '../persistence/media';
@@ -42,8 +41,10 @@ export async function renderPdf(resume: Resume, assets: Record<string, Asset> = 
     return result;
   }, { signal, priority: options.priority });
 }
-export const loadPdf = (bytes: Uint8Array) => openPdf(bytes).promise;
+export const loadPdf = async (bytes: Uint8Array) => (await import('./pdfRuntime')).openPdf(bytes).promise;
 export async function thumbnail(bytes: Uint8Array, signal?: AbortSignal): Promise<Blob> {
+  if (signal?.aborted) throw renderCancelled();
+  const { openPdf } = await import('./pdfRuntime');
   if (signal?.aborted) throw renderCancelled();
   const loading = openPdf(bytes);
   const abort = () => { void loading.destroy(); };
@@ -60,4 +61,3 @@ export async function thumbnail(bytes: Uint8Array, signal?: AbortSignal): Promis
 }
 export function downloadBlob(blob: Blob, name: string) { const url = URL.createObjectURL(blob); const link = document.createElement('a'); link.href = url; link.download = name; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 60_000); }
 export function filename(title: string): string { let name = title.replace(/[<>:"/\\|?*\u0000-\u001F]/g, '').trim().replace(/[. ]+$/, '').slice(0, 100); if (!name) name = '简历'; if (/^(con|prn|aux|nul|com\d|lpt\d)$/i.test(name)) name += '-简历'; return name; }
-export { pdfjs };

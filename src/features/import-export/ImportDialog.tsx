@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FileJson, FileText, Upload, LoaderCircle, Eye } from 'lucide-react';
 import type { BackupEnvelope, Locale } from '../../domain/types';
@@ -7,9 +7,9 @@ import { base64ToBytes, bytesBlob, bytesToBase64, repository, sha256 } from '../
 import { imageFromBlob, normalizePhoto } from '../../persistence/media';
 import { useApp } from '../../app/store';
 import { Button, Field, Modal, Toggle, useObjectUrl } from '../../components/ui';
-import { PdfPreview } from '../preview/PdfPreview';
+const PdfPreview = lazy(() => import('../preview/PdfPreview').then(module => ({ default: module.PdfPreview })));
 import { parseBackup, parseText, resumeFromText, type TextCandidate } from './parsers';
-import { readPdfResume, type ImportedPhoto, type PdfImportResult } from './pdfImport';
+import type { ImportedPhoto, PdfImportResult } from './pdfImport';
 import type { DocxImportResult } from './docxImport';
 import { CandidateReview } from './CandidateReview';
 import { uid } from '../../domain/resume';
@@ -54,6 +54,7 @@ export function ImportDialog({ open, onClose, initial = 'pdf' }: { open: boolean
     try {
       if (/\.pdf$/i.test(file.name) || file.type === 'application/pdf') {
         setMode('pdf');
+        const { readPdfResume } = await import('./pdfImport');
         const result = await readPdfResume(file, { signal: controller.signal, onProgress: (page, total) => { if (id === requestId.current) setProgress('正在读取第 ' + page + ' / ' + total + ' 页'); } });
         if (id !== requestId.current) return;
         setPdf(result); setCandidate(result.candidate); setUsePhoto(Boolean(result.photo));
@@ -132,7 +133,7 @@ export function ImportDialog({ open, onClose, initial = 'pdf' }: { open: boolean
         <div className="pdf-import-summary"><strong>已读取 {pdf.candidate.pageCount} 页</strong><span>{candidate?.groups.length ?? 0} 个模块 · {pdf.candidate.columns === 2 ? '分栏内容' : '单栏内容'}</span></div>
         {pdf.candidate.warnings.map((warning, index) => <p className="pdf-import-warning" key={index}>{warning.message}</p>)}
         <Button secondary onClick={() => setShowOriginal(value => !value)}><Eye size={15} />{showOriginal ? '收起原 PDF' : '查看原 PDF'}</Button>
-        {showOriginal && originalPreview && <div className="import-original-preview"><PdfPreview title="原 PDF 预览" result={originalPreview} pending={false} error={null} onRetry={() => setPreviewRetry(value => value + 1)} /></div>}
+        {showOriginal && originalPreview && <div className="import-original-preview"><Suspense fallback={<LoaderCircle className="spin" />}><PdfPreview title="原 PDF 预览" result={originalPreview} pending={false} error={null} onRetry={() => setPreviewRetry(value => value + 1)} /></Suspense></div>}
         <details className="pdf-extracted-text"><summary>查看完整提取文字</summary><textarea readOnly value={pdf.candidate.sourceText} aria-label="PDF 提取原文" rows={8} /></details>
         <p className="helper-text">PDF 内容会转为可编辑字段，排版可在导入后重新选择模板。请先核对姓名、联系方式和经历条目。</p>
       </div>}
