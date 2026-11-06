@@ -1,0 +1,18 @@
+.save-status-trigger{border:0;background:none;padding:5px 3px;border-radius:5px;cursor:pointer;text-align:left;min-height:28px}
+.save-status-trigger:hover{background:#f1f5f3}
+.save-detail{font-size:13px;line-height:1.8;color:#586575}
+.app-shell .save-warning{gap:10px;flex-wrap:wrap;align-items:flex-start;color:#85591a;background:#fff8e9;border-bottom:1px solid #eedcb9}
+.app-shell .save-warning>svg{margin-top:2px}
+.app-shell .save-warning>span{min-width:160px;line-height:1.6}
+.app-shell .save-warning .save-warning-actions{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.app-shell .save-warning .save-warning-actions button{min-height:28px;font-size:12px}
+.app-shell .cloud-save-notice{display:flex;align-items:flex-start;gap:9px;padding:10px 18px;border-bottom:1px solid #eedcb9;background:#fff8e9;color:#85591a;font-size:12px;line-height:1.6}
+.cloud-save-notice>svg{margin-top:3px}
+.cloud-save-notice>div{flex:1;min-width:0}
+.cloud-save-notice strong{font-size:12px;font-weight:600}
+.cloud-save-notice p{font-size:11px;margin:3px 0 0}
+.cloud-save-notice .cloud-recovery{align-self:center;flex-shrink:0;background:none;border:0;padding:4px 0;color:#85591a;text-decoration:underline;font-size:12px;white-space:nowrap}
+.app-shell .cloud-status.pending{color:#657181}
+.app-shell .cloud-status.syncing{color:#657181}
+.app-shell .editor-topbar .cloud-status .cloud-status-label{overflow:hidden;text-overflow:ellipsis}
+@media(max-width:700px){.save-status-trigger{min-width:28px;justify-content:center}.app-shell .save-warning .save-warning-actions{width:100%;padding-left:25px}.app-shell .cloud-save-notice{padding:10px 17px}.cloud-save-notice .cloud-recovery{white-space:normal;max-width:70px}}
