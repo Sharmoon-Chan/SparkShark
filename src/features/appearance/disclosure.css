@@ -1,0 +1,23 @@
+.appearance-panel .appearance-disclosure{margin:0 0 12px;border:1px solid #e2e6ea;border-radius:8px;background:#fff;overflow:hidden}
+.appearance-panel .appearance-disclosure>summary{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:64px;padding:13px 16px;list-style:none;cursor:pointer;color:#354352}
+.appearance-panel .appearance-disclosure>summary::-webkit-details-marker{display:none}
+.appearance-panel .appearance-disclosure>summary::marker{content:""}
+.appearance-panel .appearance-disclosure>summary>span{min-width:0}
+.appearance-panel .appearance-disclosure>summary strong{display:block;font-size:13px;font-weight:600;line-height:1.5}
+.appearance-panel .appearance-disclosure>summary small{display:block;margin-top:3px;font-size:11px;line-height:1.6;color:#657181;overflow-wrap:anywhere}
+.appearance-panel .appearance-disclosure>summary>svg{flex-shrink:0;color:#74808c;transition:transform .15s}
+.appearance-panel .appearance-disclosure[open]>summary>svg{transform:rotate(180deg)}
+.appearance-panel .appearance-disclosure>summary:hover{background:#f7f9fa}
+.appearance-panel .appearance-disclosure>summary:focus-visible{outline:2px solid #16885d;outline-offset:-3px;border-radius:7px}
+.appearance-panel .appearance-disclosure[open]>summary{border-bottom:1px solid #e9edf0}
+.appearance-panel .appearance-disclosure-body{padding:20px 16px 16px}
+.appearance-panel .appearance-disclosure-body>.field{margin-bottom:20px}
+.appearance-panel .appearance-disclosure-body>.field:last-child{margin-bottom:0}
+.appearance-panel .appearance-disclosure-body .appearance-margin-note{margin-top:-11px;margin-bottom:22px;font-size:11px}
+.appearance-panel .appearance-disclosure-body .appearance-photo-note{margin:0 0 13px;font-size:12px}
+.appearance-panel .appearance-disclosure-options{border-top:1px solid #e9edf0;padding-top:15px;margin-top:4px}
+.appearance-panel .appearance-disclosure-options>h3{font-size:12px;font-weight:600;color:#536170;margin:0 0 7px}
+.appearance-panel .appearance-reset{padding-top:12px}
+.appearance-panel .appearance-reset>.button{font-size:12px;color:#657181}
+@media(max-width:480px){.appearance-panel .appearance-disclosure>summary{padding:12px;gap:10px}.appearance-panel .appearance-disclosure-body{padding:18px 12px 14px}.appearance-panel .appearance-disclosure>summary small{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.appearance-panel .appearance-disclosure>summary>svg{transition:none}}
