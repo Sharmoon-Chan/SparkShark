@@ -67,6 +67,7 @@ function ItemEditor({ section, resumeId, itemId, open, onOpen, onToggle, onClose
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: itemId });
   const [deleteOpen, setDeleteOpen] = useState(false), [finishing, setFinishing] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null), focusAfterClose = useRef(false);
+  const copiedItemToFocus = useRef<string | null>(null);
   const bodyId = useId(), toggleId = useId();
   useLayoutEffect(() => { if (!open && focusAfterClose.current) { focusAfterClose.current = false; toggle.current?.focus({ preventScroll: true }); } }, [open]);
   const editItem = (edit: (found: typeof item) => void) => {
@@ -76,6 +77,7 @@ function ItemEditor({ section, resumeId, itemId, open, onOpen, onToggle, onClose
   const setValue = (key: string, value: FieldValue) => editItem(found => { if ('fields' in found) found.fields[key] = value; else found.values[key] = value as string | string[] | RichDocument; });
   const duplicate = () => {
     const clone = structuredClone(item); clone.id = uid('item');
+    copiedItemToFocus.current = clone.id;
     update(next => { if (next.id !== resumeId) return; editSection(next, section.id, current => { if (current.kind === 'summary') return; const index = current.items.findIndex(item => item.id === itemId); if (index >= 0) (current.items as typeof item[]).splice(index + 1, 0, clone); }); });
     onOpen(clone.id);
     useApp.getState().notify({ message: '已复制条目，可直接修改副本' });
@@ -108,7 +110,7 @@ function ItemEditor({ section, resumeId, itemId, open, onOpen, onToggle, onClose
   const specs = section.kind === 'custom' ? section.fieldDefinitions.filter(field => field.visible).map(field => ({ key: field.id, label: field.label, type: CUSTOM_FIELD_TYPES.find(type => type.value === field.type)!.editor, placeholder: undefined })) : FIELD_SPECS[section.kind];
   const values = 'fields' in item ? item.fields : item.values;
   return <div ref={setNodeRef} data-item-id={itemId} style={{ transform: CSS.Transform.toString(transform), transition }} className={`item-card ${!item.visible ? 'is-hidden' : ''}`}>
-    <div className="item-heading"><button type="button" className="drag-handle" aria-label={`拖动 ${itemName(section, itemId)}`} {...attributes} {...listeners}><GripVertical size={16} /></button><button ref={toggle} id={toggleId} type="button" className="item-toggle" onClick={onToggle} aria-expanded={open} aria-controls={bodyId} title={`${open ? '收起' : '展开'} ${itemName(section, itemId)}`}>{open ? <ChevronDown size={15} /> : <ChevronRight size={15} />}<span>{itemName(section, itemId)}</span>{!item.visible && <small>已隐藏</small>}</button><Menu label={`条目操作 ${itemName(section, itemId)}`} items={[
+    <div className="item-heading"><button type="button" className="drag-handle" aria-label={`拖动 ${itemName(section, itemId)}`} {...attributes} {...listeners}><GripVertical size={16} /></button><button ref={toggle} id={toggleId} type="button" className="item-toggle" onClick={onToggle} aria-expanded={open} aria-controls={bodyId} title={`${open ? '收起' : '展开'} ${itemName(section, itemId)}`}>{open ? <ChevronDown size={15} /> : <ChevronRight size={15} />}<span>{itemName(section, itemId)}</span>{!item.visible && <small>已隐藏</small>}</button><Menu label={`条目操作 ${itemName(section, itemId)}`} onCloseAutoFocus={event => { const itemId = copiedItemToFocus.current; if (!itemId) return; event.preventDefault(); copiedItemToFocus.current = null; onOpen(itemId); }} items={[
       { label: '复制条目', icon: <Copy size={14} />, onClick: duplicate },
       { label: '上移条目', icon: <ArrowUp size={14} />, disabled: index === 0, onClick: () => move(-1) },
       { label: '下移条目', icon: <ArrowDown size={14} />, disabled: index === section.items.length - 1, onClick: () => move(1) },
@@ -149,8 +151,8 @@ function SectionEditor({ section, resume, highlighted = false }: { section: Sect
       done = true; observer?.disconnect(); card?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
       field.focus({ preventScroll: true }); setFocusRequest(null);
     };
-    // Dropdowns return focus to their trigger while closing. Defer the new
-    // field focus until that transition has finished; rich editors may mount later.
+    // Allow the expanded fields to mount; rich editors may appear later.
+    // Menu actions request focus again after their focus scope closes.
     frame = requestAnimationFrame(() => { frame = requestAnimationFrame(focusField); });
     observer = new MutationObserver(() => { if (!done) { cancelAnimationFrame(frame); frame = requestAnimationFrame(focusField); } });
     observer.observe(root, { childList: true, subtree: true });
@@ -158,6 +160,7 @@ function SectionEditor({ section, resume, highlighted = false }: { section: Sect
   }, [focusRequest, openItems]);
   const [renaming, setRenaming] = useState(false), [configure, setConfigure] = useState(false), [deleteOpen, setDeleteOpen] = useState(false);
   const [layoutOpen, setLayoutOpen] = useState(false);
+  const addedItemToFocus = useRef<string | null>(null);
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }), useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }));
   const title = sectionTitle(section);
   const changeVisibility = (visible: boolean) => {
@@ -171,9 +174,10 @@ function SectionEditor({ section, resume, highlighted = false }: { section: Sect
     const item = section.kind === 'custom' ? { id: uid('item'), visible: true, values: Object.fromEntries(section.fieldDefinitions.map(field => [field.id, field.type === 'summary' ? emptyRich() : field.type === 'keywords' ? [] : ''])) } : newItem(section.kind);
     update(next => editSection(next, section.id, current => { if (current.kind !== 'summary') (current.items as typeof item[]).push(item); }));
     openAndFocus(item.id);
+    return item.id;
   };
-  return <section ref={element} className={`section-card ${!section.visible ? 'is-hidden' : ''} ${highlighted ? 'preview-edit-target' : ''}`} id={section.kind === "custom" ? `section-custom-${section.id}` : `section-${section.kind}`} data-section-id={section.id}><div className="section-header"><SectionIcon kind={section.kind} />{renaming ? <input className="title-edit" aria-label="模块标题" autoFocus value={section.titleOverride ?? title} onChange={event => update(next => editSection(next, section.id, current => { current.titleOverride = event.target.value; }))} onBlur={() => setRenaming(false)} onKeyDown={event => { if (event.key === 'Enter' || event.key === 'Escape') setRenaming(false); }} /> : <h2>{title || '未命名模块'}</h2>}<IconButton label={`重命名${title}`} className="header-edit" onClick={() => setRenaming(true)}><Pencil size={13} /></IconButton><span className="header-spacer" />{section.kind !== 'summary' && <button type="button" className="section-add-item" aria-label={`新增${title || '模块'}条目`} title={`新增${title || '模块'}条目`} onClick={addItem}><Plus size={14} /><span>新增</span></button>}<button type="button" className={`content-layout-trigger ${section.contentLayout ? 'has-layout' : ''}`} aria-label={`${title}模块内排版`} title="模块内排版" onClick={() => setLayoutOpen(true)}><SlidersHorizontal size={12} /><span>模块内排版</span></button><Toggle label={`显示${title}`} checked={section.visible} onChange={changeVisibility} /><Menu label={`${title}模块操作`} items={[
-      ...(section.kind === 'summary' ? [] : [{ label: '新增条目', icon: <Plus size={14} />, onClick: addItem }]),
+  return <section ref={element} className={`section-card ${!section.visible ? 'is-hidden' : ''} ${highlighted ? 'preview-edit-target' : ''}`} id={section.kind === "custom" ? `section-custom-${section.id}` : `section-${section.kind}`} data-section-id={section.id}><div className="section-header"><SectionIcon kind={section.kind} />{renaming ? <input className="title-edit" aria-label="模块标题" autoFocus value={section.titleOverride ?? title} onChange={event => update(next => editSection(next, section.id, current => { current.titleOverride = event.target.value; }))} onBlur={() => setRenaming(false)} onKeyDown={event => { if (event.key === 'Enter' || event.key === 'Escape') setRenaming(false); }} /> : <h2>{title || '未命名模块'}</h2>}<IconButton label={`重命名${title}`} className="header-edit" onClick={() => setRenaming(true)}><Pencil size={13} /></IconButton><span className="header-spacer" />{section.kind !== 'summary' && <button type="button" className="section-add-item" aria-label={`新增${title || '模块'}条目`} title={`新增${title || '模块'}条目`} onClick={addItem}><Plus size={14} /><span>新增</span></button>}<button type="button" className={`content-layout-trigger ${section.contentLayout ? 'has-layout' : ''}`} aria-label={`${title}模块内排版`} title="模块内排版" onClick={() => setLayoutOpen(true)}><SlidersHorizontal size={12} /><span>模块内排版</span></button><Toggle label={`显示${title}`} checked={section.visible} onChange={changeVisibility} /><Menu label={`${title}模块操作`} onCloseAutoFocus={event => { const itemId = addedItemToFocus.current; if (!itemId) return; event.preventDefault(); addedItemToFocus.current = null; openAndFocus(itemId); }} items={[
+      ...(section.kind === 'summary' ? [] : [{ label: '新增条目', icon: <Plus size={14} />, onClick: () => { addedItemToFocus.current = addItem() ?? null; } }]),
       { label: '修改标题', icon: <Pencil size={14} />, onClick: () => setRenaming(true) },
       { label: '模块内排版', icon: <SlidersHorizontal size={14} />, onClick: () => setLayoutOpen(true) },
       ...(section.kind === 'custom' ? [{ label: '配置字段', onClick: () => setConfigure(true) }] : []),
