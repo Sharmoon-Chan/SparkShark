@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Archive, ArrowUpRight, Copy, Download, FileJson, FilePlus2, FileText, Import, LoaderCircle, Pencil, Plus, RotateCcw, Search, Trash2 } from 'lucide-react';
+import { Archive, ArrowUpRight, Copy, Download, FileJson, FilePlus2, FileText, Import, Pencil, Plus, RotateCcw, Search, Trash2 } from 'lucide-react';
 import type { Locale, StoredResume } from '../../domain/types';
 import { LOCALES, templateFor } from '../../domain/registry';
 import { createExample, createResume, remapResume } from '../../domain/resume';
 import { latestDraft, useApp } from '../../app/store';
 import { repository } from '../../persistence/repository';
-import { renderPdf, thumbnail } from '../../rendering/client';
+import { templatePreviewFor } from '../appearance/templatePreviews';
 import { Button, EmptyState, Field, Menu, Modal, Toggle, useObjectUrl } from '../../components/ui';
 import { ImportDialog } from '../import-export/ImportDialog';
 import { exportBackup, exportPdf } from '../import-export/exports';
@@ -19,16 +19,12 @@ import { markPrivateCopy, saveChosenResumes, type StorageLocation } from '../../
 function relative(iso: string): string { const seconds = Math.max(0, Math.floor((Date.now() - Date.parse(iso)) / 1000)); if (seconds < 60) return '刚刚编辑'; if (seconds < 3600) return `${Math.floor(seconds / 60)} 分钟前编辑`; if (seconds < 86400) return `${Math.floor(seconds / 3600)} 小时前编辑`; return `${Math.floor(seconds / 86400)} 天前编辑`; }
 function ResumeCard({ row, trashed }: { row: StoredResume; trashed?: boolean }) {
   const [copyOpen, setCopyOpen] = useState(false), [copyLocation, setCopyLocation] = useState<StorageLocation>('local');
-  const navigate = useNavigate(); const [image, setImage] = useState(row.thumbnail), [imageError, setImageError] = useState(false), [rename, setRename] = useState(false), [title, setTitle] = useState(row.resume.title), [remove, setRemove] = useState(false), [busy, setBusy] = useState(false);
-  const url = useObjectUrl(image);
-  useEffect(() => {
-    if (row.thumbnail && row.thumbnailRevision === row.revision) { setImage(row.thumbnail); return; }
-    const controller = new AbortController();
-    void (async () => { try { const assets = await repository.assetsFor(row.resume).catch(() => ({})); const pdf = await renderPdf(row.resume, assets, controller.signal, { priority: 'background' }); const blob = await thumbnail(pdf.bytes, controller.signal); if (!controller.signal.aborted) { setImage(blob); await repository.setThumbnail(row.id, row.revision, blob); } } catch { if (!controller.signal.aborted) setImageError(true); } })();
-    return () => controller.abort();
-  }, [row.id, row.revision, row.thumbnailRevision]);
+  const navigate = useNavigate(); const [rename, setRename] = useState(false), [title, setTitle] = useState(row.resume.title), [remove, setRemove] = useState(false), [busy, setBusy] = useState(false);
+  const savedImage = row.thumbnailRevision === row.revision ? row.thumbnail : undefined;
+  const storedUrl = useObjectUrl(savedImage);
+  const url = storedUrl ?? templatePreviewFor(row.resume.appearance.templateId);
   const run = async (action: () => Promise<unknown>, message: string) => { setBusy(true); try { await action(); await useApp.getState().refresh(); useApp.getState().notify({ message }); } catch (error) { useApp.getState().notify({ message: error instanceof Error ? error.message : String(error), error: true }); } finally { setBusy(false); } };
-  return <article className={`resume-card ${trashed ? 'trashed' : ''}`}><Link className="resume-cover" to={trashed ? '/trash' : `/resume/${row.id}`} aria-label={trashed ? row.resume.title : `编辑 ${row.resume.title}`} onClick={event => { if (trashed) event.preventDefault(); }}>{url ? <img src={url} alt={`${row.resume.title}第一页`} /> : <div className="cover-placeholder">{imageError ? <><FileText size={30} /><span>缩略图暂未生成</span></> : <><LoaderCircle size={22} className="spin" /><span>正在生成缩略图</span></>}</div>}<span className="cover-language">{LOCALES.find(locale => locale.value === row.resume.locale)?.label}</span>{!trashed && <span className="cover-edit">继续编辑<ArrowUpRight size={15} /></span>}</Link><div className="resume-card-footer"><div><Link to={trashed ? '/trash' : `/resume/${row.id}`} onClick={event => { if (trashed) event.preventDefault(); }}><h3>{row.resume.title || '未命名简历'}</h3></Link><p>{trashed ? '在回收站中' : relative(row.updatedAt)}<span>{templateFor(row.resume.appearance.templateId).name}</span></p>{!trashed && <CloudStatus localId={row.id} />}</div>{trashed ? <Menu label={`${row.resume.title}回收站操作`} items={[{ label: '恢复简历', icon: <RotateCcw size={14} />, onClick: () => void run(() => repository.restore(row.id), '简历已恢复') }, { label: '永久删除', danger: true, icon: <Trash2 size={14} />, onClick: () => setRemove(true) }]} /> : <Menu label={`更多操作 ${row.resume.title}`} items={[
+  return <article className={`resume-card ${trashed ? 'trashed' : ''}`}><Link className="resume-cover" to={trashed ? '/trash' : `/resume/${row.id}`} aria-label={trashed ? row.resume.title : `编辑 ${row.resume.title}`} onClick={event => { if (trashed) event.preventDefault(); }}>{url ? <img src={url} alt={storedUrl ? `${row.resume.title}第一页` : `${templateFor(row.resume.appearance.templateId).name}模板示意图`} loading="lazy" decoding="async" /> : <div className="cover-placeholder"><FileText size={30} /></div>}{!storedUrl && <span className="cover-language" style={{ left: 12, right: "auto" }}>模板示意</span>}<span className="cover-language">{LOCALES.find(locale => locale.value === row.resume.locale)?.label}</span>{!trashed && <span className="cover-edit">继续编辑<ArrowUpRight size={15} /></span>}</Link><div className="resume-card-footer"><div><Link to={trashed ? '/trash' : `/resume/${row.id}`} onClick={event => { if (trashed) event.preventDefault(); }}><h3>{row.resume.title || '未命名简历'}</h3></Link><p>{trashed ? '在回收站中' : relative(row.updatedAt)}<span>{templateFor(row.resume.appearance.templateId).name}</span></p>{!trashed && <CloudStatus localId={row.id} />}</div>{trashed ? <Menu label={`${row.resume.title}回收站操作`} items={[{ label: '恢复简历', icon: <RotateCcw size={14} />, onClick: () => void run(() => repository.restore(row.id), '简历已恢复') }, { label: '永久删除', danger: true, icon: <Trash2 size={14} />, onClick: () => setRemove(true) }]} /> : <Menu label={`更多操作 ${row.resume.title}`} items={[
     { label: '编辑简历', icon: <Pencil size={14} />, onClick: () => navigate(`/resume/${row.id}`) },
     { label: '重命名', icon: <Pencil size={14} />, onClick: () => { setTitle(row.resume.title); setRename(true); } },
     { label: '复制简历', icon: <Copy size={14} />, onClick: () => { setCopyLocation('local'); setCopyOpen(true); } },
