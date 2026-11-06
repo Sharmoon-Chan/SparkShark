@@ -1,0 +1,126 @@
+{
+  "date": "2026-11-06",
+  "stage": 3,
+  "status": "Locally verified and committed in functional batches; not pushed or deployed",
+  "environment": {
+    "os": "Windows",
+    "browser": "Chrome 156.0.8078.80",
+    "session": "isolated playwright-cli editor-stage3",
+    "geometry": "Vite production preview on 127.0.0.1:4173, same synthetic blank resume before and after rebuild",
+    "faultInjection": "Vite development server on 127.0.0.1:5174; API requests intercepted for cloud state and account tests",
+    "desktopViewport": {
+      "width": 1440,
+      "height": 980
+    },
+    "mobileViewport": {
+      "width": 375,
+      "height": 812
+    },
+    "geometryBaseline": "06d7402",
+    "fixture": "Default double column, standard density, no photo"
+  },
+  "geometry": {
+    "before": {
+      "panelHeightPx": 2015.4,
+      "visibleInputs": 23,
+      "collapsedGroups": 0,
+      "horizontalOverflow": false
+    },
+    "after": {
+      "panelHeightPx": 1185,
+      "visibleInputs": 7,
+      "collapsedGroups": 2,
+      "horizontalOverflow": false
+    },
+    "afterAllExpanded": {
+      "panelHeightPx": 2146.9,
+      "visibleInputs": 23,
+      "collapsedGroups": 0,
+      "horizontalOverflow": false
+    },
+    "inputCountingRule": "Visible input, select and button[role=switch]; excludes palette, density and reset buttons. Visibility does not require intersection with viewport.",
+    "panelHeightReductionPercentRounded": 41.2,
+    "expandedInputReductionPercentRounded": 69.6
+  },
+  "observedMouseActivationPaths": {
+    "nearbyAddToFirstField": 1,
+    "duplicateToFirstField": 2,
+    "moveViaItemMenu": 2,
+    "downloadDraftFromFailureNotice": 1,
+    "definition": "Excludes typing and scrolling; records the UI path, not measured human completion time"
+  },
+  "verifiedChecks": {
+    "development": {
+      "contentInteraction": true,
+      "appearanceKeyboardAndRetention": true,
+      "failedSaveRetainsDraft": true,
+      "downloadedUnsavedJsonVerified": true,
+      "saveRetryRecovers": true,
+      "mobileSaveStatusAndFocus": true,
+      "actualTwoTabConflict": true,
+      "conflictCopySurvivesReload": true,
+      "cloudPendingAction": true,
+      "cloudFailureAndConflictActions": true,
+      "noticeModalSurvivesPendingAndSyncing": true,
+      "singleCloudDialog": true,
+      "cloudCancelAndEscapeFocus": true,
+      "accountSwitchDuringReadAborts": true,
+      "navigationDuringReadAborts": true,
+      "noStaleToast": true,
+      "attemptedStaleAssociations": 0,
+      "apiWrites": 0
+    },
+    "productionPreview": {
+      "appearanceKeyboardAndRetention": true,
+      "contentInteraction": true,
+      "conflictRecovery": true,
+      "menuAddAndCopyFocus": true,
+      "mobileModuleLayoutIconVisible": true
+    },
+    "unitTests": {
+      "filesPassed": 33,
+      "testsPassed": 206
+    },
+    "typecheck": true,
+    "productionBuild": true
+  },
+  "regressionsFoundDuringVerification": [
+    "Captured cloud account after awaited storage read; fixed by preserving and asserting click-time scope.",
+    "Notice state transition removed its open modal; fixed by retaining the modal while open.",
+    "Production dropdown close restored focus over the newly duplicated field; fixed by coordinating the menu close focus event.",
+    "An older narrow-container rule hid the module layout icon after its text was collapsed; added a scoped icon visibility override."
+  ],
+  "scripts": [
+    "tests/browser/content-stage3.js",
+    "tests/browser/appearance-stage3.js",
+    "tests/browser/save-stage3.js",
+    "tests/browser/conflict-stage3.js",
+    "tests/browser/cloud-status-stage3.js",
+    "tests/browser/measure-stage3.js",
+    "tests/browser/menu-focus-stage3.js"
+  ],
+  "screenshots": [
+    "output/playwright/stage3-appearance-before.png",
+    "output/playwright/stage3-appearance-after.png",
+    "output/playwright/stage3-appearance-expanded.png",
+    "output/playwright/stage3-appearance-mobile.png",
+    "output/playwright/stage3-save-failure-mobile.png",
+    "output/playwright/stage3-cloud-conflict-mobile.png",
+    "output/playwright/stage3-content-desktop.png",
+    "output/playwright/stage3-content-mobile.png"
+  ],
+  "implementationCommits": [
+    "3856c67",
+    "0757d9d",
+    "85dc623",
+    "6ce7a7c",
+    "74fafc5"
+  ],
+  "limitations": [
+    "Geometry and UI interaction verification, not latency or public-network benchmarks.",
+    "Cloud presentation and race tests use injected state and intercepted APIs; no real account upload was validated.",
+    "Local auth/me has no running proxy backend; its expected errors are not counted as successful cloud integration.",
+    "Stage 4 export, cold/warm cache and slow-network acceptance remains pending.",
+    "Existing build warnings for mixed static/dynamic fflate and html.ts imports remain."
+  ]
+}
