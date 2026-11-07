@@ -67,4 +67,14 @@
 
 - 1c909d6：分层对齐数据规则、HTML/PDF 渲染、合成样本与导出验证。
 - 1c36b79：即时预览/PDF 工具栏、字段对话框、模块内排版同步、浏览器验证页。
-- 两批代码已分别推送 main；发布构建来自 1c36b79，Cloudflare 发布及线上验收结果在部署后补记。
+- 8b5b3f2：分阶段实现、问题定位和量化验收记录。
+- 以上提交已分别推送 main；发布构建来自 1c36b79。
+
+2026-11-07 发布到 Cloudflare Worker sparkshark（Free + SQLite Durable Objects）：
+
+- 版本：e21e1c15-6d1e-4f1e-9912-c51830037607；标签 scoped-align-20261107；流量 100%。
+- 站点：https://sparkshark.sharmoon.cc.cd/
+- 入口：/assets/index-DUWDGa82.js，HTTP 200。
+- 线上入口与本地构建 SHA-256 一致：3022fd51176b240818cada9ec1bc07f65f6944d0e94486ca8cfd7e1e5cef595d。
+- 使用独立虚构简历进行线上验收：仅应用整行居中；拖动专业到学校同行并靠右；保存与刷新后保留；精确 PDF 读取相同对齐；手机预览的字段对话框在 375/414px 尺寸调整后保持打开。
+- 演示截图：output/preview-alignment/production-preview.jpg；手机端：output/preview-alignment/production-mobile-menu.jpg。
