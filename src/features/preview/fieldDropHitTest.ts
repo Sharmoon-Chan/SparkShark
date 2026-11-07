@@ -2,7 +2,7 @@ import type { FieldDropPlacement, PreviewFieldRegion } from '../../domain/types'
 
 export interface PreviewFieldHit { target: PreviewFieldRegion; placement: FieldDropPlacement }
 
-/** Uses page-relative PDF points; the UI converts client pixels once per page. */
+/** Uses page-relative points for either renderer; HTML rectangles convert at collection. */
 export function hitTestPreviewField(source: PreviewFieldRegion, fields: readonly PreviewFieldRegion[], page: number, x: number, y: number): PreviewFieldHit | null {
   const candidates = fields.filter(field => field.page === page && field.sectionId === source.sectionId && field.itemId === source.itemId
     && x >= field.columnX - 4 && x <= field.columnX + field.columnWidth + 4);

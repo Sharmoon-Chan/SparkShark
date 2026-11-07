@@ -66,12 +66,19 @@ export function Editor() {
   const jump = (target: string, sectionTarget?: string) => { setMode('content'); setView('edit'); setChecks(false); setJumpRequest({ target, sectionTarget }); };
   const jumpFromPreview = (target: string) => { if (target === 'basics' || !resume.sections.some(section => section.id === target)) return; setHighlightedTarget(target); jump('', target); };
   const moveFieldFromPreview = (drop: PreviewFieldDrop) => {
+    if (useApp.getState().current?.id !== resume.id) return;
     const section = useApp.getState().current?.sections.find(item => item.id === drop.sectionId);
     if (!section) return;
     const settings = movePreviewField(section, drop.sourceKey, drop.targetKey, drop.placement);
     if (!settings) return;
+    const before = section.contentLayout ? structuredClone(section.contentLayout) : undefined;
     useApp.getState().update(next => { const target = next.sections.find(item => item.id === drop.sectionId); if (target) target.contentLayout = settings; });
-    useApp.getState().notify({ message: `${sectionTitle(section)}的字段排版已更新` });
+    useApp.getState().notify({ message: `${sectionTitle(section)}的字段排版已更新`, action: { label: '撤销', run: () => useApp.getState().update(next => {
+      if (next.id !== resume.id) return;
+      const target = next.sections.find(item => item.id === drop.sectionId);
+      if (!target || JSON.stringify(target.contentLayout) !== JSON.stringify(settings)) return;
+      if (before) target.contentLayout = before; else delete target.contentLayout;
+    }) } });
     void useApp.getState().flush();
   };
   const runExport = async (kind: 'pdf' | 'images' | 'html') => {
@@ -119,8 +126,8 @@ export function Editor() {
       {(saveState === 'failed' || saveState === 'conflict') && <div className="save-warning" role="alert"><AlertCircle size={16} /><span>{saveState === 'conflict' ? '另一个标签页有更新，当前修改已保留。' : '本机保存失败，当前修改仍在页面中。'}</span><div className="save-warning-actions"><button type="button" onClick={() => saveState === 'conflict' ? setConflictOpen(true) : void useApp.getState().flush()}>{saveState === 'conflict' ? '处理冲突' : '重试保存'}</button><button type="button" onClick={() => void backupDraft()}>下载当前草稿</button></div></div>}
       <CloudStatus localId={resume.id} notice />
       <div className="panel-content"><div hidden={mode !== 'content'}><ContentEditor resume={resume} highlightedTarget={highlightedTarget} /></div>{mode === 'layout' && <LayoutEditor resume={resume} />}{mode === 'templates' && <Templates resume={resume} />}{mode === 'appearance' && <AppearanceEditor resume={resume} />}{mode === 'export' && <ExportPanel resume={resume} dpi={dpi} onDpi={setDpi} onPdf={() => void runExport('pdf')} onHtml={() => void runExport('html')} onImages={() => void runExport('images')} busy={exporting} progress={exportProgress} onCancel={() => exportController.current?.abort()} />}</div>
-    </div><div className="preview-pane"><Suspense fallback={<div className="preview-mode-loading" role="status"><LoaderCircle className="spin" size={20} />正在打开 PDF 校对</div>}>{previewMode === 'html' ? <HtmlPreview resume={resume} assets={assets} {...previewActions} /> : <PdfPreview {...rendered} {...previewActions} title="预览" onRetry={() => setRetry(value => value + 1)} onFieldDrop={moveFieldFromPreview} />}</Suspense></div>
-    <Modal open={previewHelpOpen} onClose={() => { setPreviewHelpOpen(false); requestAnimationFrame(() => previewHelpButton.current?.focus()); }} title="预览模式" description="编辑时查看即时预览，导出前用精确 PDF 核对。"><div className="modal-body preview-mode-help"><h3>即时预览</h3><p>先显示内容并按 A4 分页，所选字体加载后自动更新。字体和分页可能与导出不同。</p><h3>精确 PDF</h3><p>使用导出时的字体和 A4 分页，可开启“拖动布局”调整字段。首次使用所选字体时需要等待加载。</p><p>两种模式都可直接下载 PDF。</p></div></Modal>
+    </div><div className="preview-pane"><Suspense fallback={<div className="preview-mode-loading" role="status"><LoaderCircle className="spin" size={20} />正在打开 PDF 校对</div>}>{previewMode === 'html' ? <HtmlPreview resume={resume} assets={assets} {...previewActions} onFieldDrop={moveFieldFromPreview} /> : <PdfPreview {...rendered} {...previewActions} title="预览" onRetry={() => setRetry(value => value + 1)} onFieldDrop={moveFieldFromPreview} />}</Suspense></div>
+    <Modal open={previewHelpOpen} onClose={() => { setPreviewHelpOpen(false); requestAnimationFrame(() => previewHelpButton.current?.focus()); }} title="预览模式" description="编辑时查看即时预览，导出前用精确 PDF 核对。"><div className="modal-body preview-mode-help"><h3>即时预览</h3><p>先显示内容并按 A4 分页，所选字体加载后自动更新。可开启“拖动布局”调整同一条目的字段。字体和分页可能与导出不同。</p><h3>精确 PDF</h3><p>使用导出时的字体和 A4 分页，同样支持字段拖动。首次使用所选字体时需要等待加载。</p><p>两种模式都可直接下载 PDF。</p></div></Modal>
     <HistoryDialog key={resume.id} open={historyOpen} onClose={() => setHistoryOpen(false)} resume={resume} /><Modal open={checks} onClose={() => setChecks(false)} title="检查简历" description="按当前内容检查缺项与格式，建议不会阻止保存或备份。"><div className="modal-body">{issues.length ? <div className="check-list">{issues.map((issue, index) => <button type="button" key={index} onClick={() => jump(issue.target)}><span>{issue.label}</span>{issue.points && <small>可提升 {issue.points}%</small>}</button>)}</div> : <p className="check-success"><CheckCircle2 size={18} />主要信息与联系格式完整</p>}{rendered.error && <p className="field-error">{rendered.error}</p>}</div></Modal>
     <Modal open={Boolean(conflict) && conflictOpen} onClose={() => setConflictOpen(false)} title="另一个标签页更新了简历" description="当前修改已保留。你可以另存为新简历，也可以加载最新版本。"><div className="modal-body"><StorageChoice value={conflictLocation} onChange={setConflictLocation} /><div className="conflict-options"><Button onClick={async () => { const owner = accountScope().userId; const copy = await useApp.getState().resolveConflict('copy'); if (copy) { const result = await saveChosenResumes([copy], conflictLocation, owner); if (result.failed) useApp.getState().notify({ message: '本机副本已保留，云端保存未成功，请在云端简历页重试。', error: true }); setConflictOpen(false); navigate(`/resume/${copy.id}`); } }}>保留我的修改为新简历</Button><Button secondary onClick={async () => { await useApp.getState().resolveConflict('latest'); setConflictOpen(false); }}>加载最新版本</Button><Button secondary onClick={() => void exportBackup([resume], false, assets)}>下载我的草稿备份</Button></div></div></Modal>
   </main>;

@@ -93,7 +93,7 @@ describe('browser preview font demand loading', () => {
     const first = await load.update('noto-sans-sc', 'A');
     expect(first).toMatchObject({ state: 'ready', loaded: 2, total: 2 });
     expect(FakeFontFace.instances.every(face => face.source instanceof ArrayBuffer && face.descriptors.unicodeRange === 'U+41-43')).toBe(true);
-    expect(FakeFontFace.instances.map(face => face.descriptors.weight)).toEqual(['400', '700']);
+    expect(FakeFontFace.instances.map(face => face.descriptors.weight).sort()).toEqual(['400', '700']);
     statuses.length = 0;
     await load.update('noto-sans-sc', 'ABCAB');
     expect(statuses).toEqual(['ready']);

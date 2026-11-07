@@ -4,5 +4,11 @@
 .html-preview-scroll{overflow:auto}
 .html-preview-stage{position:relative;margin:0 auto}
 .html-preview-frame{display:block;max-width:none;border:0;background:transparent;transform-origin:top left}
+.html-field-overlay{position:absolute;inset:0;pointer-events:none}
+.html-field-page{position:absolute;left:0;pointer-events:none}
+.html-preview.field-mode .html-preview-frame{pointer-events:none}
+.html-preview .preview-layout-toggle{flex-shrink:0;margin-left:auto}
+.html-preview .html-preview-heading-meta{margin-left:auto}
+@media(max-width:550px){.html-preview .preview-heading{flex-wrap:wrap}.html-preview .preview-layout-toggle{order:2;margin-left:0}.html-preview .html-preview-heading-meta{order:3}.html-preview .preview-font-status{display:none}}
 .html-preview-photo-error{max-width:620px;margin:0 auto 12px;padding:8px 12px;border:1px solid #ebd5a3;border-radius:6px;background:#fff8e8;color:#8c6c2f;font-size:11px;line-height:1.5}
 @media(max-width:760px){.html-preview-heading-meta{font-size:10px}}
