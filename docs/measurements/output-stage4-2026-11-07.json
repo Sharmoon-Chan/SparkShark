@@ -1,0 +1,4058 @@
+{
+  "date": "2026-11-07",
+  "stage": 4,
+  "status": "Local release candidate verified; not pushed or deployed",
+  "baselineCommit": "429ec1c",
+  "network": {
+    "before": {
+      "measuredAt": "2026-11-06T08:01:27.679Z",
+      "origin": "http://127.0.0.1:4173",
+      "browser": "156.0.8078.80",
+      "network": {
+        "offline": false,
+        "latency": 150,
+        "downloadThroughput": 200000,
+        "uploadThroughput": 93750,
+        "connectionType": "cellular4g"
+      },
+      "rows": [
+        {
+          "throttle": false,
+          "cache": "cold",
+          "run": 0,
+          "editorMs": 245.4,
+          "previewMs": 310.8,
+          "fontReadyMs": 498.1,
+          "stableMs": 537.8,
+          "pages": 2,
+          "resources": [
+            {
+              "path": "/assets/index-4vjvV0Ym.js",
+              "transferBytes": 457360,
+              "encodedBytes": 457060,
+              "decodedBytes": 1443862,
+              "durationMs": 69.6
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "transferBytes": 1011,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 11.4
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "transferBytes": 17592,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 13.6
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "transferBytes": 35482,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 15
+            },
+            {
+              "path": "/favicon.svg",
+              "transferBytes": 624,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 3.8
+            },
+            {
+              "path": "/api/auth/me",
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 6.9
+            },
+            {
+              "path": "/fonts/browser-manifest.json",
+              "transferBytes": 304225,
+              "encodedBytes": 303925,
+              "decodedBytes": 872667,
+              "durationMs": 74.5
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "transferBytes": 49796,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 15.1
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "transferBytes": 532000,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 19.8
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "transferBytes": 174140,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 17.2
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "transferBytes": 50636,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 16.6
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "transferBytes": 545268,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 19.8
+            },
+            {
+              "path": "/fonts/browser/sans-700.extended-014.c6df598a68a89ffe.woff2",
+              "transferBytes": 179476,
+              "encodedBytes": 179176,
+              "decodedBytes": 179176,
+              "durationMs": 18.3
+            }
+          ]
+        },
+        {
+          "throttle": false,
+          "cache": "warm",
+          "run": 0,
+          "editorMs": 178.7,
+          "previewMs": 217.6,
+          "fontReadyMs": 337,
+          "stableMs": 365.9,
+          "pages": 2,
+          "resources": [
+            {
+              "path": "/assets/index-4vjvV0Ym.js",
+              "transferBytes": 300,
+              "encodedBytes": 457060,
+              "decodedBytes": 1443862,
+              "durationMs": 8.3
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "transferBytes": 300,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 5
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "transferBytes": 300,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 3.7
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "transferBytes": 300,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 6.9
+            },
+            {
+              "path": "/favicon.svg",
+              "transferBytes": 300,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 1.8
+            },
+            {
+              "path": "/api/auth/me",
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 12.7
+            },
+            {
+              "path": "/fonts/browser-manifest.json",
+              "transferBytes": 300,
+              "encodedBytes": 303925,
+              "decodedBytes": 872667,
+              "durationMs": 4.4
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 3.8
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 6.2
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 8
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 9.7
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 11.8
+            },
+            {
+              "path": "/fonts/browser/sans-700.extended-014.c6df598a68a89ffe.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 179176,
+              "decodedBytes": 179176,
+              "durationMs": 13.6
+            }
+          ]
+        },
+        {
+          "throttle": false,
+          "cache": "cold",
+          "run": 1,
+          "editorMs": 192.4,
+          "previewMs": 239.3,
+          "fontReadyMs": 427,
+          "stableMs": 446.9,
+          "pages": 2,
+          "resources": [
+            {
+              "path": "/assets/index-4vjvV0Ym.js",
+              "transferBytes": 457360,
+              "encodedBytes": 457060,
+              "decodedBytes": 1443862,
+              "durationMs": 61.3
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "transferBytes": 1011,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 9.6
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "transferBytes": 35482,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 12.4
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "transferBytes": 17592,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 10.2
+            },
+            {
+              "path": "/favicon.svg",
+              "transferBytes": 624,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 2.7
+            },
+            {
+              "path": "/api/auth/me",
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 2.7
+            },
+            {
+              "path": "/fonts/browser-manifest.json",
+              "transferBytes": 304225,
+              "encodedBytes": 303925,
+              "decodedBytes": 872667,
+              "durationMs": 57.6
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "transferBytes": 49796,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 17.3
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "transferBytes": 532000,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 21.2
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "transferBytes": 174140,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 18.6
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "transferBytes": 50636,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 17.8
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "transferBytes": 545268,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 21.2
+            },
+            {
+              "path": "/fonts/browser/sans-700.extended-014.c6df598a68a89ffe.woff2",
+              "transferBytes": 179476,
+              "encodedBytes": 179176,
+              "decodedBytes": 179176,
+              "durationMs": 19.4
+            }
+          ]
+        },
+        {
+          "throttle": false,
+          "cache": "warm",
+          "run": 1,
+          "editorMs": 172.2,
+          "previewMs": 222.8,
+          "fontReadyMs": 355.9,
+          "stableMs": 376.5,
+          "pages": 2,
+          "resources": [
+            {
+              "path": "/assets/index-4vjvV0Ym.js",
+              "transferBytes": 300,
+              "encodedBytes": 457060,
+              "decodedBytes": 1443862,
+              "durationMs": 8.3
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "transferBytes": 300,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 4.7
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "transferBytes": 300,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 6.5
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "transferBytes": 300,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 7.2
+            },
+            {
+              "path": "/favicon.svg",
+              "transferBytes": 300,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 2.4
+            },
+            {
+              "path": "/api/auth/me",
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 3.2
+            },
+            {
+              "path": "/fonts/browser-manifest.json",
+              "transferBytes": 300,
+              "encodedBytes": 303925,
+              "decodedBytes": 872667,
+              "durationMs": 5.4
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 3.1
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 5.7
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 8
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 10
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 13.4
+            },
+            {
+              "path": "/fonts/browser/sans-700.extended-014.c6df598a68a89ffe.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 179176,
+              "decodedBytes": 179176,
+              "durationMs": 15.8
+            }
+          ]
+        },
+        {
+          "throttle": false,
+          "cache": "cold",
+          "run": 2,
+          "editorMs": 196.8,
+          "previewMs": 248.5,
+          "fontReadyMs": 439.4,
+          "stableMs": 460,
+          "pages": 2,
+          "resources": [
+            {
+              "path": "/assets/index-4vjvV0Ym.js",
+              "transferBytes": 457360,
+              "encodedBytes": 457060,
+              "decodedBytes": 1443862,
+              "durationMs": 62.3
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "transferBytes": 1011,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 6.9
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "transferBytes": 35482,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 9.7
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "transferBytes": 17592,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 8.3
+            },
+            {
+              "path": "/favicon.svg",
+              "transferBytes": 624,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 3.4
+            },
+            {
+              "path": "/api/auth/me",
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 2.4
+            },
+            {
+              "path": "/fonts/browser-manifest.json",
+              "transferBytes": 304225,
+              "encodedBytes": 303925,
+              "decodedBytes": 872667,
+              "durationMs": 55.8
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "transferBytes": 49796,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 24
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "transferBytes": 532000,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 30.5
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "transferBytes": 174140,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 26.9
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "transferBytes": 50636,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 25.4
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "transferBytes": 545268,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 30.2
+            },
+            {
+              "path": "/fonts/browser/sans-700.extended-014.c6df598a68a89ffe.woff2",
+              "transferBytes": 179476,
+              "encodedBytes": 179176,
+              "decodedBytes": 179176,
+              "durationMs": 28.3
+            }
+          ]
+        },
+        {
+          "throttle": false,
+          "cache": "warm",
+          "run": 2,
+          "editorMs": 188.5,
+          "previewMs": 241,
+          "fontReadyMs": 378.8,
+          "stableMs": 397.6,
+          "pages": 2,
+          "resources": [
+            {
+              "path": "/assets/index-4vjvV0Ym.js",
+              "transferBytes": 300,
+              "encodedBytes": 457060,
+              "decodedBytes": 1443862,
+              "durationMs": 8
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "transferBytes": 300,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 7.2
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "transferBytes": 300,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 9.2
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "transferBytes": 300,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 5.2
+            },
+            {
+              "path": "/favicon.svg",
+              "transferBytes": 300,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 2.7
+            },
+            {
+              "path": "/api/auth/me",
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 3.4
+            },
+            {
+              "path": "/fonts/browser-manifest.json",
+              "transferBytes": 300,
+              "encodedBytes": 303925,
+              "decodedBytes": 872667,
+              "durationMs": 4.8
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 3.8
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 6.5
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 8
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 10.2
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 12
+            },
+            {
+              "path": "/fonts/browser/sans-700.extended-014.c6df598a68a89ffe.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 179176,
+              "decodedBytes": 179176,
+              "durationMs": 14.5
+            }
+          ]
+        },
+        {
+          "throttle": true,
+          "cache": "cold",
+          "run": 0,
+          "editorMs": 3221.4,
+          "previewMs": 3265.3,
+          "fontReadyMs": 12841.1,
+          "stableMs": 12859.2,
+          "pages": 2,
+          "resources": [
+            {
+              "path": "/assets/index-4vjvV0Ym.js",
+              "transferBytes": 457360,
+              "encodedBytes": 457060,
+              "decodedBytes": 1443862,
+              "durationMs": 2758.5
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "transferBytes": 1011,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 182.9
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "transferBytes": 35482,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 615.7
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "transferBytes": 17592,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 430.8
+            },
+            {
+              "path": "/favicon.svg",
+              "transferBytes": 624,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 170.5
+            },
+            {
+              "path": "/api/auth/me",
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 169.9
+            },
+            {
+              "path": "/fonts/browser-manifest.json",
+              "transferBytes": 304225,
+              "encodedBytes": 303925,
+              "decodedBytes": 872667,
+              "durationMs": 1689.5
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "transferBytes": 49796,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 1662.2
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "transferBytes": 532000,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 7778.3
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "transferBytes": 174140,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 4174.3
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "transferBytes": 50636,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 1678
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "transferBytes": 545268,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 7856.5
+            },
+            {
+              "path": "/fonts/browser/sans-700.extended-014.c6df598a68a89ffe.woff2",
+              "transferBytes": 179476,
+              "encodedBytes": 179176,
+              "decodedBytes": 179176,
+              "durationMs": 4249
+            }
+          ]
+        },
+        {
+          "throttle": true,
+          "cache": "warm",
+          "run": 0,
+          "editorMs": 670.1,
+          "previewMs": 714.4,
+          "fontReadyMs": 1161,
+          "stableMs": 1194.4,
+          "pages": 2,
+          "resources": [
+            {
+              "path": "/assets/index-4vjvV0Ym.js",
+              "transferBytes": 300,
+              "encodedBytes": 457060,
+              "decodedBytes": 1443862,
+              "durationMs": 172.4
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "transferBytes": 300,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 184.6
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "transferBytes": 300,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 168.8
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "transferBytes": 300,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 184.8
+            },
+            {
+              "path": "/favicon.svg",
+              "transferBytes": 300,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 169.3
+            },
+            {
+              "path": "/api/auth/me",
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 171.1
+            },
+            {
+              "path": "/fonts/browser-manifest.json",
+              "transferBytes": 300,
+              "encodedBytes": 303925,
+              "decodedBytes": 872667,
+              "durationMs": 170.9
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 175.4
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 175.5
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 191.4
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 191.2
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 207.8
+            },
+            {
+              "path": "/fonts/browser/sans-700.extended-014.c6df598a68a89ffe.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 179176,
+              "decodedBytes": 179176,
+              "durationMs": 207.4
+            }
+          ]
+        },
+        {
+          "throttle": true,
+          "cache": "cold",
+          "run": 1,
+          "editorMs": 3223.1,
+          "previewMs": 3263.2,
+          "fontReadyMs": 12862,
+          "stableMs": 12879.2,
+          "pages": 2,
+          "resources": [
+            {
+              "path": "/assets/index-4vjvV0Ym.js",
+              "transferBytes": 457360,
+              "encodedBytes": 457060,
+              "decodedBytes": 1443862,
+              "durationMs": 2761
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "transferBytes": 1011,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 182.4
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "transferBytes": 17592,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 427.8
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "transferBytes": 35482,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 614.2
+            },
+            {
+              "path": "/favicon.svg",
+              "transferBytes": 624,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 172.1
+            },
+            {
+              "path": "/api/auth/me",
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 172.7
+            },
+            {
+              "path": "/fonts/browser-manifest.json",
+              "transferBytes": 304225,
+              "encodedBytes": 303925,
+              "decodedBytes": 872667,
+              "durationMs": 1705.8
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "transferBytes": 49796,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 1663.3
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "transferBytes": 532000,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 7790.9
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "transferBytes": 174140,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 4170.9
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "transferBytes": 50636,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 1679
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "transferBytes": 545268,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 7853.5
+            },
+            {
+              "path": "/fonts/browser/sans-700.extended-014.c6df598a68a89ffe.woff2",
+              "transferBytes": 179476,
+              "encodedBytes": 179176,
+              "decodedBytes": 179176,
+              "durationMs": 4247.5
+            }
+          ]
+        },
+        {
+          "throttle": true,
+          "cache": "warm",
+          "run": 1,
+          "editorMs": 681,
+          "previewMs": 719.1,
+          "fontReadyMs": 1173.7,
+          "stableMs": 1191.9,
+          "pages": 2,
+          "resources": [
+            {
+              "path": "/assets/index-4vjvV0Ym.js",
+              "transferBytes": 300,
+              "encodedBytes": 457060,
+              "decodedBytes": 1443862,
+              "durationMs": 173.5
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "transferBytes": 300,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 169.5
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "transferBytes": 300,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 184.8
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "transferBytes": 300,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 170.6
+            },
+            {
+              "path": "/favicon.svg",
+              "transferBytes": 300,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 178.4
+            },
+            {
+              "path": "/api/auth/me",
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 172.7
+            },
+            {
+              "path": "/fonts/browser-manifest.json",
+              "transferBytes": 300,
+              "encodedBytes": 303925,
+              "decodedBytes": 872667,
+              "durationMs": 171.9
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 177.5
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 177.5
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 193.2
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 192.8
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 208.2
+            },
+            {
+              "path": "/fonts/browser/sans-700.extended-014.c6df598a68a89ffe.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 179176,
+              "decodedBytes": 179176,
+              "durationMs": 207.7
+            }
+          ]
+        },
+        {
+          "throttle": true,
+          "cache": "cold",
+          "run": 2,
+          "editorMs": 3218.3,
+          "previewMs": 3265.8,
+          "fontReadyMs": 12863.8,
+          "stableMs": 12883.5,
+          "pages": 2,
+          "resources": [
+            {
+              "path": "/assets/index-4vjvV0Ym.js",
+              "transferBytes": 457360,
+              "encodedBytes": 457060,
+              "decodedBytes": 1443862,
+              "durationMs": 2752.7
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "transferBytes": 1011,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 181.8
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "transferBytes": 17592,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 441
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "transferBytes": 35482,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 627.2
+            },
+            {
+              "path": "/favicon.svg",
+              "transferBytes": 624,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 169.7
+            },
+            {
+              "path": "/api/auth/me",
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 169.5
+            },
+            {
+              "path": "/fonts/browser-manifest.json",
+              "transferBytes": 304225,
+              "encodedBytes": 303925,
+              "decodedBytes": 872667,
+              "durationMs": 1709.8
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "transferBytes": 49796,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 1673
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "transferBytes": 532000,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 7782.4
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "transferBytes": 174140,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 4168.2
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "transferBytes": 50636,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 1688.3
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "transferBytes": 545268,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 7858
+            },
+            {
+              "path": "/fonts/browser/sans-700.extended-014.c6df598a68a89ffe.woff2",
+              "transferBytes": 179476,
+              "encodedBytes": 179176,
+              "decodedBytes": 179176,
+              "durationMs": 4260.7
+            }
+          ]
+        },
+        {
+          "throttle": true,
+          "cache": "warm",
+          "run": 2,
+          "editorMs": 705.1,
+          "previewMs": 756.2,
+          "fontReadyMs": 1202,
+          "stableMs": 1228.4,
+          "pages": 2,
+          "resources": [
+            {
+              "path": "/assets/index-4vjvV0Ym.js",
+              "transferBytes": 300,
+              "encodedBytes": 457060,
+              "decodedBytes": 1443862,
+              "durationMs": 183.9
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "transferBytes": 300,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 195.3
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "transferBytes": 300,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 195.6
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "transferBytes": 300,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 180
+            },
+            {
+              "path": "/favicon.svg",
+              "transferBytes": 300,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 182.2
+            },
+            {
+              "path": "/api/auth/me",
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 174.2
+            },
+            {
+              "path": "/fonts/browser-manifest.json",
+              "transferBytes": 300,
+              "encodedBytes": 303925,
+              "decodedBytes": 872667,
+              "durationMs": 172.3
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 172
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 172.3
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 187.4
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 187.2
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 202.3
+            },
+            {
+              "path": "/fonts/browser/sans-700.extended-014.c6df598a68a89ffe.woff2",
+              "transferBytes": 300,
+              "encodedBytes": 179176,
+              "decodedBytes": 179176,
+              "durationMs": 201.9
+            }
+          ]
+        }
+      ],
+      "summary": [
+        {
+          "throttle": false,
+          "cache": "cold",
+          "previewMs": {
+            "samples": 3,
+            "median": 248.5,
+            "min": 239.3,
+            "max": 310.8
+          },
+          "fontStableMs": {
+            "samples": 3,
+            "median": 460,
+            "min": 446.9,
+            "max": 537.8
+          },
+          "transferredBytes": {
+            "samples": 3,
+            "median": 2347910,
+            "min": 2347910,
+            "max": 2347910
+          }
+        },
+        {
+          "throttle": false,
+          "cache": "warm",
+          "previewMs": {
+            "samples": 3,
+            "median": 222.8,
+            "min": 217.6,
+            "max": 241
+          },
+          "fontStableMs": {
+            "samples": 3,
+            "median": 376.5,
+            "min": 365.9,
+            "max": 397.6
+          },
+          "transferredBytes": {
+            "samples": 3,
+            "median": 3900,
+            "min": 3900,
+            "max": 3900
+          }
+        },
+        {
+          "throttle": true,
+          "cache": "cold",
+          "previewMs": {
+            "samples": 3,
+            "median": 3265.3,
+            "min": 3263.2,
+            "max": 3265.8
+          },
+          "fontStableMs": {
+            "samples": 3,
+            "median": 12879.2,
+            "min": 12859.2,
+            "max": 12883.5
+          },
+          "transferredBytes": {
+            "samples": 3,
+            "median": 2347910,
+            "min": 2347910,
+            "max": 2347910
+          }
+        },
+        {
+          "throttle": true,
+          "cache": "warm",
+          "previewMs": {
+            "samples": 3,
+            "median": 719.1,
+            "min": 714.4,
+            "max": 756.2
+          },
+          "fontStableMs": {
+            "samples": 3,
+            "median": 1194.4,
+            "min": 1191.9,
+            "max": 1228.4
+          },
+          "transferredBytes": {
+            "samples": 3,
+            "median": 3900,
+            "min": 3900,
+            "max": 3900
+          }
+        }
+      ],
+      "caveats": [
+        "Three observations per condition: median/min/max only, not p95.",
+        "Local static preview responses; inspect encoded/decoded sizes and cache hits before comparing with compressed CDN traffic.",
+        "No CPU throttle; font ready is recorded separately from initial fallback preview."
+      ]
+    },
+    "after": {
+      "measuredAt": "2026-11-07T04:20:51.713Z",
+      "origin": "http://127.0.0.1:4173",
+      "browser": "156.0.8078.80",
+      "network": {
+        "offline": false,
+        "latency": 150,
+        "downloadThroughput": 200000,
+        "uploadThroughput": 93750,
+        "connectionType": "cellular4g"
+      },
+      "rows": [
+        {
+          "throttle": false,
+          "cache": "cold",
+          "run": 0,
+          "frameGaps": [],
+          "visibility": "visible",
+          "editorMs": 186.2,
+          "previewMs": 252.6,
+          "fontReadyMs": 346.5,
+          "stableMs": 378.6,
+          "pages": 2,
+          "visibilityAtEnd": "visible",
+          "resources": [
+            {
+              "path": "/assets/index-B0S09vYw.js",
+              "startMs": 24.2,
+              "transferBytes": 424264,
+              "encodedBytes": 423964,
+              "decodedBytes": 1336761,
+              "durationMs": 54.3
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "startMs": 24.5,
+              "transferBytes": 1011,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 6.7
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "startMs": 24.6,
+              "transferBytes": 35482,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 10.3
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "startMs": 24.7,
+              "transferBytes": 17592,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 8.7
+            },
+            {
+              "path": "/favicon.svg",
+              "startMs": 106.1,
+              "transferBytes": 624,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 3
+            },
+            {
+              "path": "/api/auth/me",
+              "startMs": 122.6,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 2.6
+            },
+            {
+              "path": "/fonts/browser-manifests/noto-sans-sc.json",
+              "startMs": 217.4,
+              "transferBytes": 38733,
+              "encodedBytes": 38433,
+              "decodedBytes": 107874,
+              "durationMs": 8.8
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "startMs": 269,
+              "transferBytes": 49796,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 16.9
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "startMs": 269.1,
+              "transferBytes": 532000,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 20.4
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "startMs": 269.2,
+              "transferBytes": 174140,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 18.8
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "startMs": 269.3,
+              "transferBytes": 50636,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 18
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "startMs": 269.5,
+              "transferBytes": 545268,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 20.4
+            }
+          ]
+        },
+        {
+          "throttle": false,
+          "cache": "warm",
+          "run": 0,
+          "frameGaps": [],
+          "visibility": "visible",
+          "editorMs": 169.2,
+          "previewMs": 207.3,
+          "fontReadyMs": 297.9,
+          "stableMs": 327.8,
+          "pages": 2,
+          "visibilityAtEnd": "visible",
+          "resources": [
+            {
+              "path": "/assets/index-B0S09vYw.js",
+              "startMs": 19.9,
+              "transferBytes": 300,
+              "encodedBytes": 423964,
+              "decodedBytes": 1336761,
+              "durationMs": 7.9
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "startMs": 20.1,
+              "transferBytes": 300,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 5.7
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "startMs": 20.2,
+              "transferBytes": 300,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 4.2
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "startMs": 20.2,
+              "transferBytes": 300,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 7
+            },
+            {
+              "path": "/favicon.svg",
+              "startMs": 87,
+              "transferBytes": 300,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 1.8
+            },
+            {
+              "path": "/api/auth/me",
+              "startMs": 113.7,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 2.1
+            },
+            {
+              "path": "/fonts/browser-manifests/noto-sans-sc.json",
+              "startMs": 196.3,
+              "transferBytes": 300,
+              "encodedBytes": 38433,
+              "decodedBytes": 107874,
+              "durationMs": 2.7
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "startMs": 224.1,
+              "transferBytes": 300,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 3.1
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "startMs": 224.2,
+              "transferBytes": 300,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 5.4
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "startMs": 224.3,
+              "transferBytes": 300,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 7.3
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "startMs": 224.4,
+              "transferBytes": 300,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 8.9
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "startMs": 224.5,
+              "transferBytes": 300,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 11.4
+            }
+          ]
+        },
+        {
+          "throttle": false,
+          "cache": "cold",
+          "run": 1,
+          "frameGaps": [],
+          "visibility": "visible",
+          "editorMs": 186.1,
+          "previewMs": 248.6,
+          "fontReadyMs": 327.5,
+          "stableMs": 400.1,
+          "pages": 2,
+          "visibilityAtEnd": "visible",
+          "resources": [
+            {
+              "path": "/assets/index-B0S09vYw.js",
+              "startMs": 12.2,
+              "transferBytes": 424264,
+              "encodedBytes": 423964,
+              "decodedBytes": 1336761,
+              "durationMs": 53.5
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "startMs": 12.6,
+              "transferBytes": 1011,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 6.6
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "startMs": 12.7,
+              "transferBytes": 17592,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 8.7
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "startMs": 12.7,
+              "transferBytes": 35482,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 9.9
+            },
+            {
+              "path": "/favicon.svg",
+              "startMs": 96.4,
+              "transferBytes": 624,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 2.4
+            },
+            {
+              "path": "/api/auth/me",
+              "startMs": 119.9,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 2.6
+            },
+            {
+              "path": "/fonts/browser-manifests/noto-sans-sc.json",
+              "startMs": 221.3,
+              "transferBytes": 38733,
+              "encodedBytes": 38433,
+              "decodedBytes": 107874,
+              "durationMs": 10.8
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "startMs": 247.3,
+              "transferBytes": 49796,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 13.4
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "startMs": 247.6,
+              "transferBytes": 532000,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 18.2
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "startMs": 247.8,
+              "transferBytes": 174140,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 15.3
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "startMs": 247.9,
+              "transferBytes": 50636,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 14.6
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "startMs": 248.1,
+              "transferBytes": 545268,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 18.3
+            }
+          ]
+        },
+        {
+          "throttle": false,
+          "cache": "warm",
+          "run": 1,
+          "frameGaps": [],
+          "visibility": "visible",
+          "editorMs": 163.8,
+          "previewMs": 211.7,
+          "fontReadyMs": 339.8,
+          "stableMs": 357.4,
+          "pages": 2,
+          "visibilityAtEnd": "visible",
+          "resources": [
+            {
+              "path": "/assets/index-B0S09vYw.js",
+              "startMs": 22.1,
+              "transferBytes": 300,
+              "encodedBytes": 423964,
+              "decodedBytes": 1336761,
+              "durationMs": 7.8
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "startMs": 22.2,
+              "transferBytes": 300,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 5.3
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "startMs": 22.3,
+              "transferBytes": 300,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 6.7
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "startMs": 22.4,
+              "transferBytes": 300,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 4.2
+            },
+            {
+              "path": "/favicon.svg",
+              "startMs": 87.3,
+              "transferBytes": 300,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 2.2
+            },
+            {
+              "path": "/api/auth/me",
+              "startMs": 109.7,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 2.5
+            },
+            {
+              "path": "/fonts/browser-manifests/noto-sans-sc.json",
+              "startMs": 196,
+              "transferBytes": 300,
+              "encodedBytes": 38433,
+              "decodedBytes": 107874,
+              "durationMs": 3
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "startMs": 231.6,
+              "transferBytes": 300,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 3.4
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "startMs": 231.7,
+              "transferBytes": 300,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 5.5
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "startMs": 231.8,
+              "transferBytes": 300,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 7
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "startMs": 231.9,
+              "transferBytes": 300,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 9
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "startMs": 232,
+              "transferBytes": 300,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 10.7
+            }
+          ]
+        },
+        {
+          "throttle": false,
+          "cache": "cold",
+          "run": 2,
+          "frameGaps": [],
+          "visibility": "visible",
+          "editorMs": 187.6,
+          "previewMs": 232.6,
+          "fontReadyMs": 333.6,
+          "stableMs": 369.8,
+          "pages": 2,
+          "visibilityAtEnd": "visible",
+          "resources": [
+            {
+              "path": "/assets/index-B0S09vYw.js",
+              "startMs": 10.8,
+              "transferBytes": 424264,
+              "encodedBytes": 423964,
+              "decodedBytes": 1336761,
+              "durationMs": 57.6
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "startMs": 10.9,
+              "transferBytes": 1011,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 5.8
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "startMs": 11,
+              "transferBytes": 35482,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 9.5
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "startMs": 11.1,
+              "transferBytes": 17592,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 7.7
+            },
+            {
+              "path": "/favicon.svg",
+              "startMs": 98.3,
+              "transferBytes": 624,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 2.7
+            },
+            {
+              "path": "/api/auth/me",
+              "startMs": 127.8,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 2
+            },
+            {
+              "path": "/fonts/browser-manifests/noto-sans-sc.json",
+              "startMs": 219.2,
+              "transferBytes": 38733,
+              "encodedBytes": 38433,
+              "decodedBytes": 107874,
+              "durationMs": 9.6
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "startMs": 254.9,
+              "transferBytes": 49796,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 14.4
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "startMs": 255,
+              "transferBytes": 532000,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 17.4
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "startMs": 255.2,
+              "transferBytes": 174140,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 15.4
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "startMs": 255.3,
+              "transferBytes": 50636,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 14.9
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "startMs": 255.4,
+              "transferBytes": 545268,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 17.4
+            }
+          ]
+        },
+        {
+          "throttle": false,
+          "cache": "warm",
+          "run": 2,
+          "frameGaps": [],
+          "visibility": "visible",
+          "editorMs": 146.2,
+          "previewMs": 187.2,
+          "fontReadyMs": 279.8,
+          "stableMs": 319.9,
+          "pages": 2,
+          "visibilityAtEnd": "visible",
+          "resources": [
+            {
+              "path": "/assets/index-B0S09vYw.js",
+              "startMs": 10.3,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 2.4
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "startMs": 10.5,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 4.3
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "startMs": 10.6,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 6.1
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "startMs": 10.7,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 2.8
+            },
+            {
+              "path": "/favicon.svg",
+              "startMs": 72.7,
+              "transferBytes": 300,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 2.5
+            },
+            {
+              "path": "/api/auth/me",
+              "startMs": 86.7,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 2.8
+            },
+            {
+              "path": "/fonts/browser-manifests/noto-sans-sc.json",
+              "startMs": 176,
+              "transferBytes": 300,
+              "encodedBytes": 38433,
+              "decodedBytes": 107874,
+              "durationMs": 3
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "startMs": 204,
+              "transferBytes": 300,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 3.4
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "startMs": 204.2,
+              "transferBytes": 300,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 5.7
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "startMs": 204.4,
+              "transferBytes": 300,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 7.8
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "startMs": 204.6,
+              "transferBytes": 300,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 10.3
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "startMs": 204.8,
+              "transferBytes": 300,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 12.6
+            }
+          ]
+        },
+        {
+          "throttle": true,
+          "cache": "cold",
+          "run": 0,
+          "frameGaps": [
+            427
+          ],
+          "visibility": "visible",
+          "editorMs": 3074.9,
+          "previewMs": 3113.3,
+          "fontReadyMs": 10434.1,
+          "stableMs": 10450.1,
+          "pages": 2,
+          "visibilityAtEnd": "visible",
+          "resources": [
+            {
+              "path": "/assets/index-B0S09vYw.js",
+              "startMs": 198.7,
+              "transferBytes": 424264,
+              "encodedBytes": 423964,
+              "decodedBytes": 1336761,
+              "durationMs": 2594.8
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "startMs": 198.9,
+              "transferBytes": 1011,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 180.4
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "startMs": 199,
+              "transferBytes": 35482,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 612.7
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "startMs": 199.2,
+              "transferBytes": 17592,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 426.8
+            },
+            {
+              "path": "/favicon.svg",
+              "startMs": 2828.4,
+              "transferBytes": 624,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 168.6
+            },
+            {
+              "path": "/api/auth/me",
+              "startMs": 2850.6,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 174.9
+            },
+            {
+              "path": "/fonts/browser-manifests/noto-sans-sc.json",
+              "startMs": 3102.1,
+              "transferBytes": 38733,
+              "encodedBytes": 38433,
+              "decodedBytes": 107874,
+              "durationMs": 349.8
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "startMs": 3462.8,
+              "transferBytes": 49796,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 1407.9
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "startMs": 3463,
+              "transferBytes": 532000,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 6873.3
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "startMs": 3463.1,
+              "transferBytes": 174140,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 3294.5
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "startMs": 3463.2,
+              "transferBytes": 50636,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 1423.1
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "startMs": 3463.3,
+              "transferBytes": 545268,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 6950.2
+            }
+          ]
+        },
+        {
+          "throttle": true,
+          "cache": "warm",
+          "run": 0,
+          "frameGaps": [
+            184
+          ],
+          "visibility": "visible",
+          "editorMs": 661,
+          "previewMs": 701.4,
+          "fontReadyMs": 1158.2,
+          "stableMs": 1178.4,
+          "pages": 2,
+          "visibilityAtEnd": "visible",
+          "resources": [
+            {
+              "path": "/assets/index-B0S09vYw.js",
+              "startMs": 184.8,
+              "transferBytes": 300,
+              "encodedBytes": 423964,
+              "decodedBytes": 1336761,
+              "durationMs": 183.6
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "startMs": 185,
+              "transferBytes": 300,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 180.3
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "startMs": 185,
+              "transferBytes": 300,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 196.3
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "startMs": 185,
+              "transferBytes": 300,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 196.6
+            },
+            {
+              "path": "/favicon.svg",
+              "startMs": 424.2,
+              "transferBytes": 300,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 174.2
+            },
+            {
+              "path": "/api/auth/me",
+              "startMs": 446.6,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 165.8
+            },
+            {
+              "path": "/fonts/browser-manifests/noto-sans-sc.json",
+              "startMs": 689.6,
+              "transferBytes": 300,
+              "encodedBytes": 38433,
+              "decodedBytes": 107874,
+              "durationMs": 167.2
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "startMs": 876,
+              "transferBytes": 300,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 180.7
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "startMs": 876.2,
+              "transferBytes": 300,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 181
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "startMs": 876.3,
+              "transferBytes": 300,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 195.5
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "startMs": 876.3,
+              "transferBytes": 300,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 195.3
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "startMs": 876.5,
+              "transferBytes": 300,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 210.9
+            }
+          ]
+        },
+        {
+          "throttle": true,
+          "cache": "cold",
+          "run": 1,
+          "frameGaps": [
+            438
+          ],
+          "visibility": "visible",
+          "editorMs": 3048.9,
+          "previewMs": 3100.5,
+          "fontReadyMs": 10443,
+          "stableMs": 10461.6,
+          "pages": 2,
+          "visibilityAtEnd": "visible",
+          "resources": [
+            {
+              "path": "/assets/index-B0S09vYw.js",
+              "startMs": 195.4,
+              "transferBytes": 424264,
+              "encodedBytes": 423964,
+              "decodedBytes": 1336761,
+              "durationMs": 2586.8
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "startMs": 195.6,
+              "transferBytes": 1011,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 178.3
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "startMs": 195.6,
+              "transferBytes": 35482,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 622.1
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "startMs": 195.8,
+              "transferBytes": 17592,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 438.1
+            },
+            {
+              "path": "/favicon.svg",
+              "startMs": 2809,
+              "transferBytes": 624,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 176
+            },
+            {
+              "path": "/api/auth/me",
+              "startMs": 2824.4,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 176.6
+            },
+            {
+              "path": "/fonts/browser-manifests/noto-sans-sc.json",
+              "startMs": 3086.1,
+              "transferBytes": 38733,
+              "encodedBytes": 38433,
+              "decodedBytes": 107874,
+              "durationMs": 359.2
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "startMs": 3457.1,
+              "transferBytes": 49796,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 1397.2
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "startMs": 3457.3,
+              "transferBytes": 532000,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 6886.1
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "startMs": 3457.4,
+              "transferBytes": 174140,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 3302.6
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "startMs": 3457.5,
+              "transferBytes": 50636,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 1427.8
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "startMs": 3457.7,
+              "transferBytes": 545268,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 6962.4
+            }
+          ]
+        },
+        {
+          "throttle": true,
+          "cache": "warm",
+          "run": 1,
+          "frameGaps": [
+            179
+          ],
+          "visibility": "visible",
+          "editorMs": 680.1,
+          "previewMs": 726.5,
+          "fontReadyMs": 1157,
+          "stableMs": 1174.3,
+          "pages": 2,
+          "visibilityAtEnd": "visible",
+          "resources": [
+            {
+              "path": "/assets/index-B0S09vYw.js",
+              "startMs": 201.2,
+              "transferBytes": 300,
+              "encodedBytes": 423964,
+              "decodedBytes": 1336761,
+              "durationMs": 179.3
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "startMs": 201.4,
+              "transferBytes": 300,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 191.1
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "startMs": 201.6,
+              "transferBytes": 300,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 175.9
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "startMs": 201.6,
+              "transferBytes": 300,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 191.2
+            },
+            {
+              "path": "/favicon.svg",
+              "startMs": 437,
+              "transferBytes": 300,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 171.3
+            },
+            {
+              "path": "/api/auth/me",
+              "startMs": 449.1,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 175
+            },
+            {
+              "path": "/fonts/browser-manifests/noto-sans-sc.json",
+              "startMs": 714.5,
+              "transferBytes": 300,
+              "encodedBytes": 38433,
+              "decodedBytes": 107874,
+              "durationMs": 173.6
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "startMs": 898.9,
+              "transferBytes": 300,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 175.2
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "startMs": 899.1,
+              "transferBytes": 300,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 175.3
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "startMs": 899.2,
+              "transferBytes": 300,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 190.1
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "startMs": 899.2,
+              "transferBytes": 300,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 189.9
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "startMs": 899.4,
+              "transferBytes": 300,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 205.8
+            }
+          ]
+        },
+        {
+          "throttle": true,
+          "cache": "cold",
+          "run": 2,
+          "frameGaps": [
+            415
+          ],
+          "visibility": "visible",
+          "editorMs": 3066.1,
+          "previewMs": 3101.3,
+          "fontReadyMs": 10429.3,
+          "stableMs": 10446,
+          "pages": 2,
+          "visibilityAtEnd": "visible",
+          "resources": [
+            {
+              "path": "/assets/index-B0S09vYw.js",
+              "startMs": 199,
+              "transferBytes": 424264,
+              "encodedBytes": 423964,
+              "decodedBytes": 1336761,
+              "durationMs": 2577.6
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "startMs": 199.3,
+              "transferBytes": 1011,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 168
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "startMs": 199.3,
+              "transferBytes": 17592,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 415.8
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "startMs": 199.3,
+              "transferBytes": 35482,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 603.3
+            },
+            {
+              "path": "/favicon.svg",
+              "startMs": 2804,
+              "transferBytes": 624,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 171.2
+            },
+            {
+              "path": "/api/auth/me",
+              "startMs": 2827.6,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 178.9
+            },
+            {
+              "path": "/fonts/browser-manifests/noto-sans-sc.json",
+              "startMs": 3091.3,
+              "transferBytes": 38733,
+              "encodedBytes": 38433,
+              "decodedBytes": 107874,
+              "durationMs": 355.6
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "startMs": 3458.1,
+              "transferBytes": 49796,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 1402.1
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "startMs": 3458.3,
+              "transferBytes": 532000,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 6874
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "startMs": 3458.4,
+              "transferBytes": 50636,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 1432.6
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "startMs": 3458.4,
+              "transferBytes": 174140,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 3292.3
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "startMs": 3458.6,
+              "transferBytes": 545268,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 6949.8
+            }
+          ]
+        },
+        {
+          "throttle": true,
+          "cache": "warm",
+          "run": 2,
+          "frameGaps": [
+            169
+          ],
+          "visibility": "visible",
+          "editorMs": 677.7,
+          "previewMs": 720.9,
+          "fontReadyMs": 1151.4,
+          "stableMs": 1169,
+          "pages": 2,
+          "visibilityAtEnd": "visible",
+          "resources": [
+            {
+              "path": "/assets/index-B0S09vYw.js",
+              "startMs": 196.2,
+              "transferBytes": 300,
+              "encodedBytes": 423964,
+              "decodedBytes": 1336761,
+              "durationMs": 169.3
+            },
+            {
+              "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+              "startMs": 196.4,
+              "transferBytes": 300,
+              "encodedBytes": 711,
+              "decodedBytes": 1301,
+              "durationMs": 181.8
+            },
+            {
+              "path": "/assets/index-D0ICWCGb.css",
+              "startMs": 196.5,
+              "transferBytes": 300,
+              "encodedBytes": 17292,
+              "decodedBytes": 89476,
+              "durationMs": 169.5
+            },
+            {
+              "path": "/assets/resume-DARQQHql.js",
+              "startMs": 196.5,
+              "transferBytes": 300,
+              "encodedBytes": 35182,
+              "decodedBytes": 118840,
+              "durationMs": 197.5
+            },
+            {
+              "path": "/favicon.svg",
+              "startMs": 422.6,
+              "transferBytes": 300,
+              "encodedBytes": 324,
+              "decodedBytes": 324,
+              "durationMs": 172.6
+            },
+            {
+              "path": "/api/auth/me",
+              "startMs": 447,
+              "transferBytes": 300,
+              "encodedBytes": 0,
+              "decodedBytes": 0,
+              "durationMs": 178.8
+            },
+            {
+              "path": "/fonts/browser-manifests/noto-sans-sc.json",
+              "startMs": 708.5,
+              "transferBytes": 300,
+              "encodedBytes": 38433,
+              "decodedBytes": 107874,
+              "durationMs": 173.5
+            },
+            {
+              "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+              "startMs": 892.8,
+              "transferBytes": 300,
+              "encodedBytes": 49496,
+              "decodedBytes": 49496,
+              "durationMs": 174.2
+            },
+            {
+              "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+              "startMs": 893,
+              "transferBytes": 300,
+              "encodedBytes": 531700,
+              "decodedBytes": 531700,
+              "durationMs": 174.3
+            },
+            {
+              "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+              "startMs": 893.1,
+              "transferBytes": 300,
+              "encodedBytes": 173840,
+              "decodedBytes": 173840,
+              "durationMs": 189.5
+            },
+            {
+              "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+              "startMs": 893.2,
+              "transferBytes": 300,
+              "encodedBytes": 50336,
+              "decodedBytes": 50336,
+              "durationMs": 189.1
+            },
+            {
+              "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+              "startMs": 893.3,
+              "transferBytes": 300,
+              "encodedBytes": 544968,
+              "decodedBytes": 544968,
+              "durationMs": 204.4
+            }
+          ]
+        }
+      ],
+      "summary": [
+        {
+          "throttle": false,
+          "cache": "cold",
+          "previewMs": {
+            "samples": 3,
+            "median": 248.6,
+            "min": 232.6,
+            "max": 252.6
+          },
+          "fontStableMs": {
+            "samples": 3,
+            "median": 378.6,
+            "min": 369.8,
+            "max": 400.1
+          },
+          "transferredBytes": {
+            "samples": 3,
+            "median": 1869846,
+            "min": 1869846,
+            "max": 1869846
+          }
+        },
+        {
+          "throttle": false,
+          "cache": "warm",
+          "previewMs": {
+            "samples": 3,
+            "median": 207.3,
+            "min": 187.2,
+            "max": 211.7
+          },
+          "fontStableMs": {
+            "samples": 3,
+            "median": 327.8,
+            "min": 319.9,
+            "max": 357.4
+          },
+          "transferredBytes": {
+            "samples": 3,
+            "median": 3600,
+            "min": 3600,
+            "max": 3600
+          }
+        },
+        {
+          "throttle": true,
+          "cache": "cold",
+          "previewMs": {
+            "samples": 3,
+            "median": 3101.3,
+            "min": 3100.5,
+            "max": 3113.3
+          },
+          "fontStableMs": {
+            "samples": 3,
+            "median": 10450.1,
+            "min": 10446,
+            "max": 10461.6
+          },
+          "transferredBytes": {
+            "samples": 3,
+            "median": 1869846,
+            "min": 1869846,
+            "max": 1869846
+          }
+        },
+        {
+          "throttle": true,
+          "cache": "warm",
+          "previewMs": {
+            "samples": 3,
+            "median": 720.9,
+            "min": 701.4,
+            "max": 726.5
+          },
+          "fontStableMs": {
+            "samples": 3,
+            "median": 1174.3,
+            "min": 1169,
+            "max": 1178.4
+          },
+          "transferredBytes": {
+            "samples": 3,
+            "median": 3600,
+            "min": 3600,
+            "max": 3600
+          }
+        }
+      ],
+      "caveats": [
+        "Three observations per condition: median/min/max only, not p95.",
+        "Local static preview responses; inspect encoded/decoded sizes and cache hits before comparing with compressed CDN traffic.",
+        "No CPU throttle; font ready is recorded separately from initial fallback preview."
+      ]
+    },
+    "excluded": {
+      "file": "output/stage4/network-after-uncontrolled-api.json",
+      "reason": "Uncontrolled foreground state introduced animation frame throttling; not used in comparisons."
+    }
+  },
+  "interaction": {
+    "date": "2026-11-07",
+    "results": [
+      {
+        "sample": "two-pages",
+        "editing": {
+          "times": [
+            50.3,
+            39.7,
+            49.1,
+            41.6,
+            38.8,
+            38.9,
+            38.9,
+            33.9,
+            54.5,
+            39.4,
+            39,
+            38.8,
+            33.3,
+            33.5,
+            38.9,
+            50.5,
+            39.1,
+            32.5,
+            33.3,
+            33.4
+          ],
+          "layouts": [
+            1.6,
+            1.4,
+            1.8,
+            1.6,
+            1.4,
+            1.3,
+            1.5,
+            1.4,
+            1.7,
+            1.5,
+            1.5,
+            1.5,
+            1.5,
+            1.3,
+            1.3,
+            1.7,
+            1.6,
+            1.4,
+            1.3,
+            1.4
+          ],
+          "pages": 2,
+          "stableDocument": true
+        },
+        "switching": {
+          "times": [
+            34.5,
+            30.5,
+            34.4,
+            50.2,
+            35.7,
+            30.7,
+            33.4,
+            33.2,
+            33.4,
+            34,
+            32.7,
+            33.3,
+            33.5,
+            33.1,
+            33.7,
+            32.9,
+            33.5,
+            33.2,
+            33.4,
+            33.5
+          ],
+          "pageCounts": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "templates": [
+            "应用清简模板",
+            "应用条理模板"
+          ],
+          "stableDocument": true
+        },
+        "summary": {
+          "edit": {
+            "medianMs": 38.9,
+            "p95Ms": 50.5,
+            "samples": 20
+          },
+          "switch": {
+            "medianMs": 33.4,
+            "p95Ms": 35.7,
+            "samples": 20
+          }
+        }
+      },
+      {
+        "sample": "long-sidebar",
+        "editing": {
+          "times": [
+            71,
+            62.7,
+            66.7,
+            66.7,
+            61.8,
+            64.1,
+            63.6,
+            68.9,
+            63.8,
+            66.6,
+            66.7,
+            66.7,
+            66.7,
+            94.9,
+            68,
+            64.8,
+            67.7,
+            77.1,
+            67.3,
+            71.3
+          ],
+          "layouts": [
+            4.9,
+            4.7,
+            4.6,
+            5.1,
+            4.5,
+            4.6,
+            4.5,
+            4.8,
+            4.3,
+            4.8,
+            4.7,
+            4.8,
+            4.7,
+            6,
+            4.9,
+            4.4,
+            7.1,
+            4.7,
+            4.9,
+            4.9
+          ],
+          "pages": 10,
+          "stableDocument": true
+        },
+        "switching": {
+          "times": [
+            71.4,
+            67.2,
+            60.5,
+            57,
+            59.7,
+            55.8,
+            68,
+            69.3,
+            57.3,
+            83.2,
+            61.1,
+            59.5,
+            59,
+            55.3,
+            59.1,
+            55.5,
+            55.5,
+            56.1,
+            55,
+            55.5
+          ],
+          "pageCounts": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "templates": [
+            "应用并列模板",
+            "应用色带模板"
+          ],
+          "stableDocument": true
+        },
+        "summary": {
+          "edit": {
+            "medianMs": 66.7,
+            "p95Ms": 77.1,
+            "samples": 20
+          },
+          "switch": {
+            "medianMs": 59.05,
+            "p95Ms": 71.4,
+            "samples": 20
+          }
+        }
+      }
+    ],
+    "measurement": "Native input setter + DOM input/click events through React store to updated paginated DOM and next animation frame. Not human typing or stage-2 runtime-only measurement."
+  },
+  "exports": {
+    "cases": 27,
+    "pages": 73,
+    "moduleCharacterComparisons": 191,
+    "failures": [],
+    "caseResults": [
+      {
+        "id": "template-clean",
+        "pages": 2,
+        "characters": 722,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeSansSC-Oblique",
+          "/CZZZZZ+MyResumeSansSC-Bold",
+          "/DZZZZZ+MyResumeSansSC-Regular",
+          "/EZZZZZ+MyResumeSansSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeSansSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeSansSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeSansSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "template-lined",
+        "pages": 2,
+        "characters": 722,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeSansSC-Oblique",
+          "/CZZZZZ+MyResumeSansSC-Bold",
+          "/DZZZZZ+MyResumeSansSC-Regular",
+          "/EZZZZZ+MyResumeSansSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeSansSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeSansSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeSansSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "template-split",
+        "pages": 1,
+        "characters": 715,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeSansSC-Oblique",
+          "/CZZZZZ+MyResumeSansSC-Bold",
+          "/DZZZZZ+MyResumeSansSC-Regular",
+          "/EZZZZZ+MyResumeSansSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeSansSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeSansSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeSansSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "template-band",
+        "pages": 1,
+        "characters": 715,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeSansSC-Oblique",
+          "/CZZZZZ+MyResumeSansSC-Bold",
+          "/DZZZZZ+MyResumeSansSC-Regular",
+          "/EZZZZZ+MyResumeSansSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeSansSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeSansSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeSansSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "template-essential",
+        "pages": 2,
+        "characters": 721,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeSerifSC-Oblique",
+          "/CZZZZZ+MyResumeSerifSC-Bold",
+          "/DZZZZZ+MyResumeSerifSC-Regular",
+          "/EZZZZZ+MyResumeSerifSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeSerifSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeSerifSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeSerifSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "template-modern",
+        "pages": 2,
+        "characters": 722,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeSansSC-Oblique",
+          "/CZZZZZ+MyResumeSansSC-Bold",
+          "/DZZZZZ+MyResumeSansSC-Regular",
+          "/EZZZZZ+MyResumeSansSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeSansSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeSansSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeSansSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "template-modernSplit",
+        "pages": 1,
+        "characters": 715,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeSansSC-Oblique",
+          "/CZZZZZ+MyResumeSansSC-Bold",
+          "/DZZZZZ+MyResumeSansSC-Regular",
+          "/EZZZZZ+MyResumeSansSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeSansSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeSansSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeSansSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "template-gradient",
+        "pages": 1,
+        "characters": 715,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 10,
+        "fonts": [
+          "/BBZZZZ+MyResumeSansSC-Oblique",
+          "/CZZZZZ+MyResumeSansSC-Bold",
+          "/DZZZZZ+MyResumeSansSC-Regular",
+          "/EZZZZZ+MyResumeSansSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeSansSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeSansSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeSansSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "template-reed",
+        "pages": 2,
+        "characters": 722,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeSerifSC-Oblique",
+          "/CZZZZZ+MyResumeSerifSC-Bold",
+          "/DZZZZZ+MyResumeSerifSC-Regular",
+          "/EZZZZZ+MyResumeSerifSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeSerifSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeSerifSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeSerifSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "template-leafish",
+        "pages": 1,
+        "characters": 715,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeSansSC-Oblique",
+          "/CZZZZZ+MyResumeSansSC-Bold",
+          "/DZZZZZ+MyResumeSansSC-Regular",
+          "/EZZZZZ+MyResumeSansSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeSansSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeSansSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeSansSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "template-executive",
+        "pages": 2,
+        "characters": 722,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumePlexSansSC-Oblique",
+          "/CZZZZZ+MyResumePlexSansSC-Bold",
+          "/DZZZZZ+MyResumePlexSansSC-Regular",
+          "/EZZZZZ+MyResumePlexSansSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumePlexSansSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumePlexSansSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumePlexSansSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "template-scholar",
+        "pages": 2,
+        "characters": 722,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeSerifSC-Oblique",
+          "/CZZZZZ+MyResumeSerifSC-Bold",
+          "/DZZZZZ+MyResumeSerifSC-Regular",
+          "/EZZZZZ+MyResumeSerifSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeSerifSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeSerifSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeSerifSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "template-atelier",
+        "pages": 2,
+        "characters": 722,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeWenKaiTC-Oblique",
+          "/CZZZZZ+MyResumeWenKaiTC-Bold",
+          "/DZZZZZ+MyResumeWenKaiTC-Regular",
+          "/EZZZZZ+MyResumeWenKaiTC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeWenKaiTC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeWenKaiTC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeWenKaiTC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "template-ledger",
+        "pages": 1,
+        "characters": 715,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 10,
+        "fonts": [
+          "/BBZZZZ+MyResumePlexSansSC-Oblique",
+          "/CZZZZZ+MyResumePlexSansSC-Bold",
+          "/DZZZZZ+MyResumePlexSansSC-Regular",
+          "/EZZZZZ+MyResumePlexSansSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumePlexSansSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumePlexSansSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumePlexSansSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "template-ribbon",
+        "pages": 1,
+        "characters": 715,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 10,
+        "fonts": [
+          "/BBZZZZ+MyResumeSerifSC-Oblique",
+          "/CZZZZZ+MyResumeSerifSC-Bold",
+          "/DZZZZZ+MyResumeSerifSC-Regular",
+          "/EZZZZZ+MyResumeSerifSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeSerifSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeSerifSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeSerifSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "template-aurora",
+        "pages": 1,
+        "characters": 715,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeRoundTC-Oblique",
+          "/CZZZZZ+MyResumeRoundTC-Bold",
+          "/DZZZZZ+MyResumeRoundTC-Regular",
+          "/EZZZZZ+MyResumeRoundTC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeRoundTC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeRoundTC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeRoundTC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "stress-single-long-paragraph",
+        "pages": 6,
+        "characters": 12170,
+        "outsidePage": 0,
+        "images": 0,
+        "linkCount": 7,
+        "fonts": [
+          "/CZZZZZ+MyResumeSerifSC-Bold",
+          "/DZZZZZ+MyResumeSerifSC-Regular",
+          "/EZZZZZ+MyResumeSerifSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {}
+      },
+      {
+        "id": "stress-list-code-marks",
+        "pages": 6,
+        "characters": 7573,
+        "outsidePage": 0,
+        "images": 0,
+        "linkCount": 8,
+        "fonts": [
+          "/CZZZZZ+MyResumeSansSC-Bold",
+          "/Courier",
+          "/DZZZZZ+MyResumeSansSC-Regular",
+          "/EZZZZZ+MyResumeSansSC-Regular",
+          "/Helvetica",
+          "/IZZZZZ+MyResumeSansSC-Oblique"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {}
+      },
+      {
+        "id": "stress-double-left-long-sidebar",
+        "pages": 10,
+        "characters": 6413,
+        "outsidePage": 0,
+        "images": 0,
+        "linkCount": 8,
+        "fonts": [
+          "/CZZZZZ+MyResumeRoundTC-Bold",
+          "/DZZZZZ+MyResumeRoundTC-Regular",
+          "/EZZZZZ+MyResumeRoundTC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {}
+      },
+      {
+        "id": "stress-double-right-long-sidebar",
+        "pages": 10,
+        "characters": 6413,
+        "outsidePage": 0,
+        "images": 0,
+        "linkCount": 8,
+        "fonts": [
+          "/CZZZZZ+MyResumeRoundTC-Bold",
+          "/DZZZZZ+MyResumeRoundTC-Regular",
+          "/EZZZZZ+MyResumeRoundTC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {}
+      },
+      {
+        "id": "stress-oversized-header-photo",
+        "pages": 5,
+        "characters": 4251,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 11,
+        "fonts": [
+          "/CEZZZZ+MyResumeSerifSC-Regular",
+          "/CZZZZZ+MyResumeSerifSC-Bold",
+          "/DZZZZZ+MyResumeSerifSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {}
+      },
+      {
+        "id": "font-noto-sans-sc",
+        "pages": 2,
+        "characters": 722,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeSansSC-Oblique",
+          "/CZZZZZ+MyResumeSansSC-Bold",
+          "/DZZZZZ+MyResumeSansSC-Regular",
+          "/EZZZZZ+MyResumeSansSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeSansSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeSansSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeSansSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "font-noto-serif-sc",
+        "pages": 2,
+        "characters": 722,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeSerifSC-Oblique",
+          "/CZZZZZ+MyResumeSerifSC-Bold",
+          "/DZZZZZ+MyResumeSerifSC-Regular",
+          "/EZZZZZ+MyResumeSerifSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeSerifSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeSerifSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeSerifSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "font-lxgw-wenkai",
+        "pages": 2,
+        "characters": 722,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeWenKaiTC-Oblique",
+          "/CZZZZZ+MyResumeWenKaiTC-Bold",
+          "/DZZZZZ+MyResumeWenKaiTC-Regular",
+          "/EZZZZZ+MyResumeWenKaiTC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeWenKaiTC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeWenKaiTC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeWenKaiTC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "font-ibm-plex-sans-sc",
+        "pages": 2,
+        "characters": 722,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumePlexSansSC-Oblique",
+          "/CZZZZZ+MyResumePlexSansSC-Bold",
+          "/DZZZZZ+MyResumePlexSansSC-Regular",
+          "/EZZZZZ+MyResumePlexSansSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumePlexSansSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumePlexSansSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumePlexSansSC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "font-chiron-round-tc",
+        "pages": 2,
+        "characters": 722,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeRoundTC-Oblique",
+          "/CZZZZZ+MyResumeRoundTC-Bold",
+          "/DZZZZZ+MyResumeRoundTC-Regular",
+          "/EZZZZZ+MyResumeRoundTC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeRoundTC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeRoundTC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeRoundTC-Oblique"
+          ]
+        }
+      },
+      {
+        "id": "font-source-han-sans-sc",
+        "pages": 2,
+        "characters": 722,
+        "outsidePage": 0,
+        "images": 1,
+        "linkCount": 9,
+        "fonts": [
+          "/BBZZZZ+MyResumeSourceHanSansSC-Oblique",
+          "/CZZZZZ+MyResumeSourceHanSansSC-Bold",
+          "/DZZZZZ+MyResumeSourceHanSansSC-Regular",
+          "/EZZZZZ+MyResumeSourceHanSansSC-Regular",
+          "/Helvetica"
+        ],
+        "allNonstandardFontsEmbedded": true,
+        "markFonts": {
+          "RegularBody": [
+            "DZZZZZ+MyResumeSourceHanSansSC-Regular"
+          ],
+          "BoldBody": [
+            "CZZZZZ+MyResumeSourceHanSansSC-Bold"
+          ],
+          "ItalicBody": [
+            "BBZZZZ+MyResumeSourceHanSansSC-Oblique"
+          ]
+        }
+      }
+    ],
+    "beforeFailure": {
+      "case": "stress-list-code-marks",
+      "page": 1,
+      "marker": "19.",
+      "problem": "Marker left on the previous page without its first content line"
+    },
+    "uiDownloads": {
+      "downloads": [
+        {
+          "label": "下载 JSON 备份",
+          "filename": "ui-example.json",
+          "suggestedFilename": "前端工程师 · 示例.json",
+          "bytes": 19320,
+          "elapsedMs": 141
+        },
+        {
+          "label": "下载 PDF",
+          "filename": "ui-example.pdf",
+          "suggestedFilename": "前端工程师 · 示例.pdf",
+          "bytes": 69536,
+          "elapsedMs": 268
+        },
+        {
+          "label": "下载图片",
+          "filename": "ui-example-images.zip",
+          "suggestedFilename": "前端工程师 · 示例-图片.zip",
+          "bytes": 368937,
+          "elapsedMs": 7078
+        },
+        {
+          "label": "下载 HTML",
+          "filename": "ui-example.html",
+          "suggestedFilename": "前端工程师 · 示例.html",
+          "bytes": 19709,
+          "elapsedMs": 180
+        },
+        {
+          "label": "下载图片",
+          "filename": "ui-single-300dpi.png",
+          "suggestedFilename": "单页图片导出 · 虚构示例.png",
+          "bytes": 199120,
+          "elapsedMs": 1126
+        }
+      ],
+      "offlineHtml": {
+        "hasName": true,
+        "photos": 1,
+        "scripts": 0,
+        "externalRequests": 0
+      },
+      "singleImage300dpi": {
+        "width": 2481,
+        "height": 3508
+      },
+      "cloudWrites": 0,
+      "note": "Download timings are one observation with shared renderer/font caches, not a latency benchmark.",
+      "environment": "Local Wrangler 4175; Essential template and Source Han Sans chosen in preview regression; synthetic data"
+    },
+    "imageZip": {
+      "pages": 2,
+      "width": 1241,
+      "height": 1754
+    },
+    "visualReviewSheets": 6
+  },
+  "delivery": {
+    "date": "2026-11-07",
+    "environment": "isolated local Wrangler, no deployment",
+    "files": 1020,
+    "totalBytes": 718344432,
+    "largest": {
+      "file": "fonts/serif-700-oblique.ttf",
+      "bytes": 15378948
+    },
+    "responses": [
+      {
+        "resource": "/",
+        "status": 200,
+        "cacheControl": "public, max-age=0, must-revalidate",
+        "contentType": "text/html; charset=utf-8",
+        "nosniff": null
+      },
+      {
+        "resource": "/assets/index-B0S09vYw.js",
+        "status": 200,
+        "cacheControl": "public, max-age=31536000, immutable",
+        "contentType": "text/javascript; charset=utf-8",
+        "nosniff": "nosniff"
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.base.8f7bbb57b2810a1e.woff2",
+        "status": 200,
+        "cacheControl": "public, max-age=31536000, immutable",
+        "contentType": "font/woff2",
+        "nosniff": "nosniff"
+      },
+      {
+        "resource": "/fonts/browser-manifests/noto-sans-sc.json",
+        "status": 200,
+        "cacheControl": "public, max-age=0, must-revalidate",
+        "contentType": "application/json",
+        "nosniff": "nosniff"
+      },
+      {
+        "resource": "/api/auth/me",
+        "status": 200,
+        "cacheControl": "no-store",
+        "contentType": "application/json; charset=utf-8",
+        "nosniff": "nosniff"
+      }
+    ],
+    "metadata": [
+      {
+        "id": "noto-sans-sc",
+        "bytes": 107874,
+        "gzipBytes": 38433,
+        "brotliBytes": 18805
+      },
+      {
+        "id": "noto-serif-sc",
+        "bytes": 108037,
+        "gzipBytes": 38462,
+        "brotliBytes": 18798
+      },
+      {
+        "id": "lxgw-wenkai",
+        "bytes": 245880,
+        "gzipBytes": 86035,
+        "brotliBytes": 31467
+      },
+      {
+        "id": "ibm-plex-sans-sc",
+        "bytes": 104815,
+        "gzipBytes": 37313,
+        "brotliBytes": 18396
+      },
+      {
+        "id": "chiron-round-tc",
+        "bytes": 197646,
+        "gzipBytes": 66854,
+        "brotliBytes": 28077
+      },
+      {
+        "id": "source-han-sans-sc",
+        "bytes": 108454,
+        "gzipBytes": 38443,
+        "brotliBytes": 18830
+      }
+    ],
+    "verifiedFontParts": 696
+  },
+  "browserCache": {
+    "environment": "local Wrangler 4175, no CDN transit",
+    "date": "2026-11-07",
+    "results": [
+      {
+        "cache": "cold",
+        "resources": [
+          {
+            "path": "/assets/index-B0S09vYw.js",
+            "transferSize": 424264,
+            "encodedBodySize": 423964
+          },
+          {
+            "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+            "transferSize": 1011,
+            "encodedBodySize": 711
+          },
+          {
+            "path": "/assets/resume-DARQQHql.js",
+            "transferSize": 35482,
+            "encodedBodySize": 35182
+          },
+          {
+            "path": "/assets/index-D0ICWCGb.css",
+            "transferSize": 17592,
+            "encodedBodySize": 17292
+          },
+          {
+            "path": "/favicon.svg",
+            "transferSize": 513,
+            "encodedBodySize": 213
+          },
+          {
+            "path": "/api/auth/me",
+            "transferSize": 427,
+            "encodedBodySize": 127
+          },
+          {
+            "path": "/fonts/browser-manifests/noto-sans-sc.json",
+            "transferSize": 300,
+            "encodedBodySize": 38433
+          },
+          {
+            "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+            "transferSize": 49796,
+            "encodedBodySize": 49496
+          },
+          {
+            "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+            "transferSize": 532000,
+            "encodedBodySize": 531700
+          },
+          {
+            "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+            "transferSize": 174140,
+            "encodedBodySize": 173840
+          },
+          {
+            "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+            "transferSize": 50636,
+            "encodedBodySize": 50336
+          },
+          {
+            "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+            "transferSize": 545268,
+            "encodedBodySize": 544968
+          }
+        ]
+      },
+      {
+        "cache": "warm",
+        "resources": [
+          {
+            "path": "/assets/index-B0S09vYw.js",
+            "transferSize": 0,
+            "encodedBodySize": 423964
+          },
+          {
+            "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+            "transferSize": 0,
+            "encodedBodySize": 711
+          },
+          {
+            "path": "/assets/resume-DARQQHql.js",
+            "transferSize": 0,
+            "encodedBodySize": 35182
+          },
+          {
+            "path": "/assets/index-D0ICWCGb.css",
+            "transferSize": 0,
+            "encodedBodySize": 17292
+          },
+          {
+            "path": "/favicon.svg",
+            "transferSize": 300,
+            "encodedBodySize": 213
+          },
+          {
+            "path": "/api/auth/me",
+            "transferSize": 427,
+            "encodedBodySize": 127
+          },
+          {
+            "path": "/fonts/browser-manifests/noto-sans-sc.json",
+            "transferSize": 300,
+            "encodedBodySize": 38433
+          },
+          {
+            "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+            "transferSize": 0,
+            "encodedBodySize": 49496
+          },
+          {
+            "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+            "transferSize": 0,
+            "encodedBodySize": 531700
+          },
+          {
+            "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+            "transferSize": 0,
+            "encodedBodySize": 173840
+          },
+          {
+            "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+            "transferSize": 0,
+            "encodedBodySize": 50336
+          },
+          {
+            "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+            "transferSize": 0,
+            "encodedBodySize": 544968
+          }
+        ]
+      }
+    ],
+    "immutableResourcesFromBrowserCache": 9
+  },
+  "checks": {
+    "unitTests": 208,
+    "unitTestFiles": 33,
+    "typecheck": true,
+    "productionBuild": true,
+    "cloudAssetPreparation": true,
+    "unopenedDialogsDeferred": true,
+    "cancelledDialogLoadStaysClosed": true,
+    "dialogNetworkFailureRetries": true,
+    "homeBackupAndExportImportEntriesUseSameWrapper": true,
+    "historyOnDemand": true,
+    "templateImageCount": 16,
+    "pdfResourcesInInstantMode": 0,
+    "mobileWidthPx": 375,
+    "horizontalOverflow": false,
+    "manualPdfPreview": true
+  },
+  "scripts": [
+    "scripts/verify-stage4-exports.ts",
+    "scripts/verify-stage4-exports.py",
+    "scripts/verify-stage4-delivery.mjs",
+    "tests/browser/network-stage4.js",
+    "tests/browser/interaction-stage4.js",
+    "tests/browser/exports-stage4.js",
+    "tests/browser/deferred-dialogs-stage4.js",
+    "tests/browser/deferred-dialog-failure-stage4.js",
+    "tests/browser/cache-stage4.js"
+  ],
+  "limitations": [
+    "Local preview and local Wrangler measurements, not public Cloudflare transit.",
+    "Network observations have three samples per condition and report median/min/max; no p95 claim.",
+    "Before and after network runs are on November 6 and 7, respectively; final runs explicitly emulate foreground focus.",
+    "Interaction timings include programmatic input/click, React store and pagination; not directly comparable to stage-2 runtime-only timings.",
+    "First font stabilization remains about 10.45 seconds in the specified cold slow network.",
+    "Initial account identification still gates workspace startup; no account isolation behavior was changed.",
+    "PDF/HTML engines do not promise pixel-identical layouts."
+  ],
+  "implementationCommits": [
+    "bee58d6",
+    "a60fbbd",
+    "7ee4894",
+    "335de31"
+  ]
+}

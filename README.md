@@ -117,3 +117,5 @@ HTML 下载包含可见内容、样式和裁剪后的头像，可离线打开，
 当前默认即时预览、固定模板示意图及字号层级原型见 [即时预览方案](docs/instant-preview-prototype.md)。
 
 分阶段优化与进度见 [产品优化计划](docs/product-polish-plan.md)；当前 A4 分页、渐进字体和量化验证见 [第二阶段记录](docs/preview-stage2.md)。
+
+编辑与保存恢复见 [第三阶段记录](docs/editor-stage3.md)；按需导入、字体请求减量、导出矩阵和冷热缓存／慢网实测见 [第四阶段记录](docs/output-stage4.md)。
