@@ -13,6 +13,7 @@ interface Face { weight: number; style: 'normal' | 'italic'; parts: Part[] }
 interface Family { family: string; coverage: number[][]; chunks: Chunk[]; faces: Face[] }
 interface BrowserFontManifest { version: number; families: Record<string, Family> }
 interface FontRequest extends Part { family: string; weight: number; style: 'normal' | 'italic'; ranges: number[][] }
+export interface BrowserFontUse { weight: 400 | 700; style: 'normal' | 'italic'; text: string }
 
 const FAMILIES: Record<string, string> = {
   'noto-sans-sc': 'PreviewMyResumeSansSC', 'noto-serif-sc': 'PreviewMyResumeSerifSC',
@@ -20,6 +21,7 @@ const FAMILIES: Record<string, string> = {
   'chiron-round-tc': 'PreviewMyResumeRoundTC', 'source-han-sans-sc': 'PreviewMyResumeSourceHanSansSC',
 };
 export const browserFontFamily = (fontId: string): string => Object.hasOwn(FAMILIES, fontId) ? FAMILIES[fontId] : FAMILIES['noto-sans-sc'];
+const knownFontId = (fontId: string) => Object.hasOwn(FAMILIES, fontId) ? fontId : 'noto-sans-sc';
 const abortError = () => new DOMException('字体加载已取消', 'AbortError');
 const contains = (ranges: number[][], point: number) => ranges.some(([start, end]) => point >= start && point <= end);
 const unicodeRange = (ranges: number[][]) => ranges.map(([start, end]) => `U+${start.toString(16)}${end === start ? '' : '-' + end.toString(16)}`).join(',');
@@ -105,15 +107,19 @@ function fontBase(document: Document): URL {
   return new URL(`${import.meta.env.BASE_URL}fonts/`, origin);
 }
 
-async function manifestAt(base: URL): Promise<BrowserFontManifest> {
-  const key = base.href;
+async function manifestAt(base: URL, fontId: string): Promise<BrowserFontManifest> {
+  const id = knownFontId(fontId);
+  const url = new URL(`browser-manifests/${id}.json`, base);
+  const key = url.href;
   let existing = manifestCache.get(key);
   if (!existing) {
     existing = (async () => {
-      const response = await fetch(new URL('browser-manifest.json', base), { signal: AbortSignal.timeout(20_000) });
+      const response = await fetch(url, { signal: AbortSignal.timeout(20_000) });
       if (!response.ok) throw new Error(`字体目录下载失败 (${response.status})`);
       const bytes = await readBounded(response, MAX_MANIFEST_BYTES);
-      return parseBrowserFontManifest(JSON.parse(new TextDecoder().decode(bytes)));
+      const catalog = parseBrowserFontManifest(JSON.parse(new TextDecoder().decode(bytes)));
+      if (Object.keys(catalog.families).length !== 1 || !catalog.families[id]) throw new Error('字体目录与选项不一致');
+      return catalog;
     })();
     manifestCache.set(key, existing);
     void existing.catch(() => { if (manifestCache.get(key) === existing) manifestCache.delete(key); });
@@ -122,7 +128,7 @@ async function manifestAt(base: URL): Promise<BrowserFontManifest> {
 }
 
 /** Public for meaningful coverage/request-count tests and offline measurement. */
-export function requestedBrowserFontParts(manifest: BrowserFontManifest, fontId: string, text: string, italic = false): { requests: FontRequest[]; missingCharacters: string[] } {
+export function requestedBrowserFontParts(manifest: BrowserFontManifest, fontId: string, text: string, italic = false, usage?: BrowserFontUse[]): { requests: FontRequest[]; missingCharacters: string[] } {
   const familyId = Object.hasOwn(FAMILIES, fontId) ? fontId : 'noto-sans-sc';
   const family = manifest.families[familyId];
   if (!family || family.family !== browserFontFamily(fontId)) throw new Error('字体目录与选项不一致');
@@ -131,11 +137,14 @@ export function requestedBrowserFontParts(manifest: BrowserFontManifest, fontId:
   const needed = new Map(chunks.map(chunk => [chunk.id, chunk.ranges]));
   const requests: FontRequest[] = [];
   for (const face of family.faces) {
-    if (face.style === 'italic' && !italic) continue;
+    if (!usage && face.style === 'italic' && !italic) continue;
+    const facePoints = usage ? new Set(usage.filter(use => use.weight === face.weight && use.style === face.style).flatMap(use => Array.from(use.text, character => character.codePointAt(0)!))) : null;
+    if (facePoints?.size === 0) continue;
     if (![400, 700].includes(face.weight) || !['normal', 'italic'].includes(face.style)) throw new Error('字体样式无效');
     for (const part of face.parts) {
       const ranges = needed.get(part.chunk);
       if (!ranges) continue;
+      if (facePoints && ![...facePoints].some(point => contains(ranges, point))) continue;
       if (!/^browser\/[A-Za-z0-9_.-]+\.woff2$/.test(part.file) || part.file.includes('..') || !/^[a-f0-9]{64}$/.test(part.sha256) || !Number.isSafeInteger(part.bytes) || part.bytes <= 0 || part.bytes > 4 * 1024 * 1024) throw new Error('字体分片无效');
       requests.push({ ...part, family: family.family, weight: face.weight, style: face.style, ranges });
     }
@@ -213,7 +222,7 @@ function acquire(document: Document, cache: DocumentCache, base: URL, request: F
 }
 
 export interface BrowserFontController {
-  update(fontId: string, text: string, italic?: boolean): Promise<BrowserFontStatus>;
+  update(fontId: string, text: string, italic?: boolean, usage?: BrowserFontUse[]): Promise<BrowserFontStatus>;
   dispose(): void;
 }
 
@@ -225,7 +234,7 @@ export function createBrowserFontController(document: Document, onStatus?: (stat
   const documentCache = cache, base = fontBase(document), consumer = Symbol('preview-fonts');
   let current = new Map<string, Entry>(), sequence = 0, disposed = false;
   return {
-    async update(fontId, text, italic = false) {
+    async update(fontId, text, italic = false, usage) {
       const revision = ++sequence;
       const family = browserFontFamily(fontId);
       const report = (state: BrowserFontStatus['state'], requests: FontRequest[] = [], missingCharacters: string[] = [], error?: string): BrowserFontStatus => {
@@ -235,9 +244,9 @@ export function createBrowserFontController(document: Document, onStatus?: (stat
       };
       if (disposed) throw abortError();
       try {
-        const manifest = await manifestAt(base);
+        const manifest = await manifestAt(base, fontId);
         if (disposed || revision !== sequence) throw abortError();
-        const { requests, missingCharacters } = requestedBrowserFontParts(manifest, fontId, text, italic);
+        const { requests, missingCharacters } = requestedBrowserFontParts(manifest, fontId, text, italic, usage);
         const next = new Map<string, Entry>();
         // Acquire first so equivalent requests never briefly lose their final
         // consumer and abort while an editor re-renders.

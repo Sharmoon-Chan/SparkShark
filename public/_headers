@@ -13,3 +13,7 @@
 /fonts/browser-manifest.json
   Cache-Control: public, max-age=0, must-revalidate
   X-Content-Type-Options: nosniff
+
+/fonts/browser-manifests/*
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff

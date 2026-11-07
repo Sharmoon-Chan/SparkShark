@@ -29,7 +29,10 @@ function deferred<T>() {
 function installFetch(handler?: (path: string, options: RequestInit | undefined) => Promise<Response> | undefined) {
   const fetcher = vi.fn(async (url: URL | string, options?: RequestInit) => {
     const path = new URL(url).pathname.replace(/^\/fonts\//, '');
-    if (path === 'browser-manifest.json') return new Response(JSON.stringify(manifest));
+    if (path.startsWith('browser-manifests/')) {
+      const id = path.slice('browser-manifests/'.length, -'.json'.length);
+      return new Response(JSON.stringify({ version: 1, families: { [id]: manifest.families[id] } }));
+    }
     const custom = handler?.(path, options); if (custom) return custom;
     const bytes = files.get(path);
     if (!bytes) return new Response('', { status: 404 });
@@ -63,6 +66,27 @@ beforeEach(async () => {
 afterEach(() => { controllers.forEach(item => item.dispose()); vi.unstubAllGlobals(); });
 
 describe('browser preview font demand loading', () => {
+  it('requests a separate catalog only when its family is selected and reuses it on return', async () => {
+    const fetcher = installFetch(), load = controller();
+    await load.update('noto-sans-sc', 'A');
+    expect(paths(fetcher).filter(path => path.includes('browser-manifests/'))).toEqual(['/fonts/browser-manifests/noto-sans-sc.json']);
+    await load.update('noto-serif-sc', 'A'); await load.update('noto-sans-sc', 'A');
+    expect(paths(fetcher).filter(path => path.includes('browser-manifests/'))).toEqual(['/fonts/browser-manifests/noto-sans-sc.json', '/fonts/browser-manifests/noto-serif-sc.json']);
+  });
+
+  it('loads body-only characters only in the regular face and adds bold or italic ranges when used', async () => {
+    const fetcher = installFetch(), load = controller();
+    const usage: import('./browserFonts').BrowserFontUse[] = [{ weight: 400, style: 'normal', text: 'A中' }, { weight: 700, style: 'normal', text: 'A' }];
+    expect(await load.update('noto-sans-sc', 'A中', false, usage)).toMatchObject({ loaded: 3, total: 3 });
+    expect(paths(fetcher).some(path => path.includes('700-normal-han'))).toBe(false);
+    expect(paths(fetcher).some(path => path.includes('italic'))).toBe(false);
+    usage[1].text += '中';
+    expect(await load.update('noto-sans-sc', 'A中', false, usage)).toMatchObject({ loaded: 4, total: 4 });
+    usage.push({ weight: 400, style: 'italic', text: 'A' });
+    expect(await load.update('noto-sans-sc', 'A中', false, usage)).toMatchObject({ loaded: 5, total: 5 });
+    expect(paths(fetcher).some(path => path.includes('700-italic'))).toBe(false);
+  });
+
   it('loads only selected glyph ranges and faces as verified ArrayBuffers, then reuses them while typing', async () => {
     const statuses: string[] = [];
     const fetcher = installFetch(), document = fakeDocument(), load = controller(document, status => statuses.push(status.state));

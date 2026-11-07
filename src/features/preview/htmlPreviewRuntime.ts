@@ -3,6 +3,7 @@ import { sectionTitle } from '../../domain/registry';
 import { paginatePreview, type PaginationResult } from './domPagination';
 import { HTML_PREVIEW_MIN_HEIGHT, HTML_PREVIEW_WIDTH, previewSystemFont } from './htmlPreviewDocument';
 import { browserFontFamily, createBrowserFontController, type BrowserFontStatus } from './browserFonts';
+import { browserFontUsage } from './browserFontUsage';
 
 export interface PreviewLayoutState {
   pages: number;
@@ -96,22 +97,13 @@ export function createHtmlPreviewRuntime(document: Document, options: PreviewRun
   });
   const updateFonts = (force = false) => {
     if (!current) return;
-    const walker = document.createTreeWalker(source, 4);
-    const parts: string[] = [];
-    while (walker.nextNode()) {
-      const node = walker.currentNode;
-      // Generated contact symbols intentionally use system fallback. Only user
-      // content should trigger a missing-glyph notice or additional shards.
-      if (!node.parentElement?.closest('.contact-icon')) parts.push(node.textContent ?? '');
-    }
-    const text = parts.join('');
-    const characters = [...new Set(Array.from(text))].sort().join('');
-    const italic = [...source.querySelectorAll<HTMLElement>('em,i,[style]')].some(element => element.matches('em,i') || element.style.fontStyle === 'italic');
-    const signature = `${current.appearance.fontFamilyId}:${italic}:${characters}`;
+    const usage = browserFontUsage(source);
+    const text = usage.map(use => use.text).join('');
+    const signature = current.appearance.fontFamilyId + ':' + usage.map(use => `${use.weight}:${use.style}:${[...new Set(Array.from(use.text))].sort().join('')}`).sort().join('|');
     if (!force && signature === fontSignature) return;
     fontSignature = signature;
     fontStyle.textContent = `body{font-family:"${browserFontFamily(current.appearance.fontFamilyId)}",${previewSystemFont(current.appearance.fontFamilyId)}!important}`;
-    void fontController.update(current.appearance.fontFamilyId, text, italic).catch(error => {
+    void fontController.update(current.appearance.fontFamilyId, text, false, usage).catch(error => {
       if (!disposed && (error as Error).name !== 'AbortError') options.onFontStatus?.({ state: 'fallback', family: browserFontFamily(current!.appearance.fontFamilyId), loaded: 0, total: 0, bytes: 0, missingCharacters: [], error: String(error) });
     });
   };
