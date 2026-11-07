@@ -1,0 +1,286 @@
+{
+  "date": "2026-11-07",
+  "status": "Published and verified on the user-selected resume",
+  "userResumeObservation": {
+    "pageFontSizePx": 13,
+    "project": {
+      "namePx": 12.5,
+      "descriptionPx": 10,
+      "summaryPx": 12
+    },
+    "skill": {
+      "namePx": 14.8571,
+      "descriptionPx": 13
+    },
+    "computedFontFamilyEqual": true,
+    "fontState": "ready",
+    "missingGlyphs": 0,
+    "privateResumeContentStored": false
+  },
+  "defaultHierarchy": {
+    "section": 20,
+    "entry": 18,
+    "body": 14
+  },
+  "syntheticBrowserChecks": {
+    "page13To16To13RestoresOriginalRatios": true,
+    "unified13": {
+      "projectTitle": 16.7143,
+      "projectBody": 13,
+      "skillTitle": 16.7143,
+      "skillBody": 13
+    },
+    "unified16": {
+      "projectTitle": 20.5714,
+      "projectBody": 16,
+      "skillTitle": 20.5714,
+      "skillBody": 16
+    },
+    "customAt16": {
+      "title": 22,
+      "body": 14
+    },
+    "customAt13AfterReload": {
+      "title": 17.875,
+      "body": 11.375
+    },
+    "globalResetCancel": true,
+    "globalResetUndo": true,
+    "moduleResetCancel": true,
+    "moduleResetApply": true,
+    "sameFontInSettingsSampleAndPaper": true,
+    "switchToSerifAffectsBothModules": true,
+    "mobile": {
+      "viewportWidth": 375,
+      "documentScrollWidth": 375
+    }
+  },
+  "pdf": {
+    "passed": true,
+    "results": [
+      {
+        "case": "legacy-13",
+        "fields": [
+          {
+            "token": "BindProjectTitle",
+            "sizePx": 12.5,
+            "fonts": [
+              "CZZZZZ+MyResumeSourceHanSansSC-Bold"
+            ]
+          },
+          {
+            "token": "BindProjectIntro",
+            "sizePx": 10,
+            "fonts": [
+              "EZZZZZ+MyResumeSourceHanSansSC-Regular"
+            ]
+          },
+          {
+            "token": "BindProjectBody",
+            "sizePx": 12,
+            "fonts": [
+              "EZZZZZ+MyResumeSourceHanSansSC-Regular"
+            ]
+          },
+          {
+            "token": "BindSkillTitle",
+            "sizePx": 16.7143,
+            "fonts": [
+              "CZZZZZ+MyResumeSourceHanSansSC-Bold"
+            ]
+          },
+          {
+            "token": "BindSkillBody",
+            "sizePx": 13,
+            "fonts": [
+              "EZZZZZ+MyResumeSourceHanSansSC-Regular"
+            ]
+          }
+        ]
+      },
+      {
+        "case": "linked-16",
+        "fields": [
+          {
+            "token": "BindProjectTitle",
+            "sizePx": 15.3846,
+            "fonts": [
+              "CZZZZZ+MyResumeSourceHanSansSC-Bold"
+            ]
+          },
+          {
+            "token": "BindProjectIntro",
+            "sizePx": 12.3077,
+            "fonts": [
+              "EZZZZZ+MyResumeSourceHanSansSC-Regular"
+            ]
+          },
+          {
+            "token": "BindProjectBody",
+            "sizePx": 14.7692,
+            "fonts": [
+              "EZZZZZ+MyResumeSourceHanSansSC-Regular"
+            ]
+          },
+          {
+            "token": "BindSkillTitle",
+            "sizePx": 20.5714,
+            "fonts": [
+              "CZZZZZ+MyResumeSourceHanSansSC-Bold"
+            ]
+          },
+          {
+            "token": "BindSkillBody",
+            "sizePx": 16,
+            "fonts": [
+              "EZZZZZ+MyResumeSourceHanSansSC-Regular"
+            ]
+          }
+        ]
+      },
+      {
+        "case": "unified-13",
+        "fields": [
+          {
+            "token": "BindProjectTitle",
+            "sizePx": 16.7143,
+            "fonts": [
+              "CZZZZZ+MyResumeSourceHanSansSC-Bold"
+            ]
+          },
+          {
+            "token": "BindProjectIntro",
+            "sizePx": 13,
+            "fonts": [
+              "EZZZZZ+MyResumeSourceHanSansSC-Regular"
+            ]
+          },
+          {
+            "token": "BindProjectBody",
+            "sizePx": 13,
+            "fonts": [
+              "EZZZZZ+MyResumeSourceHanSansSC-Regular"
+            ]
+          },
+          {
+            "token": "BindSkillTitle",
+            "sizePx": 16.7143,
+            "fonts": [
+              "CZZZZZ+MyResumeSourceHanSansSC-Bold"
+            ]
+          },
+          {
+            "token": "BindSkillBody",
+            "sizePx": 13,
+            "fonts": [
+              "EZZZZZ+MyResumeSourceHanSansSC-Regular"
+            ]
+          }
+        ]
+      },
+      {
+        "case": "unified-16",
+        "fields": [
+          {
+            "token": "BindProjectTitle",
+            "sizePx": 20.5714,
+            "fonts": [
+              "CZZZZZ+MyResumeSourceHanSansSC-Bold"
+            ]
+          },
+          {
+            "token": "BindProjectIntro",
+            "sizePx": 16,
+            "fonts": [
+              "EZZZZZ+MyResumeSourceHanSansSC-Regular"
+            ]
+          },
+          {
+            "token": "BindProjectBody",
+            "sizePx": 16,
+            "fonts": [
+              "EZZZZZ+MyResumeSourceHanSansSC-Regular"
+            ]
+          },
+          {
+            "token": "BindSkillTitle",
+            "sizePx": 20.5714,
+            "fonts": [
+              "CZZZZZ+MyResumeSourceHanSansSC-Bold"
+            ]
+          },
+          {
+            "token": "BindSkillBody",
+            "sizePx": 16,
+            "fonts": [
+              "EZZZZZ+MyResumeSourceHanSansSC-Regular"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "tests": {
+    "passed": 213,
+    "files": 34,
+    "typecheck": true,
+    "cloudTypecheck": true,
+    "cloudBuild": true
+  },
+  "publicReferenceFiles": [
+    {
+      "file": "Builder-BovMmq-c.js",
+      "sha256": "70891394f32969158dc1c27b962821bbbe7d4fb2a9a4a77767ca5c38a0399b8d",
+      "bytes": 242815
+    },
+    {
+      "file": "main-Dw55IjuP.css",
+      "sha256": "478470350930abfc3a2ee4e875ff5556ebbded49c90b96c559b8fa824660593d",
+      "bytes": 213424
+    },
+    {
+      "file": "Preview-YgWaN82q.js",
+      "sha256": "3574cf7e9c460dd2cc712da2af2e4b0512b5228c21e53c96e265654f6201905d",
+      "bytes": 499758
+    }
+  ],
+  "scope": "Public reference assets were read, not copied into implementation. User page inspected for presentation settings only; tests use synthetic content.",
+  "regressionMatrix": {
+    "cases": 27,
+    "pages": 73,
+    "sectionComparisons": 191,
+    "failures": []
+  },
+  "implementationCommits": [
+    "ca83907",
+    "0f7b296"
+  ],
+  "release": {
+    "sourceCommit": "0f7b296f4c03a8cf98fb56c156c05d54ac6c725d",
+    "version": "4c61a45b-d8ae-4138-b277-948dc8071cc2",
+    "verifiedAt": "2026-11-07T05:55:45.311Z",
+    "script": "/assets/index-DNpPgyPe.js",
+    "scriptBytes": 1341164,
+    "scriptSha256": "239a2d7cb3fcd281b79045131bca320c219de7b2d2d04fd10c0fdd7aaa31638a",
+    "apiStatus": 200,
+    "createdAt": "2026-11-07T05:54:34.428333Z",
+    "percentage": 100
+  },
+  "userResumeApplied": {
+    "clearedLegacyOverrides": 3,
+    "textUnchanged": true,
+    "localSaved": true,
+    "cloudSynced": true,
+    "preChangeHistoryVisible": true,
+    "pageFontSizePx": 13,
+    "projectTitleSizePx": 16.7143,
+    "projectDescriptionSizePx": 13,
+    "projectBodySizePx": 13,
+    "skillTitleSizePx": 16.7143,
+    "skillBodySizePx": 13,
+    "fontFamilyEqual": true,
+    "fontState": "ready",
+    "missingGlyphs": 0,
+    "pages": 2
+  }
+}

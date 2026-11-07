@@ -121,3 +121,5 @@ HTML 下载包含可见内容、样式和裁剪后的头像，可离线打开，
 编辑与保存恢复见 [第三阶段记录](docs/editor-stage3.md)；按需导入、字体请求减量、导出矩阵和冷热缓存／慢网实测见 [第四阶段记录](docs/output-stage4.md)。
 
 正式发布版本、逐批推送及线上验证见 [2026-11-07 发布记录](docs/releases/2026-11-07-instant-preview.md)。
+
+页面与模块内的字号绑定、20／18／14 默认层级及旧字号恢复见 [字号联动修正](docs/typography-binding.md)。
