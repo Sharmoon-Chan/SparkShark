@@ -40,18 +40,23 @@ function Inline({ node, context }: { node: RichNode; context: Context }) {
   if (link?.type === 'link' && !context.blockedLinks.has(link.attrs.href) && safeLink(link.attrs.href)) return <Link src={safeLink(link.attrs.href)!} style={{ ...style, color: context.theme, textDecoration: contentTextDecoration(underline || context.resume.appearance.underlineLinks, mark('strike')) }}>{content}</Link>;
   return <Text style={style}>{content}</Text>;
 }
-function Rich({ node, context, depth = 0, id }: { node: RichNode; context: Context; depth?: number; id?: string }): ReactElement {
+function Rich({ node, context, depth = 0, id, prefix }: { node: RichNode; context: Context; depth?: number; id?: string; prefix?: { text: string; width: number } }): ReactElement {
   const children = node.content ?? [];
-  if (node.type === 'doc' || node.type === 'listItem') return <View id={id}>{children.map((child, index) => <Rich key={index} node={child} context={context} depth={depth} />)}</View>;
-  if (node.type === 'bulletList' || node.type === 'orderedList') return <View id={id} style={{ marginBottom: context.size * .3 * context.spacing }}>{children.map((child, index) => <View key={index} style={{ flexDirection: 'row', marginBottom: 2 * context.spacing }}>
-    <Text style={{ width: context.size * (node.type === 'orderedList' ? 1.7 : 1.15), flexShrink: 0, fontFamily: context.font }}>{node.type === 'orderedList' ? `${(node.attrs?.start ?? 1) + index}.` : '•'}</Text>
-    <View style={{ flex: 1, minWidth: 0 }}><Rich node={child} context={context} depth={depth + 1} /></View>
-  </View>)}</View>;
-  if (node.type === 'codeBlock') return <View id={id} style={{ backgroundColor: '#F4F5F6', padding: 5 * context.spacing, marginBottom: 5 * context.spacing }}><Text orphans={2} widows={2} style={{ fontSize: context.size * .9, lineHeight: context.line, fontStyle: context.italic ? 'italic' : undefined, textDecoration: context.underline ? 'underline' : undefined }}>{segments(richText(node), true, context.font, context.italic)}</Text></View>;
+  if (node.type === 'doc' || node.type === 'listItem') return <View id={id}>{prefix && !children.length && <Text>{prefix.text}</Text>}{children.map((child, index) => <Rich key={index} node={child} context={context} depth={depth} prefix={index === 0 ? prefix : undefined} />)}</View>;
+  if (node.type === 'bulletList' || node.type === 'orderedList') {
+    const width = context.size * (node.type === 'orderedList' ? 1.7 : 1.15);
+    // The marker and first paragraph share one text layout, so widow/orphan
+    // protection cannot move the paragraph while leaving its marker behind.
+    return <View id={id} style={{ marginBottom: context.size * .3 * context.spacing }}>{prefix && <Text minPresenceAhead={context.size * context.line * 2}>{prefix.text}</Text>}{children.map((child, index) => <View key={index} style={{ paddingLeft: width, marginBottom: 2 * context.spacing }}>
+      <Rich node={child} context={context} depth={depth + 1} prefix={{ text: node.type === 'orderedList' ? `${(node.attrs?.start ?? 1) + index}. ` : '• ', width }} />
+    </View>)}</View>;
+  }
+  if (node.type === 'codeBlock') return <View id={id} style={{ backgroundColor: '#F4F5F6', padding: 5 * context.spacing, marginBottom: 5 * context.spacing }}><Text orphans={2} widows={2} style={{ fontSize: context.size * .9, lineHeight: context.line, fontStyle: context.italic ? 'italic' : undefined, textDecoration: context.underline ? 'underline' : undefined }}>{prefix && <Text>{prefix.text}</Text>}{segments(richText(node), true, context.font, context.italic)}</Text></View>;
   if (node.type === 'text' || node.type === 'hardBreak') return <Inline node={node} context={context} />;
   const heading = node.type === 'heading';
   return <Text id={id} orphans={2} widows={2} minPresenceAhead={heading ? context.size * context.line * 2 : undefined} style={{ marginBottom: context.size * .35 * context.spacing, fontSize: heading ? context.size * ({ 1: 1.5, 2: 1.25, 3: 1.1 }[node.attrs?.level ?? 3]) : context.size,
-    fontWeight: heading ? 700 : 400, textAlign: node.attrs?.textAlign ?? 'left', lineHeight: context.line }}>
+    fontWeight: heading ? 700 : 400, textAlign: node.attrs?.textAlign ?? 'left', lineHeight: context.line, textIndent: prefix ? -prefix.width : undefined }}>
+    {prefix && <Text style={{ fontFamily: context.font, fontWeight: 400, textIndent: -prefix.width }}>{prefix.text}</Text>}
     {children.map((child, index) => <Inline key={index} node={child} context={context} />)}
   </Text>;
 }

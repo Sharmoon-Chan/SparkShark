@@ -1,0 +1,65 @@
+// Real downloads from the UI; only use an isolated synthetic resume.
+async (page) => {
+  const assert = (ok, message) => { if (!ok) throw new Error(message); };
+  const cloudWrites = [];
+  const observe = request => { if (new URL(request.url()).pathname.startsWith('/api/') && request.method() !== 'GET') cloudWrites.push(request.url()); };
+  page.on('request', observe);
+  const originalUrl = page.url();
+  await page.setViewportSize({ width: 1440, height: 980 });
+  await page.getByRole('button', { name: '简历内容', exact: true }).click();
+  await page.getByRole('button', { name: '上传或设置头像', exact: true }).click();
+  await page.getByLabel('选择头像文件', { exact: true }).setInputFiles('docs/fixtures/demo-avatar.png');
+  await page.getByRole('button', { name: '保存照片', exact: true }).click();
+  await page.getByRole('dialog', { name: '头像设置', exact: true }).waitFor({ state: 'hidden' });
+  await page.getByRole('button', { name: '保存', exact: true }).click();
+  await page.locator('.save-indicator.saved').waitFor();
+  const name = await page.getByRole('textbox', { name: '全名', exact: true }).inputValue();
+  await page.getByRole('button', { name: '导出与备份', exact: true }).click();
+  const panel = page.locator('.panel-content'), downloads = [];
+  async function download(label, filename) {
+    const started = Date.now(), event = page.waitForEvent('download', { timeout: 120000 });
+    await panel.getByRole('button', { name: label, exact: true }).click();
+    const file = await event; await file.saveAs('output/stage4/' + filename);
+    assert(!await file.failure(), 'Download failed: ' + label);
+    const stream = await file.createReadStream(); let data = Buffer.alloc(0);
+    for await (const chunk of stream) data = Buffer.concat([data, chunk]);
+    downloads.push({ label, filename, suggestedFilename: file.suggestedFilename(), bytes: data.length, elapsedMs: Date.now() - started });
+    return data;
+  }
+  const backup = JSON.parse((await download('下载 JSON 备份', 'ui-example.json')).toString());
+  assert(backup.resumes[0].basics.name === name && backup.assets.length > 0, 'Backup omitted content or photo');
+  const pdf = await download('下载 PDF', 'ui-example.pdf');
+  assert(pdf.subarray(0, 5).toString() === '%PDF-', 'Invalid PDF signature');
+  const images = await download('下载图片', 'ui-example-images.zip');
+  assert(images.subarray(0, 2).toString() === 'PK', 'Expected a multi-page image ZIP');
+  const html = (await download('下载 HTML', 'ui-example.html')).toString();
+  assert(html.includes(name) && /data:image\//.test(html), 'HTML omitted name or photo');
+  const offline = await page.context().newPage(), externalRequests = [];
+  await offline.route('**/*', route => { externalRequests.push(route.request().url()); return route.abort(); });
+  await offline.setViewportSize({ width: 1000, height: 1100 });
+  await offline.setContent(html, { waitUntil: 'load' });
+  const offlineCheck = await offline.evaluate(expected => ({ hasName: document.body.textContent.includes(expected), photos: [...document.images].filter(img => img.complete && img.naturalWidth > 0).length, scripts: document.scripts.length }), name);
+  assert(offlineCheck.hasName && offlineCheck.photos > 0 && !offlineCheck.scripts && !externalRequests.length, 'HTML cannot render independently offline');
+  await offline.screenshot({ path: 'output/stage4/ui-html-offline.png', scale: 'css' });
+  await offline.close(); await page.bringToFront();
+  await page.goto(new URL('/', originalUrl).href);
+  await page.getByRole('button', { name: '新建简历', exact: true }).click();
+  await page.getByRole('textbox', { name: '简历名称', exact: true }).fill('单页图片导出 · 虚构示例');
+  await page.getByRole('button', { name: /^空白简历/ }).click();
+  await page.getByRole('button', { name: '创建简历', exact: true }).click();
+  await page.getByRole('textbox', { name: '全名', exact: true }).fill('单页图片验收');
+  await page.getByRole('button', { name: '导出与备份', exact: true }).click();
+  await page.getByRole('combobox', { name: '图片分辨率', exact: true }).selectOption('300');
+  const single = await download('下载图片', 'ui-single-300dpi.png');
+  assert(single.subarray(1, 4).toString() === 'PNG', 'Single-page image was not a PNG');
+  const dimensions = { width: single.readUInt32BE(16), height: single.readUInt32BE(20) };
+  assert(dimensions.width >= 2480 && dimensions.height >= 3508, '300 DPI image has insufficient resolution');
+  await page.goto(originalUrl);
+  page.off('request', observe);
+  assert(cloudWrites.length === 0, 'Unexpected cloud write');
+  const result = { downloads, offlineHtml: { ...offlineCheck, externalRequests: externalRequests.length }, singleImage300dpi: dimensions, cloudWrites: cloudWrites.length, note: 'Download timings are one observation with shared renderer/font caches, not a latency benchmark.' };
+  const reportEvent = page.waitForEvent('download');
+  await page.evaluate(data => { const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })); const a = document.createElement('a'); a.href = url; a.download = 'export-stage4.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }, result);
+  await (await reportEvent).saveAs('output/stage4/ui-exports-report.json');
+  return result;
+}
