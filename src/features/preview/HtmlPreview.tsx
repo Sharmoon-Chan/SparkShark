@@ -8,6 +8,7 @@ import { createHtmlPreviewRuntime, type PreviewLayoutState } from './htmlPreview
 import type { BrowserFontStatus } from './browserFonts';
 import { capturePreviewAnchor, restorePreviewAnchor } from './previewScrollAnchor';
 import type { HtmlFieldOverlayProps } from './HtmlFieldOverlay';
+import type { PreviewAlignmentActions } from './previewAlignment';
 import './html-preview.css';
 import './preview-fields.css';
 
@@ -27,11 +28,12 @@ export interface HtmlPreviewProps {
   exporting?: boolean;
   onSectionSelect?: (target: string) => void;
   onFieldDrop?: (drop: PreviewFieldDrop) => void;
+  fieldAlignment?: PreviewAlignmentActions;
   title?: string;
   headingControls?: ReactNode;
 }
 
-export function HtmlPreview({ resume, assets, onPdf, onPng, onFit, fitting, fitProgress, onUndoFit, exporting, onSectionSelect, onFieldDrop, headingControls, title = '预览' }: HtmlPreviewProps) {
+export function HtmlPreview({ resume, assets, onPdf, onPng, onFit, fitting, fitProgress, onUndoFit, exporting, onSectionSelect, onFieldDrop, fieldAlignment, headingControls, title = '预览' }: HtmlPreviewProps) {
   const container = useRef<HTMLDivElement>(null), frame = useRef<HTMLIFrameElement>(null);
   const [availableWidth, setAvailableWidth] = useState(650), [documentHeight, setDocumentHeight] = useState(HTML_PREVIEW_MIN_HEIGHT);
   const [manualZoom, setManualZoom] = useState<number | null>(null), [frameRevision, setFrameRevision] = useState(0);
@@ -42,6 +44,7 @@ export function HtmlPreview({ resume, assets, onPdf, onPng, onFit, fitting, fitP
   const [fieldMode, setFieldMode] = useState(false), [fieldReady, setFieldReady] = useState(false);
   const [FieldOverlay, setFieldOverlay] = useState<ComponentType<HtmlFieldOverlayProps> | null>(null);
   const [overlayError, setOverlayError] = useState(false), [overlayRetry, setOverlayRetry] = useState(0);
+  const [alignmentToolbar, setAlignmentToolbar] = useState<HTMLDivElement | null>(null);
   const zoomRef = useRef(1);
   const scrollAnchor = useRef<ReturnType<typeof capturePreviewAnchor>>(null);
   const selectSection = useRef(onSectionSelect); selectSection.current = onSectionSelect;
@@ -127,14 +130,15 @@ export function HtmlPreview({ resume, assets, onPdf, onPng, onFit, fitting, fitP
 
   return <section className={`preview html-preview ${fieldMode ? 'field-mode' : ''}`} aria-label="简历即时预览">
     <div className="preview-heading"><span className="preview-title">{title}</span>{headingControls}{onFieldDrop && <button type="button" className="preview-layout-toggle" aria-label="拖动布局" aria-pressed={fieldMode} onClick={() => setFieldMode(value => !value)}><GripVertical size={13} /><span>拖动布局</span></button>}<span className="html-preview-heading-meta" title="即时 A4 分页，最终导出请用精确 PDF 核对。">{fontStatus?.state === 'loading' && <span className="preview-font-status" role="status">字体加载中</span>}{fontStatus?.state === 'fallback' && (fontStatus.error ? <button type="button" className="preview-font-retry" title={fontStatus.error} onClick={() => runtime.current?.retryFonts()}>字体待重试</button> : <span className="preview-font-status" title={`部分字符使用系统字体：${fontStatus.missingCharacters.slice(0, 6).join(' ')}`}>部分字形替代</span>)}{pagination.pages ? `${pagination.pages} 页 · A4` : 'A4'}</span></div>
-    {fieldMode && <div className="preview-layout-help" role="status">{overlayError ? <>拖动工具加载失败。<button type="button" className="text-button" onClick={() => setOverlayRetry(value => value + 1)}>重试拖动工具</button></> : !FieldOverlay ? '正在打开拖动工具…' : !canDrag ? '正在更新布局，稍后可拖动。' : fields.length ? '拖到同一条目字段的左右可同行，上下可换行；点击或按 Enter 也可选择位置。' : '先填写模块字段，再调整位置。'}</div>}
+    {fieldMode && <div className="preview-layout-help" role="status">{overlayError ? <>拖动工具加载失败。<button type="button" className="text-button" onClick={() => setOverlayRetry(value => value + 1)}>重试拖动工具</button></> : !FieldOverlay ? '正在打开拖动工具…' : !canDrag ? '正在更新布局，稍后可拖动。' : fields.length ? '拖到同一条目字段的左右可同行，上下可换行；点击或按 Enter 可选择位置与对齐。' : '先填写模块字段，再调整位置。'}</div>}
+    {fieldMode && fieldAlignment && <div ref={setAlignmentToolbar} />}
     <div className="preview-scroll html-preview-scroll" ref={container}>
       {(rendered.error || pagination.error) && <div className="preview-error" role="alert"><strong>暂时无法显示预览</strong><p>{rendered.error || pagination.error}</p></div>}
       {photo.key === photoKey && photo.error && <div className="html-preview-photo-error" role="status">头像暂未显示：{photo.error}</div>}
       {fitting && <div className="preview-fit-status" role="status"><LoaderCircle size={14} className="spin" /><span>{fitProgress || '正在检查精确 PDF 排版'}</span></div>}
       {rendered.html && <div className="html-preview-stage" style={{ width: HTML_PREVIEW_WIDTH * zoom, height: documentHeight * zoom }}>
         <iframe ref={frame} className="html-preview-frame" title="即时简历内容" sandbox="allow-same-origin" referrerPolicy="no-referrer" srcDoc={HTML_PREVIEW_SHELL} width={HTML_PREVIEW_WIDTH} height={documentHeight} style={{ transform: `scale(${zoom})` }} onLoad={() => setFrameRevision(value => value + 1)} />
-        {fieldMode && onFieldDrop && FieldOverlay && <FieldOverlay fields={fields} enabled={Boolean(canDrag)} zoom={zoom} scrollContainer={container} onDrop={onFieldDrop} />}
+        {fieldMode && onFieldDrop && FieldOverlay && <FieldOverlay fields={fields} enabled={Boolean(canDrag)} zoom={zoom} scrollContainer={container} onDrop={onFieldDrop} alignment={fieldAlignment} toolbarTarget={alignmentToolbar} />}
       </div>}
     </div>
     <div className="preview-toolbar">

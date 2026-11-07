@@ -1,10 +1,13 @@
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AlertCircle, CheckCircle2, Clock, FileText, Info, LoaderCircle, Save, SearchCheck } from 'lucide-react';
-import type { Locale, PreviewFieldDrop, Resume } from '../../domain/types';
+import type { Locale, PreviewFieldDrop, Resume, Section, SectionContentLayout } from '../../domain/types';
 import { completeness, fieldChecks, snapshotOf } from '../../domain/resume';
 import { LOCALES, sectionTitle } from '../../domain/registry';
 import { movePreviewField } from '../../domain/fieldDrop';
+import { resolveContentLayout } from '../../domain/contentLayout';
+import { alignPreviewField, alignmentLabels, alignmentScopeLabels, previewAlignmentState } from '../../domain/fieldAlignment';
+import type { PreviewAlignmentActions } from '../preview/previewAlignment';
 import { useApp } from '../../app/store';
 import { useNavigation } from '../../app/navigation';
 import { repository } from '../../persistence/repository';
@@ -65,21 +68,40 @@ export function Editor() {
   const score = completeness(resume), issues = fieldChecks(resume);
   const jump = (target: string, sectionTarget?: string) => { setMode('content'); setView('edit'); setChecks(false); setJumpRequest({ target, sectionTarget }); };
   const jumpFromPreview = (target: string) => { if (target === 'basics' || !resume.sections.some(section => section.id === target)) return; setHighlightedTarget(target); jump('', target); };
-  const moveFieldFromPreview = (drop: PreviewFieldDrop) => {
+  const applyPreviewLayout = (section: Section, settings: SectionContentLayout, message: string) => {
     if (useApp.getState().current?.id !== resume.id) return;
-    const section = useApp.getState().current?.sections.find(item => item.id === drop.sectionId);
-    if (!section) return;
-    const settings = movePreviewField(section, drop.sourceKey, drop.targetKey, drop.placement);
-    if (!settings) return;
     const before = section.contentLayout ? structuredClone(section.contentLayout) : undefined;
-    useApp.getState().update(next => { const target = next.sections.find(item => item.id === drop.sectionId); if (target) target.contentLayout = settings; });
-    useApp.getState().notify({ message: `${sectionTitle(section)}的字段排版已更新`, action: { label: '撤销', run: () => useApp.getState().update(next => {
+    useApp.getState().update(next => { const target = next.sections.find(item => item.id === section.id); if (target) target.contentLayout = settings; });
+    useApp.getState().notify({ message, action: { label: '撤销', run: () => useApp.getState().update(next => {
       if (next.id !== resume.id) return;
-      const target = next.sections.find(item => item.id === drop.sectionId);
+      const target = next.sections.find(item => item.id === section.id);
       if (!target || JSON.stringify(target.contentLayout) !== JSON.stringify(settings)) return;
       if (before) target.contentLayout = before; else delete target.contentLayout;
     }) } });
     void useApp.getState().flush();
+  };
+  const moveFieldFromPreview = (drop: PreviewFieldDrop) => {
+    if (useApp.getState().current?.id !== resume.id) return;
+    const section = useApp.getState().current?.sections.find(item => item.id === drop.sectionId);
+    if (!section?.visible || drop.sourceKey === drop.targetKey || !resolveContentLayout(section).fields.some(field => field.key === drop.targetKey && field.visible)) return;
+    const moved = movePreviewField(section, drop.sourceKey, drop.targetKey, drop.placement);
+    const aligned = drop.alignment ? alignPreviewField({ ...section, contentLayout: moved ?? section.contentLayout }, drop.sourceKey, drop.alignment.scope, drop.alignment.value) : null;
+    const settings = aligned ?? moved;
+    if (settings) applyPreviewLayout(section, settings, `${sectionTitle(section)}的字段排版已更新${drop.alignment ? ` · ${alignmentScopeLabels[drop.alignment.scope]}${alignmentLabels[drop.alignment.value]}` : ''}`);
+  };
+  const fieldAlignment: PreviewAlignmentActions = {
+    read: (sectionId, fieldKey) => {
+      const current = useApp.getState().current;
+      const section = current?.id === resume.id && current.sections.find(item => item.id === sectionId);
+      return section ? previewAlignmentState(section, fieldKey) : { field: null, row: null, module: null };
+    },
+    apply: change => {
+      if (useApp.getState().current?.id !== resume.id) return;
+      const section = useApp.getState().current?.sections.find(item => item.id === change.sectionId);
+      if (!section?.visible) return;
+      const settings = alignPreviewField(section, change.fieldKey, change.scope, change.value);
+      if (settings) applyPreviewLayout(section, settings, `${sectionTitle(section)} · ${alignmentScopeLabels[change.scope]}已${alignmentLabels[change.value]}`);
+    },
   };
   const runExport = async (kind: 'pdf' | 'images' | 'html') => {
     const snapshot = structuredClone(useApp.getState().current!); const controller = new AbortController(); exportController.current = controller; setExporting(true); setExportProgress(kind === 'pdf' ? '正在生成 PDF…' : kind === 'html' ? '正在准备 HTML…' : '正在准备图片…');
@@ -120,7 +142,7 @@ export function Editor() {
     catch (error) { useApp.getState().notify({ message: error instanceof Error ? error.message : String(error), error: true }); }
   };
   const previewControls = <div className="preview-heading-controls"><div className="segmented preview-mode-switch" role="group" aria-label="预览模式"><button type="button" aria-pressed={previewMode === 'html'} className={previewMode === 'html' ? 'active' : ''} onClick={() => setPreviewMode('html')}>即时预览</button><button type="button" aria-pressed={previewMode === 'pdf'} className={previewMode === 'pdf' ? 'active' : ''} onClick={() => setPreviewMode('pdf')}>精确 PDF</button></div><button ref={previewHelpButton} type="button" className="icon-button" aria-label="预览模式说明" title="预览模式说明" onClick={() => setPreviewHelpOpen(true)}><Info size={15} /></button></div>;
-  const previewActions = { headingControls: previewControls, onPdf: () => void runExport('pdf'), onPng: () => void runExport('images'), onFit: () => void fit(), fitting, fitProgress, exporting, onSectionSelect: jumpFromPreview, onUndoFit: fitRestore ? () => { useApp.getState().update(next => { const restored = restoreOnePageFormat(next, fitRestore); next.appearance = restored.appearance; next.layout = restored.layout; next.sections = restored.sections; }); setFitRestore(null); void useApp.getState().flush(); useApp.getState().notify({ message: '已还原智能排版前的布局和间距，内容编辑已保留。' }); } : undefined };
+  const previewActions = { headingControls: previewControls, fieldAlignment, onPdf: () => void runExport('pdf'), onPng: () => void runExport('images'), onFit: () => void fit(), fitting, fitProgress, exporting, onSectionSelect: jumpFromPreview, onUndoFit: fitRestore ? () => { useApp.getState().update(next => { const restored = restoreOnePageFormat(next, fitRestore); next.appearance = restored.appearance; next.layout = restored.layout; next.sections = restored.sections; }); setFitRestore(null); void useApp.getState().flush(); useApp.getState().notify({ message: '已还原智能排版前的布局和间距，内容编辑已保留。' }); } : undefined };
   return <main className={`editor-shell view-${view}`}><header className="editor-topbar"><input className="resume-title-input" aria-label="简历名称" value={resume.title} onChange={event => useApp.getState().update(next => { next.title = event.target.value; })} placeholder="未命名简历" /><LocalSaveStatus state={saveState} error={saveError} onRetry={() => useApp.getState().flush()} onBackup={() => void backupDraft()} onConflict={() => setConflictOpen(true)} /><CloudStatus localId={resume.id} /><div className="topbar-spacer" /><select className="locale-select" aria-label="简历语言" value={resume.locale} onChange={event => useApp.getState().update(next => { next.locale = event.target.value as Locale; })}>{LOCALES.map(locale => <option value={locale.value} key={locale.value}>{locale.label}</option>)}</select><Button secondary aria-label="历史记录" onClick={() => setHistoryOpen(true)}><Clock size={15} /><span>历史记录</span></Button><Button secondary aria-label="保存" disabled={saveState === 'saving'} onClick={async () => { if (await useApp.getState().flush()) useApp.getState().notify({ message: '当前内容已保存' }); }}><Save size={15} /><span>保存</span></Button></header>
     <div className="mobile-view-tabs"><button type="button" className={view === 'edit' ? 'active' : ''} onClick={() => setView('edit')}>编辑</button><button type="button" className={view === 'preview' ? 'active' : ''} onClick={() => setView('preview')}>预览</button></div><div className="editor-panel"><div className="completeness compact-completeness"><span>完整度 <strong>{score.score}%</strong></span><div className="completeness-track" aria-hidden="true"><span style={{ width: `${score.score}%` }} /></div><button type="button" className="check-button" onClick={() => setChecks(true)}><SearchCheck size={14} />检查简历{issues.length > 0 && <span className="check-count">{issues.length}</span>}</button></div>
       {(saveState === 'failed' || saveState === 'conflict') && <div className="save-warning" role="alert"><AlertCircle size={16} /><span>{saveState === 'conflict' ? '另一个标签页有更新，当前修改已保留。' : '本机保存失败，当前修改仍在页面中。'}</span><div className="save-warning-actions"><button type="button" onClick={() => saveState === 'conflict' ? setConflictOpen(true) : void useApp.getState().flush()}>{saveState === 'conflict' ? '处理冲突' : '重试保存'}</button><button type="button" onClick={() => void backupDraft()}>下载当前草稿</button></div></div>}

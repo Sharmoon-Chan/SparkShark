@@ -19,6 +19,13 @@ export function collectHtmlPreviewFields(destination: HTMLElement, resume: Resum
       if (column.dataset.previewColumn === 'header') continue;
       const columnBox = column.getBoundingClientRect(), clip = clipFieldRect(columnBox, pageBox);
       if (!clip) continue;
+      // Template sidebars can have inner padding. Alignment/drop guides belong
+      // to the content box, while the page slice still controls visibility.
+      const body = column.querySelector<HTMLElement>('.main-column,.sidebar-column');
+      const bodyStyle = body && document.defaultView?.getComputedStyle(body), bodyBox = body?.getBoundingClientRect();
+      const inset = (value: string | undefined) => Number.parseFloat(value ?? '') || 0;
+      const contentLeft = bodyBox ? Math.max(clip.left, bodyBox.left + inset(bodyStyle?.paddingLeft) + inset(bodyStyle?.borderLeftWidth)) : clip.left;
+      const contentRight = bodyBox ? Math.min(clip.right, bodyBox.right - inset(bodyStyle?.paddingRight) - inset(bodyStyle?.borderRightWidth)) : clip.right;
       for (const element of column.querySelectorAll<HTMLElement>('[data-preview-field-id]')) {
         const identity = parsePreviewFieldId(element.dataset.previewFieldId), section = identity && sections.get(identity.sectionId);
         const spec = identity && specs.get(identity.sectionId)?.get(identity.fieldKey);
@@ -36,7 +43,7 @@ export function collectHtmlPreviewFields(destination: HTMLElement, resume: Resum
         const right = Math.max(...visible.map(rect => rect.right)), bottom = Math.max(...visible.map(rect => rect.bottom));
         const field: PreviewFieldRegion = { ...identity, page: pageNumber, label: spec.label, rich,
           x: (left - pageBox.left) * .75, y: (top - pageBox.top) * .75, width: (right - left) * .75, height: (bottom - top) * .75,
-          columnX: (clip.left - pageBox.left) * .75, columnWidth: (clip.right - clip.left) * .75 };
+          columnX: (contentLeft - pageBox.left) * .75, columnWidth: (contentRight - contentLeft) * .75 };
         const key = JSON.stringify([pageNumber, identity.sectionId, identity.itemId, identity.fieldKey]), previous = result.get(key);
         if (previous) {
           const x = Math.min(previous.x, field.x), y = Math.min(previous.y, field.y);
