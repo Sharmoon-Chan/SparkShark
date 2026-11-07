@@ -8,7 +8,7 @@ import { latestDraft, useApp } from '../../app/store';
 import { repository } from '../../persistence/repository';
 import { templatePreviewFor } from '../appearance/templatePreviews';
 import { Button, EmptyState, Field, Menu, Modal, Toggle, useObjectUrl } from '../../components/ui';
-import { ImportDialog } from '../import-export/ImportDialog';
+import { DeferredImportDialog as ImportDialog } from '../import-export/DeferredImportDialog';
 import { exportBackup, exportPdf } from '../import-export/exports';
 import { DraftRecovery } from './DraftRecovery';
 import { StorageChoice } from '../../cloud/AccountUI';

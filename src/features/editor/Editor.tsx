@@ -16,7 +16,7 @@ import { AppearanceEditor } from '../appearance/AppearanceEditor';
 import { Templates } from '../appearance/Templates';
 import { HtmlPreview } from '../preview/HtmlPreview';
 import { usePdf } from '../preview/usePdf';
-import { HistoryDialog } from '../history/HistoryDialog';
+import { deferredDialog } from '../../components/deferredDialog';
 import { ExportPanel } from '../import-export/ExportPanel';
 import { exportBackup, exportHtml, exportImages, exportPdf } from '../import-export/exports';
 import { renderPdf } from '../../rendering/client';
@@ -31,6 +31,7 @@ import './editor-settings.css';
 import '../preview/preview-mode.css';
 
 const PdfPreview = lazy(() => import('../preview/PdfPreview').then(module => ({ default: module.PdfPreview })));
+const HistoryDialog = deferredDialog(() => import('../history/HistoryDialog').then(module => module.HistoryDialog), '历史记录');
 
 export function Editor() {
   const { id = '' } = useParams(), navigate = useNavigate(), { mode, setMode } = useNavigation();

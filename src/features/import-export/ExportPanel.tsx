@@ -3,7 +3,7 @@ import { Archive, Download, FileCode2, FileJson, FileText, Image, Import } from 
 import type { Resume } from '../../domain/types';
 import { useApp } from '../../app/store';
 import { Button, Toggle } from '../../components/ui';
-import { ImportDialog } from './ImportDialog';
+import { DeferredImportDialog as ImportDialog } from './DeferredImportDialog';
 import { exportBackup } from './exports';
 
 export function ExportPanel({ resume, dpi, onDpi, onPdf, onHtml, onImages, busy, progress, onCancel }: { resume: Resume; dpi: number; onDpi: (dpi: number) => void; onPdf: () => void; onHtml: () => void; onImages: () => void; busy: boolean; progress: string; onCancel: () => void }) {
