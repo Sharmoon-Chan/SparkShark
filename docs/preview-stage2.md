@@ -1,6 +1,6 @@
 # 第二阶段：即时 A4 分页与渐进字体
 
-2026-11-06。本地实施和核验完成，已分批提交，尚未发布。阶段计划见 [产品优化计划](product-polish-plan.md)，完整原始指标见 [阶段 2 量化记录](measurements/preview-stage2-2026-11-06.json)。
+2026-11-06 完成本地实施和核验，已于 2026-11-07 随 [即时预览版本](releases/2026-11-07-instant-preview.md) 分批推送和发布。阶段计划见 [产品优化计划](product-polish-plan.md)，原始本地指标见 [阶段 2 量化记录](measurements/preview-stage2-2026-11-06.json)。
 
 ## 实现
 

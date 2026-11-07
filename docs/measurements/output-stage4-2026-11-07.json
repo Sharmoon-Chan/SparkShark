@@ -1,7 +1,7 @@
 {
   "date": "2026-11-07",
   "stage": 4,
-  "status": "Local release candidate verified; not pushed or deployed",
+  "status": "Locally verified; released on 2026-11-07. Original measurements below are local; production results are in release-2026-11-07.json.",
   "baselineCommit": "429ec1c",
   "network": {
     "before": {
@@ -4054,5 +4054,11 @@
     "a60fbbd",
     "7ee4894",
     "335de31"
-  ]
+  ],
+  "release": {
+    "date": "2026-11-07",
+    "sourceCommit": "23d7b22b63bd6d7285b1157d1ab464ca2646f849",
+    "version": "1d445e51-7424-45b9-bb3e-e2154ed86bb7",
+    "record": "../releases/2026-11-07-instant-preview.md"
+  }
 }

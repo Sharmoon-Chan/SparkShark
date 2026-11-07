@@ -1,7 +1,7 @@
 {
   "date": "2026-11-06",
   "stage": 3,
-  "status": "Locally verified and committed in functional batches; not pushed or deployed",
+  "status": "Locally verified; released on 2026-11-07. Original measurements below are local; production results are in release-2026-11-07.json.",
   "environment": {
     "os": "Windows",
     "browser": "Chrome 156.0.8078.80",
@@ -122,5 +122,11 @@
     "Local auth/me has no running proxy backend; its expected errors are not counted as successful cloud integration.",
     "Stage 4 export, cold/warm cache and slow-network acceptance remains pending.",
     "Existing build warnings for mixed static/dynamic fflate and html.ts imports remain."
-  ]
+  ],
+  "release": {
+    "date": "2026-11-07",
+    "sourceCommit": "23d7b22b63bd6d7285b1157d1ab464ca2646f849",
+    "version": "1d445e51-7424-45b9-bb3e-e2154ed86bb7",
+    "record": "../releases/2026-11-07-instant-preview.md"
+  }
 }

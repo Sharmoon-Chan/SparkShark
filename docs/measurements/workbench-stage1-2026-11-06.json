@@ -1,7 +1,7 @@
 {
   "date": "2026-11-06",
   "stage": 1,
-  "status": "Locally verified; committed in functional batches on 2026-11-06; not deployed",
+  "status": "Locally verified; released on 2026-11-07. Original measurements below are local; production results are in release-2026-11-07.json.",
   "environment": "Vite production preview, isolated Chrome session, same synthetic resume",
   "desktopViewport": {
     "width": 1440,
@@ -54,5 +54,11 @@
     "output/playwright/polish-stage1-after.png",
     "output/playwright/polish-stage1-mobile-preview.png",
     "output/playwright/polish-stage1-mobile-templates.png"
-  ]
+  ],
+  "release": {
+    "date": "2026-11-07",
+    "sourceCommit": "23d7b22b63bd6d7285b1157d1ab464ca2646f849",
+    "version": "1d445e51-7424-45b9-bb3e-e2154ed86bb7",
+    "record": "../releases/2026-11-07-instant-preview.md"
+  }
 }

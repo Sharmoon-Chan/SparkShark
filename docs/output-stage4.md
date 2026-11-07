@@ -1,6 +1,6 @@
 # 第四阶段：输出与网络验收
 
-2026-11-07 完成本地发布候选。优化前网络基线取自 2026-11-06 的 `429ec1c` 构建；本轮在同一 Windows 环境、Chrome 156.0.8078.80、1440×980 视口验证。没有推送或部署。总计划见 [产品优化计划](product-polish-plan.md)，原始测量与检查汇总见 [量化记录](measurements/output-stage4-2026-11-07.json)。
+2026-11-07 完成本地发布候选，并于同日推送、发布和完成线上验收，见 [发布记录](releases/2026-11-07-instant-preview.md)。本文保留发布前本地测量：优化前网络基线取自 2026-11-06 的 `429ec1c` 构建；使用同一 Windows 环境、Chrome 156.0.8078.80、1440×980 视口。总计划见 [产品优化计划](product-polish-plan.md)，原始本地指标见 [量化记录](measurements/output-stage4-2026-11-07.json)。
 
 ## 改动与依据
 
@@ -55,6 +55,6 @@
 
 浏览器脚本见 `tests/browser/*stage4.js`：network、interaction、exports、deferred-dialogs、deferred-dialog-failure、cache。`scripts/verify-stage4-delivery.mjs` 只访问本地 Wrangler，并验证缓存头、资源大小及字体哈希。原始文件保存在忽略目录 `output/stage4/`，量化 JSON 入库。
 
-这是本地发布候选验收，线上仍是已发布旧版本。发布后的冷缓存、地域链路、账号接口等待仍需线上复测；当前启动仍等待账号识别，本轮未改变账户隔离策略。HTML 与 PDF 采用不同引擎，最终投递版继续用精确 PDF 核对。构建的已有 fflate／HTML 动静态导入重叠警告保留。
+这是发布前本地验收记录。发布后的真实网络冷／热缓存与功能检查另见 [线上发布记录](releases/2026-11-07-instant-preview.md)，不与本文模拟网络数据混用。当前启动仍等待账号识别，本轮未改变账户隔离策略。HTML 与 PDF 采用不同引擎，最终投递版继续用精确 PDF 核对。构建的已有 fflate／HTML 动静态导入重叠警告保留。
 
 本轮实现按功能提交：`bee58d6` 按需窗口，`a60fbbd` 家族目录与实际样式请求，`7ee4894` 版本化资源缓存，`335de31` PDF 列表分页。测量脚本、计划与验收记录另列一笔提交。

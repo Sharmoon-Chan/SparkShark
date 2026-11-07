@@ -1,0 +1,4985 @@
+{
+  "date": "2026-11-07",
+  "status": "Deployed at 100 percent and production checks passed",
+  "origin": "https://sparkshark.sharmoon.cc.cd",
+  "sourceCommit": "23d7b22b63bd6d7285b1157d1ab464ca2646f849",
+  "gitTag": "release-2026-11-07",
+  "verificationCommit": "93b046d",
+  "deployment": {
+    "id": "6d9ee004-a4de-4d7c-b0a7-5cd201c5bec1",
+    "created_on": "2026-11-07T04:54:05.928029Z",
+    "versions": [
+      {
+        "version_id": "1d445e51-7424-45b9-bb3e-e2154ed86bb7",
+        "percentage": 100
+      }
+    ],
+    "annotations": {
+      "workers/message": "Release 23d7b22: instant preview, progressive fonts, editor polish and output fixes",
+      "workers/triggered_by": "deployment"
+    }
+  },
+  "previousVersion": "004aa210-6372-4446-b88a-2a948aec204d",
+  "pushedBatches": [
+    {
+      "commit": "1ddad6a797328b1e38c6df12f6ada7cd11da55d8",
+      "subject": "fix: restore regular body weight and distinct resume type hierarchy",
+      "startedAt": "2026-11-07T04:44:56.9540450+00:00",
+      "completedAt": "2026-11-07T04:45:33.0956557+00:00",
+      "exitCode": 0
+    },
+    {
+      "commit": "e8e3b981f20e5169eb914c756339d98ba59a1c90",
+      "subject": "perf: replace live template renders with a compact static catalog",
+      "startedAt": "2026-11-07T04:45:33.3002917+00:00",
+      "completedAt": "2026-11-07T04:45:36.8819103+00:00",
+      "exitCode": 0
+    },
+    {
+      "commit": "587c911f8cbd63dc1d5b1c35a5b4bc83112001f8",
+      "subject": "feat: add stable paginated HTML previews and progressive font shards",
+      "startedAt": "2026-11-07T04:45:37.0760167+00:00",
+      "completedAt": "2026-11-07T04:48:12.2530823+00:00",
+      "exitCode": 0
+    },
+    {
+      "commit": "06d74028b04fcb7cd32033a58bbc6f65f9073abb",
+      "subject": "style: streamline the workbench and record staged verification",
+      "startedAt": "2026-11-07T04:48:12.4249283+00:00",
+      "completedAt": "2026-11-07T04:48:15.1915751+00:00",
+      "exitCode": 0
+    },
+    {
+      "commit": "3856c67cdd77f7821eca060fd3e63c9811d7a280",
+      "subject": "feat: streamline resume item editing and reversible actions",
+      "startedAt": "2026-11-07T04:48:15.3325451+00:00",
+      "completedAt": "2026-11-07T04:48:17.8403558+00:00",
+      "exitCode": 0
+    },
+    {
+      "commit": "0757d9d7b0c13dcac86c25965858270fd4b7be67",
+      "subject": "style: group advanced appearance controls into disclosures",
+      "startedAt": "2026-11-07T04:48:17.9942602+00:00",
+      "completedAt": "2026-11-07T04:48:20.6967175+00:00",
+      "exitCode": 0
+    },
+    {
+      "commit": "85dc623499923a2c3dfb212a70ae546ee7f94a5c",
+      "subject": "fix: hand off menu focus to newly created resume items",
+      "startedAt": "2026-11-07T04:48:20.8595683+00:00",
+      "completedAt": "2026-11-07T04:48:23.4073989+00:00",
+      "exitCode": 0
+    },
+    {
+      "commit": "6ce7a7c2ec3b626726e96d7b93320ffc209fc3c3",
+      "subject": "fix: make local save and cloud recovery states explicit",
+      "startedAt": "2026-11-07T04:48:23.5570916+00:00",
+      "completedAt": "2026-11-07T04:48:26.4284605+00:00",
+      "exitCode": 0
+    },
+    {
+      "commit": "74fafc5499d091dd592e31120c97c4ebe5ef9431",
+      "subject": "fix: keep module layout controls visible on narrow screens",
+      "startedAt": "2026-11-07T04:48:26.5335477+00:00",
+      "completedAt": "2026-11-07T04:48:29.0191274+00:00",
+      "exitCode": 0
+    },
+    {
+      "commit": "429ec1cbf32cfd69c2706434fcb9fd4d59a8e24d",
+      "subject": "docs: record stage three interaction checks and measurements",
+      "startedAt": "2026-11-07T04:48:29.1153431+00:00",
+      "completedAt": "2026-11-07T04:48:31.6915751+00:00",
+      "exitCode": 0
+    },
+    {
+      "commit": "bee58d60c15394cb56c576d69676dfc4130cc341",
+      "subject": "perf: defer import and history dialogs until opened",
+      "startedAt": "2026-11-07T04:48:31.7919011+00:00",
+      "completedAt": "2026-11-07T04:48:34.4288796+00:00",
+      "exitCode": 0
+    },
+    {
+      "commit": "a60fbbd57c24bd121d7fb5c01deaf82365f44dfa",
+      "subject": "perf: load only selected font catalogs and used faces",
+      "startedAt": "2026-11-07T04:48:34.5306252+00:00",
+      "completedAt": "2026-11-07T04:48:37.3205345+00:00",
+      "exitCode": 0
+    },
+    {
+      "commit": "7ee4894a72a5f0bd99e82ca7e2804ea3de994498",
+      "subject": "perf: cache versioned static assets and verify local delivery",
+      "startedAt": "2026-11-07T04:48:37.4250782+00:00",
+      "completedAt": "2026-11-07T04:48:39.8851961+00:00",
+      "exitCode": 0
+    },
+    {
+      "commit": "335de31003454eb2211c39ce4a3718625c64926d",
+      "subject": "fix: keep PDF list markers with their opening text",
+      "startedAt": "2026-11-07T04:48:39.9873079+00:00",
+      "completedAt": "2026-11-07T04:48:42.5546537+00:00",
+      "exitCode": 0
+    },
+    {
+      "commit": "23d7b22b63bd6d7285b1157d1ab464ca2646f849",
+      "subject": "docs: record stage four output and network acceptance",
+      "startedAt": "2026-11-07T04:48:42.6540680+00:00",
+      "completedAt": "2026-11-07T04:48:45.1897482+00:00",
+      "exitCode": 0
+    }
+  ],
+  "preflight": {
+    "sourceCommit": "23d7b22b63bd6d7285b1157d1ab464ca2646f849",
+    "indexSha256": "ff07c4cd24205cbb7e098393a4b7982565339de1ee2563b9858b3c9d498fec51",
+    "unitTests": 208,
+    "cloudTypecheck": true,
+    "productionBuild": true,
+    "dryRun": true,
+    "browserFixtures": [
+      {
+        "path": "output\\stage4\\ui-example.pdf",
+        "bytes": 69536,
+        "sha256": "5635cfdfb971699c191c0964940d18a1f922611abae5e339ca343e04a51d0913"
+      },
+      {
+        "path": "output\\docx\\resume-example.docx",
+        "bytes": 3934,
+        "sha256": "4bc96f38f5e3a1a11304fd54746e8bf195bd18622bf45a5c0c28faa8166c7f1a"
+      },
+      {
+        "path": "output\\stage4\\long-resume-backup.json",
+        "bytes": 29977,
+        "sha256": "dd6daf6fbb3d128f0063fe6595facc38c954073650b9878e4c2fd501d95fd730"
+      }
+    ]
+  },
+  "assetUpload": {
+    "changedAssetsUploaded": 743,
+    "alreadyUploaded": 276,
+    "uploadSeconds": 246.71,
+    "workerUploadedSeconds": 257.84
+  },
+  "http": {
+    "origin": "https://sparkshark.sharmoon.cc.cd",
+    "startedAt": "2026-11-07T04:55:08.319Z",
+    "sourceCommit": "23d7b22b63bd6d7285b1157d1ab464ca2646f849",
+    "scripts": [
+      {
+        "resource": "/assets/index-B0S09vYw.js",
+        "bytes": 1336761,
+        "sha256": "bc487a024bf94e8027337f8d64dcd2bfd983e6c5099c89a106e54af55dfbb099",
+        "cacheControl": "public, max-age=31536000, immutable"
+      }
+    ],
+    "catalogs": [
+      {
+        "id": "chiron-round-tc",
+        "resource": "/fonts/browser-manifests/chiron-round-tc.json",
+        "bytes": 197646,
+        "sha256": "7d19e4c299d57134c85e2c175579a6aadb6fc690a81b23065762e364ec8d9c9c",
+        "cacheControl": "public, max-age=0, must-revalidate"
+      },
+      {
+        "id": "ibm-plex-sans-sc",
+        "resource": "/fonts/browser-manifests/ibm-plex-sans-sc.json",
+        "bytes": 104815,
+        "sha256": "56491ae601ce4435c8d60bdbd2b4860517e925d7bb27f21b3d421c1a31f7790d",
+        "cacheControl": "public, max-age=0, must-revalidate"
+      },
+      {
+        "id": "lxgw-wenkai",
+        "resource": "/fonts/browser-manifests/lxgw-wenkai.json",
+        "bytes": 245880,
+        "sha256": "1b2fdd34aa71f583e72833ed01d57a366571f181064da2cbe052465e41ef6762",
+        "cacheControl": "public, max-age=0, must-revalidate"
+      },
+      {
+        "id": "noto-sans-sc",
+        "resource": "/fonts/browser-manifests/noto-sans-sc.json",
+        "bytes": 107874,
+        "sha256": "b7d67c83b9c6722a8bc1998ac31d7e62d0f2b7a5b59451f2d268082afd40e971",
+        "cacheControl": "public, max-age=0, must-revalidate"
+      },
+      {
+        "id": "noto-serif-sc",
+        "resource": "/fonts/browser-manifests/noto-serif-sc.json",
+        "bytes": 108037,
+        "sha256": "049b37716430b67fa976b096d178232a9feec52d395245afb16e34ca9d1b5ced",
+        "cacheControl": "public, max-age=0, must-revalidate"
+      },
+      {
+        "id": "source-han-sans-sc",
+        "resource": "/fonts/browser-manifests/source-han-sans-sc.json",
+        "bytes": 108454,
+        "sha256": "cfb66709594aba89c1283b6691aeec8f13368af5d92ba2b499a19b69939352e3",
+        "cacheControl": "public, max-age=0, must-revalidate"
+      }
+    ],
+    "fontHeads": [
+      {
+        "resource": "/fonts/browser/plex-400-oblique.base.541c9f42ebbd81ae.woff2",
+        "status": 200,
+        "expectedBytes": 41052
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.common.b8250b05d7046635.woff2",
+        "status": 200,
+        "expectedBytes": 694776
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-000.71262be701734012.woff2",
+        "status": 200,
+        "expectedBytes": 81856
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-001.c212db31b12d57d7.woff2",
+        "status": 200,
+        "expectedBytes": 148096
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-002.9a8c5e3854d94e8a.woff2",
+        "status": 200,
+        "expectedBytes": 155188
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-003.a766a88ea595032a.woff2",
+        "status": 200,
+        "expectedBytes": 166464
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-004.385c79120e1e181f.woff2",
+        "status": 200,
+        "expectedBytes": 165420
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-005.e748cf0e4f00d57c.woff2",
+        "status": 200,
+        "expectedBytes": 167344
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-006.30c5b24bfe8cb72d.woff2",
+        "status": 200,
+        "expectedBytes": 177156
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-007.e317b0b08e5026a3.woff2",
+        "status": 200,
+        "expectedBytes": 158452
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-008.438d49e2553547cd.woff2",
+        "status": 200,
+        "expectedBytes": 139816
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-009.ba29a979fb9ac422.woff2",
+        "status": 200,
+        "expectedBytes": 152696
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-010.1f51eb979c7d8b29.woff2",
+        "status": 200,
+        "expectedBytes": 143448
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-011.6617ce9183379645.woff2",
+        "status": 200,
+        "expectedBytes": 164968
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-012.b0babcf1c4a2af16.woff2",
+        "status": 200,
+        "expectedBytes": 157392
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-013.aaa1dab6acfc0b0a.woff2",
+        "status": 200,
+        "expectedBytes": 167432
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-014.e307e46d4db104d1.woff2",
+        "status": 200,
+        "expectedBytes": 167080
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-015.3fe589076942cc10.woff2",
+        "status": 200,
+        "expectedBytes": 154004
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-016.a2a691d6c3c8d87b.woff2",
+        "status": 200,
+        "expectedBytes": 177956
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-017.6c2039505b2a0bdd.woff2",
+        "status": 200,
+        "expectedBytes": 167808
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-018.d1526f69aa5d33b3.woff2",
+        "status": 200,
+        "expectedBytes": 173692
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-019.02e1a673106c4c57.woff2",
+        "status": 200,
+        "expectedBytes": 161040
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-020.e0b5323d05ce0b4b.woff2",
+        "status": 200,
+        "expectedBytes": 162184
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-021.8b7421c25d5e7d50.woff2",
+        "status": 200,
+        "expectedBytes": 161364
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-022.b2a96e3ef1b383d3.woff2",
+        "status": 200,
+        "expectedBytes": 182156
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-023.371a3fccb9cd4a3f.woff2",
+        "status": 200,
+        "expectedBytes": 188956
+      },
+      {
+        "resource": "/fonts/browser/plex-400-oblique.extended-024.10924b6059a5749b.woff2",
+        "status": 200,
+        "expectedBytes": 93484
+      },
+      {
+        "resource": "/fonts/browser/plex-400.base.7b0aa588eb74b74d.woff2",
+        "status": 200,
+        "expectedBytes": 36396
+      },
+      {
+        "resource": "/fonts/browser/plex-400.common.9c4b966baba1802b.woff2",
+        "status": 200,
+        "expectedBytes": 642904
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-000.1834446c53c40ee7.woff2",
+        "status": 200,
+        "expectedBytes": 74996
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-001.e978187bf9d1c4cd.woff2",
+        "status": 200,
+        "expectedBytes": 136064
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-002.99018b5f847b8b5f.woff2",
+        "status": 200,
+        "expectedBytes": 143908
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-003.8f9484124aba7db2.woff2",
+        "status": 200,
+        "expectedBytes": 154592
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-004.cb945581e3ed9ce4.woff2",
+        "status": 200,
+        "expectedBytes": 154212
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-005.9acc23be944f141a.woff2",
+        "status": 200,
+        "expectedBytes": 154860
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-006.9e95cb2c4db695e2.woff2",
+        "status": 200,
+        "expectedBytes": 164820
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-007.f01368f7b6d90cfb.woff2",
+        "status": 200,
+        "expectedBytes": 146564
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-008.25fc9b59ab90bfdc.woff2",
+        "status": 200,
+        "expectedBytes": 128124
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-009.697d25edac209c57.woff2",
+        "status": 200,
+        "expectedBytes": 140736
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-010.9c93325020b247bc.woff2",
+        "status": 200,
+        "expectedBytes": 131820
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-011.de71e80c33cc2ed2.woff2",
+        "status": 200,
+        "expectedBytes": 152036
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-012.686cdc4cb81de977.woff2",
+        "status": 200,
+        "expectedBytes": 144728
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-013.0b59be61f678e232.woff2",
+        "status": 200,
+        "expectedBytes": 155984
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-014.1b9e51414c233498.woff2",
+        "status": 200,
+        "expectedBytes": 154924
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-015.7b820c9ea4fcb4cc.woff2",
+        "status": 200,
+        "expectedBytes": 142284
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-016.3c2716410c97f51f.woff2",
+        "status": 200,
+        "expectedBytes": 165652
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-017.6cb56724b72d0808.woff2",
+        "status": 200,
+        "expectedBytes": 155252
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-018.8cfd671ffc90eac3.woff2",
+        "status": 200,
+        "expectedBytes": 159792
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-019.57c673f6d3ee5eb9.woff2",
+        "status": 200,
+        "expectedBytes": 149548
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-020.ffa1939dda51a258.woff2",
+        "status": 200,
+        "expectedBytes": 149136
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-021.acb4c0529d5404e8.woff2",
+        "status": 200,
+        "expectedBytes": 149840
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-022.688ddac8e10826c4.woff2",
+        "status": 200,
+        "expectedBytes": 169276
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-023.0d6df1a7a1df1d81.woff2",
+        "status": 200,
+        "expectedBytes": 176664
+      },
+      {
+        "resource": "/fonts/browser/plex-400.extended-024.9e3ce8f9b81704e1.woff2",
+        "status": 200,
+        "expectedBytes": 86060
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.base.52a65e20544ffebb.woff2",
+        "status": 200,
+        "expectedBytes": 40676
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.common.ff08e90b5dd64954.woff2",
+        "status": 200,
+        "expectedBytes": 722504
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-000.fbefab14a10e8b99.woff2",
+        "status": 200,
+        "expectedBytes": 80900
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-001.5b1cfa010ff19b2d.woff2",
+        "status": 200,
+        "expectedBytes": 154420
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-002.fda46e34d3e3902f.woff2",
+        "status": 200,
+        "expectedBytes": 161472
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-003.60f54c65635f57c9.woff2",
+        "status": 200,
+        "expectedBytes": 172940
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-004.f1609772da378eed.woff2",
+        "status": 200,
+        "expectedBytes": 173488
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-005.bd4e2ae6d060e8a8.woff2",
+        "status": 200,
+        "expectedBytes": 172316
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-006.97b1e65b2e7580bc.woff2",
+        "status": 200,
+        "expectedBytes": 183324
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-007.94dfb2b35435c621.woff2",
+        "status": 200,
+        "expectedBytes": 163564
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-008.a64f543e2d2baf08.woff2",
+        "status": 200,
+        "expectedBytes": 145844
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-009.bd31ceb6f6170cbf.woff2",
+        "status": 200,
+        "expectedBytes": 158840
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-010.1f26d2b4e23c8a77.woff2",
+        "status": 200,
+        "expectedBytes": 148940
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-011.55b0ae899d1f7baf.woff2",
+        "status": 200,
+        "expectedBytes": 170012
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-012.874f2f4610cab48c.woff2",
+        "status": 200,
+        "expectedBytes": 162380
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-013.6177c14a9a4ec8c1.woff2",
+        "status": 200,
+        "expectedBytes": 173560
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-014.47eeecfa21e27746.woff2",
+        "status": 200,
+        "expectedBytes": 172920
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-015.83dddd28b596c9ae.woff2",
+        "status": 200,
+        "expectedBytes": 158116
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-016.ea2d1bc264f842c5.woff2",
+        "status": 200,
+        "expectedBytes": 183948
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-017.3ccb285bd33225ea.woff2",
+        "status": 200,
+        "expectedBytes": 174988
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-018.a6ccb4003613d7bd.woff2",
+        "status": 200,
+        "expectedBytes": 180544
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-019.9f2f29e1a934fcc3.woff2",
+        "status": 200,
+        "expectedBytes": 166464
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-020.78a2560d65ce4b6e.woff2",
+        "status": 200,
+        "expectedBytes": 167096
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-021.e49caf3e55da1ec8.woff2",
+        "status": 200,
+        "expectedBytes": 173480
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-022.f17906f680dbb057.woff2",
+        "status": 200,
+        "expectedBytes": 187996
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-023.a7cc3de31a7767c8.woff2",
+        "status": 200,
+        "expectedBytes": 195800
+      },
+      {
+        "resource": "/fonts/browser/plex-700-oblique.extended-024.bfa25945e4be8cae.woff2",
+        "status": 200,
+        "expectedBytes": 96004
+      },
+      {
+        "resource": "/fonts/browser/plex-700.base.ae159b7f57211700.woff2",
+        "status": 200,
+        "expectedBytes": 35972
+      },
+      {
+        "resource": "/fonts/browser/plex-700.common.cc4f7ab42429b5b3.woff2",
+        "status": 200,
+        "expectedBytes": 663780
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-000.f7e9c1f7192405d7.woff2",
+        "status": 200,
+        "expectedBytes": 73748
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-001.e09de3bd4522ead5.woff2",
+        "status": 200,
+        "expectedBytes": 140280
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-002.ac583fa00411ff8f.woff2",
+        "status": 200,
+        "expectedBytes": 147788
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-003.e6cc7e7cc3529a7d.woff2",
+        "status": 200,
+        "expectedBytes": 158904
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-004.6ec23b23606b8384.woff2",
+        "status": 200,
+        "expectedBytes": 159676
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-005.996ee8f2a84541b8.woff2",
+        "status": 200,
+        "expectedBytes": 157792
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-006.bad5cc80ec8d2ebb.woff2",
+        "status": 200,
+        "expectedBytes": 168684
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-007.45a65f2f44d4b64a.woff2",
+        "status": 200,
+        "expectedBytes": 150664
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-008.e12d2d55b49ad2e5.woff2",
+        "status": 200,
+        "expectedBytes": 131700
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-009.c5c7e5eda98d686b.woff2",
+        "status": 200,
+        "expectedBytes": 144808
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-010.3811442b79a684f5.woff2",
+        "status": 200,
+        "expectedBytes": 135792
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-011.0fb236c7a755d6ef.woff2",
+        "status": 200,
+        "expectedBytes": 155228
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-012.d20449eaf99052cd.woff2",
+        "status": 200,
+        "expectedBytes": 147528
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-013.6d8ee179099fc72c.woff2",
+        "status": 200,
+        "expectedBytes": 159868
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-014.c3a8afcb6bd6aebd.woff2",
+        "status": 200,
+        "expectedBytes": 158636
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-015.e5972535cb85d7c0.woff2",
+        "status": 200,
+        "expectedBytes": 143412
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-016.f465f6fa2b09dbd1.woff2",
+        "status": 200,
+        "expectedBytes": 170552
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-017.6451d27a2a60b327.woff2",
+        "status": 200,
+        "expectedBytes": 159244
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-018.65c431fd3789895e.woff2",
+        "status": 200,
+        "expectedBytes": 164732
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-019.fccc6064f8a0ab9a.woff2",
+        "status": 200,
+        "expectedBytes": 152296
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-020.4f8096073f2a6975.woff2",
+        "status": 200,
+        "expectedBytes": 151504
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-021.7da2d4f74c5931c6.woff2",
+        "status": 200,
+        "expectedBytes": 159104
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-022.145758a7d44db65b.woff2",
+        "status": 200,
+        "expectedBytes": 172980
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-023.f49d9145847e4e75.woff2",
+        "status": 200,
+        "expectedBytes": 181272
+      },
+      {
+        "resource": "/fonts/browser/plex-700.extended-024.040c5069d99f41aa.woff2",
+        "status": 200,
+        "expectedBytes": 87724
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.base.3f20302f6e17d0f3.woff2",
+        "status": 200,
+        "expectedBytes": 96168
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.common.56fe58505cb74279.woff2",
+        "status": 200,
+        "expectedBytes": 826576
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-000.42bb8b6fad03ff47.woff2",
+        "status": 200,
+        "expectedBytes": 211380
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-001.9d5db85c123af33d.woff2",
+        "status": 200,
+        "expectedBytes": 175172
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-002.3e3c1c590732caa9.woff2",
+        "status": 200,
+        "expectedBytes": 200820
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-003.393397934802ad41.woff2",
+        "status": 200,
+        "expectedBytes": 281112
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-004.d1d9ee653e49cdff.woff2",
+        "status": 200,
+        "expectedBytes": 294560
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-005.40f1517d96a5078a.woff2",
+        "status": 200,
+        "expectedBytes": 284668
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-006.eab5132654fe4a2d.woff2",
+        "status": 200,
+        "expectedBytes": 319048
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-007.4c3351ce7bee12ac.woff2",
+        "status": 200,
+        "expectedBytes": 307940
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-008.0f45620ad268dd99.woff2",
+        "status": 200,
+        "expectedBytes": 354372
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-009.c5ff9107bd034c4e.woff2",
+        "status": 200,
+        "expectedBytes": 230968
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-010.bfbf407ce825b084.woff2",
+        "status": 200,
+        "expectedBytes": 240684
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-011.a18561ef92943d62.woff2",
+        "status": 200,
+        "expectedBytes": 271908
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-012.7f71c27cdb0b917a.woff2",
+        "status": 200,
+        "expectedBytes": 259052
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-013.bc639ba064f7e92f.woff2",
+        "status": 200,
+        "expectedBytes": 259656
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-014.ebc460a1ced5b501.woff2",
+        "status": 200,
+        "expectedBytes": 279292
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-015.143399bf4b217838.woff2",
+        "status": 200,
+        "expectedBytes": 314576
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-016.4a51587354ef435c.woff2",
+        "status": 200,
+        "expectedBytes": 270048
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-017.c4cfa73bd70cbf51.woff2",
+        "status": 200,
+        "expectedBytes": 269128
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-018.4635d1434f184c0a.woff2",
+        "status": 200,
+        "expectedBytes": 328876
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-019.c863a89af77d24f1.woff2",
+        "status": 200,
+        "expectedBytes": 268588
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-020.14f3360f7ad769a2.woff2",
+        "status": 200,
+        "expectedBytes": 321980
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-021.0d50270b49a229d4.woff2",
+        "status": 200,
+        "expectedBytes": 271160
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-022.db4e24332d4862ce.woff2",
+        "status": 200,
+        "expectedBytes": 275684
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-023.a7bf3aafa8d7526a.woff2",
+        "status": 200,
+        "expectedBytes": 298400
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-024.b0a2122e1d9f422e.woff2",
+        "status": 200,
+        "expectedBytes": 331836
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-025.48e85040d5ba62ac.woff2",
+        "status": 200,
+        "expectedBytes": 296796
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-026.4dddecd4e74062a0.woff2",
+        "status": 200,
+        "expectedBytes": 103836
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-027.892ea3f4e48483b9.woff2",
+        "status": 200,
+        "expectedBytes": 86596
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-028.bb899168b6152c39.woff2",
+        "status": 200,
+        "expectedBytes": 97708
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-029.7c11beb1fa11be76.woff2",
+        "status": 200,
+        "expectedBytes": 88576
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-030.e960a14809c54ef8.woff2",
+        "status": 200,
+        "expectedBytes": 92156
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-031.459ccc880a2df59a.woff2",
+        "status": 200,
+        "expectedBytes": 100924
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-032.e517fd21ce5bdb97.woff2",
+        "status": 200,
+        "expectedBytes": 94616
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-033.18ba7713b8f7c39b.woff2",
+        "status": 200,
+        "expectedBytes": 100552
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-034.fe8bdcb7f3395dd4.woff2",
+        "status": 200,
+        "expectedBytes": 97900
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-035.be78599972073ff2.woff2",
+        "status": 200,
+        "expectedBytes": 91828
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-036.2fd4cfb12692f64f.woff2",
+        "status": 200,
+        "expectedBytes": 146540
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-037.20c406736405dccc.woff2",
+        "status": 200,
+        "expectedBytes": 233216
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-038.c487805e1e6e6b4f.woff2",
+        "status": 200,
+        "expectedBytes": 320532
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-039.2d4725ff61b5429c.woff2",
+        "status": 200,
+        "expectedBytes": 342252
+      },
+      {
+        "resource": "/fonts/browser/round-400-oblique.extended-040.c4216ea74d63bb94.woff2",
+        "status": 200,
+        "expectedBytes": 248976
+      },
+      {
+        "resource": "/fonts/browser/round-400.base.d0db02384f22c73f.woff2",
+        "status": 200,
+        "expectedBytes": 88532
+      },
+      {
+        "resource": "/fonts/browser/round-400.common.1b271f6ceadeb608.woff2",
+        "status": 200,
+        "expectedBytes": 771876
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-000.7680201f3cbc5e2e.woff2",
+        "status": 200,
+        "expectedBytes": 188668
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-001.ac7240757f135021.woff2",
+        "status": 200,
+        "expectedBytes": 164808
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-002.271e392d1313cea3.woff2",
+        "status": 200,
+        "expectedBytes": 187440
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-003.b6b93bc536fc64b7.woff2",
+        "status": 200,
+        "expectedBytes": 262692
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-004.781cfb0a6cbdb76e.woff2",
+        "status": 200,
+        "expectedBytes": 278616
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-005.55096e712e3045a2.woff2",
+        "status": 200,
+        "expectedBytes": 266376
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-006.fd617262c0df472b.woff2",
+        "status": 200,
+        "expectedBytes": 298832
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-007.aec1afc921fdd0d3.woff2",
+        "status": 200,
+        "expectedBytes": 287544
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-008.f83914b321f18145.woff2",
+        "status": 200,
+        "expectedBytes": 330560
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-009.f5905368772c2cd3.woff2",
+        "status": 200,
+        "expectedBytes": 215988
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-010.41c9d9989c1f0892.woff2",
+        "status": 200,
+        "expectedBytes": 221472
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-011.420e5dfcf0c22964.woff2",
+        "status": 200,
+        "expectedBytes": 253960
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-012.d2538af28375f5e3.woff2",
+        "status": 200,
+        "expectedBytes": 243632
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-013.e42ec86f58d01275.woff2",
+        "status": 200,
+        "expectedBytes": 243272
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-014.9e559d82bfd2860f.woff2",
+        "status": 200,
+        "expectedBytes": 262700
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-015.162defeb9373cf4f.woff2",
+        "status": 200,
+        "expectedBytes": 298508
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-016.961f98352a713302.woff2",
+        "status": 200,
+        "expectedBytes": 252876
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-017.4e1d52372b2a2939.woff2",
+        "status": 200,
+        "expectedBytes": 252084
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-018.392cd6f87cec49d5.woff2",
+        "status": 200,
+        "expectedBytes": 312696
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-019.2623aa0eaebb454b.woff2",
+        "status": 200,
+        "expectedBytes": 248644
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-020.c94b713b7b03c29a.woff2",
+        "status": 200,
+        "expectedBytes": 300344
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-021.1074bfa542c54b61.woff2",
+        "status": 200,
+        "expectedBytes": 252756
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-022.20cc9bbdf0e60f68.woff2",
+        "status": 200,
+        "expectedBytes": 253720
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-023.6dc7c89a3c7888a5.woff2",
+        "status": 200,
+        "expectedBytes": 276584
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-024.9aaba3bb66156ac5.woff2",
+        "status": 200,
+        "expectedBytes": 311252
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-025.e81ca6d18c4ae7ca.woff2",
+        "status": 200,
+        "expectedBytes": 277980
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-026.4d94f01666f91cc1.woff2",
+        "status": 200,
+        "expectedBytes": 90076
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-027.093e7f868e0d2e9e.woff2",
+        "status": 200,
+        "expectedBytes": 74400
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-028.b5f26aec440c670a.woff2",
+        "status": 200,
+        "expectedBytes": 83556
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-029.c2d18fb9ce847542.woff2",
+        "status": 200,
+        "expectedBytes": 75968
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-030.f851671ae1c1e087.woff2",
+        "status": 200,
+        "expectedBytes": 78492
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-031.9afcf8091b0268c2.woff2",
+        "status": 200,
+        "expectedBytes": 87268
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-032.043ab89a8f209f52.woff2",
+        "status": 200,
+        "expectedBytes": 82000
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-033.8c66fa6ab8a566d1.woff2",
+        "status": 200,
+        "expectedBytes": 87224
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-034.bda888e56349bf3c.woff2",
+        "status": 200,
+        "expectedBytes": 85684
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-035.effdb9f8c4bd67ef.woff2",
+        "status": 200,
+        "expectedBytes": 80172
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-036.0d273cc784f792e5.woff2",
+        "status": 200,
+        "expectedBytes": 130556
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-037.f38faf1b1e511780.woff2",
+        "status": 200,
+        "expectedBytes": 215828
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-038.6444eb5a63171898.woff2",
+        "status": 200,
+        "expectedBytes": 298728
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-039.c1674477d0b97922.woff2",
+        "status": 200,
+        "expectedBytes": 318352
+      },
+      {
+        "resource": "/fonts/browser/round-400.extended-040.1eec9b3c8afd6309.woff2",
+        "status": 200,
+        "expectedBytes": 231104
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.base.f0a9e12e645c379a.woff2",
+        "status": 200,
+        "expectedBytes": 97020
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.common.0eba5977cb03859f.woff2",
+        "status": 200,
+        "expectedBytes": 847300
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-000.b4cd40ca599686b5.woff2",
+        "status": 200,
+        "expectedBytes": 213936
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-001.b47a1f7f15afe50b.woff2",
+        "status": 200,
+        "expectedBytes": 176888
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-002.b4ce528904dce0ae.woff2",
+        "status": 200,
+        "expectedBytes": 204928
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-003.e401a2b224883ec8.woff2",
+        "status": 200,
+        "expectedBytes": 288728
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-004.423e71be95fddc2a.woff2",
+        "status": 200,
+        "expectedBytes": 302440
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-005.925c7d1dbcf378e3.woff2",
+        "status": 200,
+        "expectedBytes": 291524
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-006.8f81b148af9b4f62.woff2",
+        "status": 200,
+        "expectedBytes": 327440
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-007.d6e38c753374963c.woff2",
+        "status": 200,
+        "expectedBytes": 316832
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-008.27f086246b5ec467.woff2",
+        "status": 200,
+        "expectedBytes": 363624
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-009.c6e0da569f911a84.woff2",
+        "status": 200,
+        "expectedBytes": 235924
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-010.df8a46c50fb39ee0.woff2",
+        "status": 200,
+        "expectedBytes": 246480
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-011.b8bd534c22d36222.woff2",
+        "status": 200,
+        "expectedBytes": 277996
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-012.827d960cb51a1e57.woff2",
+        "status": 200,
+        "expectedBytes": 264200
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-013.8799e92fb6c70dc9.woff2",
+        "status": 200,
+        "expectedBytes": 265284
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-014.3bb0054b1366e950.woff2",
+        "status": 200,
+        "expectedBytes": 286244
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-015.ece9d8c83a3db585.woff2",
+        "status": 200,
+        "expectedBytes": 323868
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-016.5d7115825696ecda.woff2",
+        "status": 200,
+        "expectedBytes": 275728
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-017.5a3d9e356ad1f435.woff2",
+        "status": 200,
+        "expectedBytes": 274676
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-018.865c0dff0ae6a2bc.woff2",
+        "status": 200,
+        "expectedBytes": 340288
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-019.8c75b5bacd844c91.woff2",
+        "status": 200,
+        "expectedBytes": 274172
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-020.8f1d129ba3e335b4.woff2",
+        "status": 200,
+        "expectedBytes": 330964
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-021.c2cc10323dcd6417.woff2",
+        "status": 200,
+        "expectedBytes": 277512
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-022.f9fb3f58cd38d6e4.woff2",
+        "status": 200,
+        "expectedBytes": 282572
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-023.7afc24b9aecc426d.woff2",
+        "status": 200,
+        "expectedBytes": 306760
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-024.7dac686a4b04aa37.woff2",
+        "status": 200,
+        "expectedBytes": 342176
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-025.0335b9786926350b.woff2",
+        "status": 200,
+        "expectedBytes": 304312
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-026.c25d5c52b371b122.woff2",
+        "status": 200,
+        "expectedBytes": 105528
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-027.38176ab50f063b38.woff2",
+        "status": 200,
+        "expectedBytes": 87960
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-028.d0b161080e18e377.woff2",
+        "status": 200,
+        "expectedBytes": 98996
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-029.bf2408184c92b9ab.woff2",
+        "status": 200,
+        "expectedBytes": 90152
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-030.15d2c6044b27132a.woff2",
+        "status": 200,
+        "expectedBytes": 94324
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-031.855942cd3fe42b05.woff2",
+        "status": 200,
+        "expectedBytes": 102164
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-032.16e1525b999d15ee.woff2",
+        "status": 200,
+        "expectedBytes": 95024
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-033.6e4712e0a8f0a58e.woff2",
+        "status": 200,
+        "expectedBytes": 101588
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-034.2923bc6acc1dad7b.woff2",
+        "status": 200,
+        "expectedBytes": 99592
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-035.7a940704b53cfcc3.woff2",
+        "status": 200,
+        "expectedBytes": 93652
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-036.be7c4deaaef248cb.woff2",
+        "status": 200,
+        "expectedBytes": 148576
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-037.dde736ccd43009ff.woff2",
+        "status": 200,
+        "expectedBytes": 238144
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-038.7cc508b42936b8bb.woff2",
+        "status": 200,
+        "expectedBytes": 328648
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-039.be4bd21ec8d705e8.woff2",
+        "status": 200,
+        "expectedBytes": 351960
+      },
+      {
+        "resource": "/fonts/browser/round-700-oblique.extended-040.bbfd46695d5eb730.woff2",
+        "status": 200,
+        "expectedBytes": 255696
+      },
+      {
+        "resource": "/fonts/browser/round-700.base.6a9cd86b75d2aa25.woff2",
+        "status": 200,
+        "expectedBytes": 89208
+      },
+      {
+        "resource": "/fonts/browser/round-700.common.6c9027fe568c123c.woff2",
+        "status": 200,
+        "expectedBytes": 799884
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-000.f404e6fa783307da.woff2",
+        "status": 200,
+        "expectedBytes": 191188
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-001.f543f09ee8d0db92.woff2",
+        "status": 200,
+        "expectedBytes": 167868
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-002.8b6388a54925e2af.woff2",
+        "status": 200,
+        "expectedBytes": 191568
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-003.b962f331c31b29d5.woff2",
+        "status": 200,
+        "expectedBytes": 270524
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-004.cd49842a589d5196.woff2",
+        "status": 200,
+        "expectedBytes": 285276
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-005.96a6eb0c6cd3ad5b.woff2",
+        "status": 200,
+        "expectedBytes": 272532
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-006.b4fa959e15505ebe.woff2",
+        "status": 200,
+        "expectedBytes": 306984
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-007.742c3a40f4a37a21.woff2",
+        "status": 200,
+        "expectedBytes": 294800
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-008.65f63a81742fc83b.woff2",
+        "status": 200,
+        "expectedBytes": 339440
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-009.157f758892842eab.woff2",
+        "status": 200,
+        "expectedBytes": 221824
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-010.1ac912a1f308c6fe.woff2",
+        "status": 200,
+        "expectedBytes": 228256
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-011.3f10a9826c0c82d8.woff2",
+        "status": 200,
+        "expectedBytes": 260296
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-012.fcf1e79a8d7d41d2.woff2",
+        "status": 200,
+        "expectedBytes": 250304
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-013.12f9c263d3cfce12.woff2",
+        "status": 200,
+        "expectedBytes": 248912
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-014.28acb5ca76a7f7f4.woff2",
+        "status": 200,
+        "expectedBytes": 269772
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-015.837acbc6b8b21c19.woff2",
+        "status": 200,
+        "expectedBytes": 307056
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-016.5f78e589e27ce3a7.woff2",
+        "status": 200,
+        "expectedBytes": 259108
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-017.b92f68b5361066dc.woff2",
+        "status": 200,
+        "expectedBytes": 258372
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-018.9f5b762373b8f2a7.woff2",
+        "status": 200,
+        "expectedBytes": 324620
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-019.d8a80221922b1a33.woff2",
+        "status": 200,
+        "expectedBytes": 254396
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-020.701196806d20cce4.woff2",
+        "status": 200,
+        "expectedBytes": 309960
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-021.00a36ef67a39ab61.woff2",
+        "status": 200,
+        "expectedBytes": 259348
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-022.70a05891ba9d39e1.woff2",
+        "status": 200,
+        "expectedBytes": 261736
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-023.d3a536a3c3cf52ca.woff2",
+        "status": 200,
+        "expectedBytes": 284128
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-024.2b2786fd6f52811b.woff2",
+        "status": 200,
+        "expectedBytes": 321528
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-025.db4a36bf4915abb0.woff2",
+        "status": 200,
+        "expectedBytes": 285544
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-026.5afa7b77f4ff1e49.woff2",
+        "status": 200,
+        "expectedBytes": 92424
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-027.0cf5d78c588944ad.woff2",
+        "status": 200,
+        "expectedBytes": 76732
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-028.72d7f99c515d11e2.woff2",
+        "status": 200,
+        "expectedBytes": 85972
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-029.0daa872786813c80.woff2",
+        "status": 200,
+        "expectedBytes": 78100
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-030.2d48e25fcfa7d9fd.woff2",
+        "status": 200,
+        "expectedBytes": 80144
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-031.fbd874359dc0ea8e.woff2",
+        "status": 200,
+        "expectedBytes": 89504
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-032.299c915153d1dca9.woff2",
+        "status": 200,
+        "expectedBytes": 83160
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-033.765917be4d13697e.woff2",
+        "status": 200,
+        "expectedBytes": 89092
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-034.aa19eeee3d307cbe.woff2",
+        "status": 200,
+        "expectedBytes": 87240
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-035.70d0bec2cb0640a9.woff2",
+        "status": 200,
+        "expectedBytes": 82344
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-036.8c9068a4ecf61cb3.woff2",
+        "status": 200,
+        "expectedBytes": 133028
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-037.c3d360934838eaf3.woff2",
+        "status": 200,
+        "expectedBytes": 221852
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-038.c722e5f641332536.woff2",
+        "status": 200,
+        "expectedBytes": 307180
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-039.fded9899d7496dfb.woff2",
+        "status": 200,
+        "expectedBytes": 326704
+      },
+      {
+        "resource": "/fonts/browser/round-700.extended-040.b5702add42fd4327.woff2",
+        "status": 200,
+        "expectedBytes": 236632
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.base.8f7bbb57b2810a1e.woff2",
+        "status": 200,
+        "expectedBytes": 53480
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.common.3d4e5bf6fe59c9ec.woff2",
+        "status": 200,
+        "expectedBytes": 561304
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-000.9a47a91224aa708c.woff2",
+        "status": 200,
+        "expectedBytes": 63148
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-001.fdfb36fc02a5df41.woff2",
+        "status": 200,
+        "expectedBytes": 137592
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-002.1b179be4d9a67cea.woff2",
+        "status": 200,
+        "expectedBytes": 170004
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-003.9a8cc55219bcc125.woff2",
+        "status": 200,
+        "expectedBytes": 181840
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-004.13f56cb87abe4584.woff2",
+        "status": 200,
+        "expectedBytes": 198088
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-005.85c7ff4ba8f1484c.woff2",
+        "status": 200,
+        "expectedBytes": 194896
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-006.6ff3c46f4f73b252.woff2",
+        "status": 200,
+        "expectedBytes": 192496
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-007.111b9005e4c204b5.woff2",
+        "status": 200,
+        "expectedBytes": 198516
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-008.f31ba356ab73b451.woff2",
+        "status": 200,
+        "expectedBytes": 188044
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-009.ab7d919a7efd0e6e.woff2",
+        "status": 200,
+        "expectedBytes": 163132
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-010.d03e9247f023edfb.woff2",
+        "status": 200,
+        "expectedBytes": 171628
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-011.4992c4df0b29cbd3.woff2",
+        "status": 200,
+        "expectedBytes": 163896
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-012.738cee3df1d17c5c.woff2",
+        "status": 200,
+        "expectedBytes": 185336
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-013.2c4891277c6f80a9.woff2",
+        "status": 200,
+        "expectedBytes": 175700
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-014.ba7ba9b52691a3fb.woff2",
+        "status": 200,
+        "expectedBytes": 182532
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-015.fa4b71155277c27a.woff2",
+        "status": 200,
+        "expectedBytes": 187440
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-016.331b9c897f22b836.woff2",
+        "status": 200,
+        "expectedBytes": 177116
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-017.55afc87e02e4ad4a.woff2",
+        "status": 200,
+        "expectedBytes": 206000
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-018.531ec56dd30c61e4.woff2",
+        "status": 200,
+        "expectedBytes": 185536
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-019.83f7a219df2490aa.woff2",
+        "status": 200,
+        "expectedBytes": 187876
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-020.7040e7bf01179080.woff2",
+        "status": 200,
+        "expectedBytes": 188760
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-021.db3de3634077fff9.woff2",
+        "status": 200,
+        "expectedBytes": 178340
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-022.2154f68a967c16df.woff2",
+        "status": 200,
+        "expectedBytes": 184928
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-023.f568a33ba93eb4e0.woff2",
+        "status": 200,
+        "expectedBytes": 194968
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-024.e9fecdc2ad9064dd.woff2",
+        "status": 200,
+        "expectedBytes": 215496
+      },
+      {
+        "resource": "/fonts/browser/sans-400-oblique.extended-025.147da2f1e913ddd0.woff2",
+        "status": 200,
+        "expectedBytes": 144536
+      },
+      {
+        "resource": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+        "status": 200,
+        "expectedBytes": 49496
+      },
+      {
+        "resource": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+        "status": 200,
+        "expectedBytes": 531700
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-000.24fc7825af5cb1b0.woff2",
+        "status": 200,
+        "expectedBytes": 58108
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-001.7e21e35f9851f52f.woff2",
+        "status": 200,
+        "expectedBytes": 129580
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-002.10b5d87990662008.woff2",
+        "status": 200,
+        "expectedBytes": 160620
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-003.ca897784e75f2942.woff2",
+        "status": 200,
+        "expectedBytes": 172428
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-004.20e4c9b5fb78c7dc.woff2",
+        "status": 200,
+        "expectedBytes": 187840
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-005.0fc2d107a7e9da1f.woff2",
+        "status": 200,
+        "expectedBytes": 185040
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-006.26f65bf1f4d62e72.woff2",
+        "status": 200,
+        "expectedBytes": 181256
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-007.9df902a69f7d67ae.woff2",
+        "status": 200,
+        "expectedBytes": 187032
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-008.da8e49b1040134fd.woff2",
+        "status": 200,
+        "expectedBytes": 178276
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-009.e4e0b91a600fd72a.woff2",
+        "status": 200,
+        "expectedBytes": 153008
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-010.808cc9e40eaffd59.woff2",
+        "status": 200,
+        "expectedBytes": 162208
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-011.10e405418306ecb9.woff2",
+        "status": 200,
+        "expectedBytes": 154880
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-012.0a98e0e673a20940.woff2",
+        "status": 200,
+        "expectedBytes": 175880
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-013.23bbcf22c5dcb2c6.woff2",
+        "status": 200,
+        "expectedBytes": 165940
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+        "status": 200,
+        "expectedBytes": 173840
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-015.b6b5016aa4f3a545.woff2",
+        "status": 200,
+        "expectedBytes": 178204
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-016.23ca401cd150ffb8.woff2",
+        "status": 200,
+        "expectedBytes": 165864
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-017.d24d2cdb4ef55dd6.woff2",
+        "status": 200,
+        "expectedBytes": 196656
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-018.6cc062dd961dab1d.woff2",
+        "status": 200,
+        "expectedBytes": 175620
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-019.e3beefa47f96048f.woff2",
+        "status": 200,
+        "expectedBytes": 177348
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-020.097013aa7773c01f.woff2",
+        "status": 200,
+        "expectedBytes": 177140
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-021.55c7d480c1070484.woff2",
+        "status": 200,
+        "expectedBytes": 167544
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-022.3b0949360001129e.woff2",
+        "status": 200,
+        "expectedBytes": 174888
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-023.1155c184bef48d46.woff2",
+        "status": 200,
+        "expectedBytes": 184532
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-024.1d5e0cc882c0367a.woff2",
+        "status": 200,
+        "expectedBytes": 204396
+      },
+      {
+        "resource": "/fonts/browser/sans-400.extended-025.a8fbec20ff44b288.woff2",
+        "status": 200,
+        "expectedBytes": 136192
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.base.91338e221c8cf5fd.woff2",
+        "status": 200,
+        "expectedBytes": 54492
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.common.8dfc8ac4a71fe23b.woff2",
+        "status": 200,
+        "expectedBytes": 578128
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-000.40f6be0f4206416b.woff2",
+        "status": 200,
+        "expectedBytes": 63568
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-001.d68858c85a1113e8.woff2",
+        "status": 200,
+        "expectedBytes": 140776
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-002.2986c2647b2a5684.woff2",
+        "status": 200,
+        "expectedBytes": 174704
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-003.d33cae7c13f32c8b.woff2",
+        "status": 200,
+        "expectedBytes": 186660
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-004.fd4580975655cd6d.woff2",
+        "status": 200,
+        "expectedBytes": 203036
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-005.f875833dc8ad85bb.woff2",
+        "status": 200,
+        "expectedBytes": 200892
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-006.1c2f825270ddd8e6.woff2",
+        "status": 200,
+        "expectedBytes": 197132
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-007.ef44ab382e707c3b.woff2",
+        "status": 200,
+        "expectedBytes": 204028
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-008.e4407be349f64132.woff2",
+        "status": 200,
+        "expectedBytes": 192932
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-009.4c40a2ccdbc65362.woff2",
+        "status": 200,
+        "expectedBytes": 166764
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-010.6cbb62b0c47a261e.woff2",
+        "status": 200,
+        "expectedBytes": 176212
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-011.6d9626f5a3942874.woff2",
+        "status": 200,
+        "expectedBytes": 168076
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-012.a9c184e48a641103.woff2",
+        "status": 200,
+        "expectedBytes": 190172
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-013.42ff71134334e6c3.woff2",
+        "status": 200,
+        "expectedBytes": 179148
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-014.cf710d3daab341ab.woff2",
+        "status": 200,
+        "expectedBytes": 187716
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-015.60f67aceb8b179da.woff2",
+        "status": 200,
+        "expectedBytes": 192084
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-016.c38c31627b0bf8c6.woff2",
+        "status": 200,
+        "expectedBytes": 181288
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-017.479acef80af74f9f.woff2",
+        "status": 200,
+        "expectedBytes": 212488
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-018.f5f01d8727f6f100.woff2",
+        "status": 200,
+        "expectedBytes": 190984
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-019.414f2cd035992ee7.woff2",
+        "status": 200,
+        "expectedBytes": 192536
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-020.07eaab54bce5af9a.woff2",
+        "status": 200,
+        "expectedBytes": 192928
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-021.287c287950393e59.woff2",
+        "status": 200,
+        "expectedBytes": 182336
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-022.3a53a15267e0a8fd.woff2",
+        "status": 200,
+        "expectedBytes": 189004
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-023.9229045cee4fe8e2.woff2",
+        "status": 200,
+        "expectedBytes": 199788
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-024.03cb7ae94161e577.woff2",
+        "status": 200,
+        "expectedBytes": 222552
+      },
+      {
+        "resource": "/fonts/browser/sans-700-oblique.extended-025.323d2a00c749797e.woff2",
+        "status": 200,
+        "expectedBytes": 147540
+      },
+      {
+        "resource": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+        "status": 200,
+        "expectedBytes": 50336
+      },
+      {
+        "resource": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+        "status": 200,
+        "expectedBytes": 544968
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-000.9bf73b19aaaecc4c.woff2",
+        "status": 200,
+        "expectedBytes": 58828
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-001.5145292435911a87.woff2",
+        "status": 200,
+        "expectedBytes": 132564
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-002.307f73e37729f12c.woff2",
+        "status": 200,
+        "expectedBytes": 165000
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-003.297198ed9cff43ed.woff2",
+        "status": 200,
+        "expectedBytes": 177072
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-004.6b232242583f1f3a.woff2",
+        "status": 200,
+        "expectedBytes": 192936
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-005.55337bd679cb08e7.woff2",
+        "status": 200,
+        "expectedBytes": 190464
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-006.6e0611533f81afbe.woff2",
+        "status": 200,
+        "expectedBytes": 186128
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-007.372a405453184026.woff2",
+        "status": 200,
+        "expectedBytes": 191884
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-008.37d03cdd8a9b70d0.woff2",
+        "status": 200,
+        "expectedBytes": 182572
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-009.9802390482ac73bc.woff2",
+        "status": 200,
+        "expectedBytes": 156384
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-010.89c9c03593d89f67.woff2",
+        "status": 200,
+        "expectedBytes": 166600
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-011.334aa9e1134bca75.woff2",
+        "status": 200,
+        "expectedBytes": 158596
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-012.88d4899fef66a04a.woff2",
+        "status": 200,
+        "expectedBytes": 180540
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-013.678e5bacb4db1331.woff2",
+        "status": 200,
+        "expectedBytes": 169516
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-014.c6df598a68a89ffe.woff2",
+        "status": 200,
+        "expectedBytes": 179176
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-015.e2571291cc0274b3.woff2",
+        "status": 200,
+        "expectedBytes": 182732
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-016.ac1b00fa7c1b3829.woff2",
+        "status": 200,
+        "expectedBytes": 170152
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-017.f5c6968a5340101b.woff2",
+        "status": 200,
+        "expectedBytes": 203064
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-018.22876925b6ce85ce.woff2",
+        "status": 200,
+        "expectedBytes": 180948
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-019.f437db9d3a5086de.woff2",
+        "status": 200,
+        "expectedBytes": 181904
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-020.f24c0b5d8f9a9440.woff2",
+        "status": 200,
+        "expectedBytes": 181444
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-021.20ac73d7ca25b817.woff2",
+        "status": 200,
+        "expectedBytes": 172004
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-022.eb11b9b511a012fb.woff2",
+        "status": 200,
+        "expectedBytes": 178384
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-023.8511fb0e81d8dd6b.woff2",
+        "status": 200,
+        "expectedBytes": 188472
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-024.9bb3b95712d77e90.woff2",
+        "status": 200,
+        "expectedBytes": 210196
+      },
+      {
+        "resource": "/fonts/browser/sans-700.extended-025.94b2c9e1d03e226a.woff2",
+        "status": 200,
+        "expectedBytes": 138776
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.base.e58a02bed7b5514b.woff2",
+        "status": 200,
+        "expectedBytes": 78348
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.common.5841ed542841ae80.woff2",
+        "status": 200,
+        "expectedBytes": 714596
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-000.c16ad75f162b51e0.woff2",
+        "status": 200,
+        "expectedBytes": 76696
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-001.f1c5149845f6ae2f.woff2",
+        "status": 200,
+        "expectedBytes": 196680
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-002.373e62aeebc195f0.woff2",
+        "status": 200,
+        "expectedBytes": 216136
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-003.243ebf53baf86041.woff2",
+        "status": 200,
+        "expectedBytes": 223992
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-004.b729214ae0ea27ea.woff2",
+        "status": 200,
+        "expectedBytes": 246828
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-005.79678ae6607858b7.woff2",
+        "status": 200,
+        "expectedBytes": 233992
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-006.232d0a749ed55d6b.woff2",
+        "status": 200,
+        "expectedBytes": 239256
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-007.fa807bc0def15a0e.woff2",
+        "status": 200,
+        "expectedBytes": 248168
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-008.ab6f3e643a6fc9a0.woff2",
+        "status": 200,
+        "expectedBytes": 235472
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-009.ca7f3e7256ca6b5c.woff2",
+        "status": 200,
+        "expectedBytes": 216548
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-010.0c9422cb10fde641.woff2",
+        "status": 200,
+        "expectedBytes": 230840
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-011.1721e1f3744f3fa1.woff2",
+        "status": 200,
+        "expectedBytes": 221912
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-012.e075ea1996fc7f5c.woff2",
+        "status": 200,
+        "expectedBytes": 242844
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-013.07fb3b865970bc56.woff2",
+        "status": 200,
+        "expectedBytes": 228500
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-014.be78c9f7541af367.woff2",
+        "status": 200,
+        "expectedBytes": 253216
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-015.8aee3bd794faa5c4.woff2",
+        "status": 200,
+        "expectedBytes": 245164
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-016.f48118c0f6c928b5.woff2",
+        "status": 200,
+        "expectedBytes": 235124
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-017.2567d84a1d756d0b.woff2",
+        "status": 200,
+        "expectedBytes": 267476
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-018.4b4fc35e9f17bfb5.woff2",
+        "status": 200,
+        "expectedBytes": 246644
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-019.34a67970e959f97d.woff2",
+        "status": 200,
+        "expectedBytes": 252148
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-020.859284e2d388d512.woff2",
+        "status": 200,
+        "expectedBytes": 247420
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-021.473c986458113d8b.woff2",
+        "status": 200,
+        "expectedBytes": 238588
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-022.bf9fbcf4739597af.woff2",
+        "status": 200,
+        "expectedBytes": 252708
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-023.09df7ac461afdc2a.woff2",
+        "status": 200,
+        "expectedBytes": 268348
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-024.79c26068d342a1b9.woff2",
+        "status": 200,
+        "expectedBytes": 285156
+      },
+      {
+        "resource": "/fonts/browser/serif-400-oblique.extended-025.9442b36733674545.woff2",
+        "status": 200,
+        "expectedBytes": 201616
+      },
+      {
+        "resource": "/fonts/browser/serif-400.base.51c2e3bfc192e1e5.woff2",
+        "status": 200,
+        "expectedBytes": 74512
+      },
+      {
+        "resource": "/fonts/browser/serif-400.common.0e22ff50cf2740e8.woff2",
+        "status": 200,
+        "expectedBytes": 685476
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-000.2dae02a81606a968.woff2",
+        "status": 200,
+        "expectedBytes": 71788
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-001.a8f0b3d92f4a3b49.woff2",
+        "status": 200,
+        "expectedBytes": 188840
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-002.9dd879eb0ae3f751.woff2",
+        "status": 200,
+        "expectedBytes": 206084
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-003.db1a416d5e596ed7.woff2",
+        "status": 200,
+        "expectedBytes": 214552
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-004.8473260987dc4745.woff2",
+        "status": 200,
+        "expectedBytes": 237220
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-005.57105f22a84216cc.woff2",
+        "status": 200,
+        "expectedBytes": 224996
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-006.9c3d66af1098ad12.woff2",
+        "status": 200,
+        "expectedBytes": 227556
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-007.c6b96225aadaa4e8.woff2",
+        "status": 200,
+        "expectedBytes": 236416
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-008.d22e4544aea49899.woff2",
+        "status": 200,
+        "expectedBytes": 225672
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-009.0014663d46cf100f.woff2",
+        "status": 200,
+        "expectedBytes": 206840
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-010.462f82dda9054257.woff2",
+        "status": 200,
+        "expectedBytes": 222308
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-011.a3507fa373f0146e.woff2",
+        "status": 200,
+        "expectedBytes": 211228
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-012.6816b2108708c026.woff2",
+        "status": 200,
+        "expectedBytes": 233300
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-013.fe71f7d19d3a82c5.woff2",
+        "status": 200,
+        "expectedBytes": 219744
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-014.cc8165d0bb2faa8c.woff2",
+        "status": 200,
+        "expectedBytes": 244352
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-015.40c84d898dbc64c3.woff2",
+        "status": 200,
+        "expectedBytes": 238224
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-016.a692c729c8860f57.woff2",
+        "status": 200,
+        "expectedBytes": 224636
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-017.3f656f3837169478.woff2",
+        "status": 200,
+        "expectedBytes": 260440
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-018.ae16116dc4204b94.woff2",
+        "status": 200,
+        "expectedBytes": 236376
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-019.5b943eeb29e1e85c.woff2",
+        "status": 200,
+        "expectedBytes": 240248
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-020.63acffb9f6bb587c.woff2",
+        "status": 200,
+        "expectedBytes": 235616
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-021.1dc29a74d525e5c0.woff2",
+        "status": 200,
+        "expectedBytes": 227328
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-022.d4052f253ebec6f8.woff2",
+        "status": 200,
+        "expectedBytes": 243136
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-023.1f5309c66946cf78.woff2",
+        "status": 200,
+        "expectedBytes": 256892
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-024.65cbfe5fbd086567.woff2",
+        "status": 200,
+        "expectedBytes": 273176
+      },
+      {
+        "resource": "/fonts/browser/serif-400.extended-025.ac2e6a654c563797.woff2",
+        "status": 200,
+        "expectedBytes": 192328
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.base.1e6b93e3fd545e7b.woff2",
+        "status": 200,
+        "expectedBytes": 79524
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.common.18e288cf6cc27e68.woff2",
+        "status": 200,
+        "expectedBytes": 738940
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-000.9fced1e223fc7584.woff2",
+        "status": 200,
+        "expectedBytes": 77676
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-001.1ffbfa4584c73772.woff2",
+        "status": 200,
+        "expectedBytes": 200492
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-002.b79d559dc0e82014.woff2",
+        "status": 200,
+        "expectedBytes": 222684
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-003.192c968792c684b9.woff2",
+        "status": 200,
+        "expectedBytes": 231440
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-004.e0dc397725dc9169.woff2",
+        "status": 200,
+        "expectedBytes": 254676
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-005.c22bd523a1b36fa5.woff2",
+        "status": 200,
+        "expectedBytes": 241664
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-006.129df762fa7c1a78.woff2",
+        "status": 200,
+        "expectedBytes": 247252
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-007.e196d413e59a7cdd.woff2",
+        "status": 200,
+        "expectedBytes": 256444
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-008.6e79c5b0a1ca811c.woff2",
+        "status": 200,
+        "expectedBytes": 243256
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-009.f99ad9b9ce4e0f8a.woff2",
+        "status": 200,
+        "expectedBytes": 224036
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-010.558f34bbdb2a67cf.woff2",
+        "status": 200,
+        "expectedBytes": 238808
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-011.4dd6515e847db2cf.woff2",
+        "status": 200,
+        "expectedBytes": 229484
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-012.9dc12fd322f49ee3.woff2",
+        "status": 200,
+        "expectedBytes": 250932
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-013.2ef6f44a9995a5e8.woff2",
+        "status": 200,
+        "expectedBytes": 235264
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-014.cf94aabc2a4e5395.woff2",
+        "status": 200,
+        "expectedBytes": 261664
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-015.567a32e5813fe2af.woff2",
+        "status": 200,
+        "expectedBytes": 252440
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-016.76459144529cfffc.woff2",
+        "status": 200,
+        "expectedBytes": 243068
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-017.39d09f568b8d1804.woff2",
+        "status": 200,
+        "expectedBytes": 275620
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-018.3bedc72dcf9c5dae.woff2",
+        "status": 200,
+        "expectedBytes": 254304
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-019.ecd15d2885022ae1.woff2",
+        "status": 200,
+        "expectedBytes": 260296
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-020.c49b676a4f36321d.woff2",
+        "status": 200,
+        "expectedBytes": 255904
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-021.dc4b8e693d166530.woff2",
+        "status": 200,
+        "expectedBytes": 246160
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-022.2ad3e1ed6775463a.woff2",
+        "status": 200,
+        "expectedBytes": 261640
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-023.1565527a2c2e9b5a.woff2",
+        "status": 200,
+        "expectedBytes": 277032
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-024.1f2cf1ebcff4d6c7.woff2",
+        "status": 200,
+        "expectedBytes": 296172
+      },
+      {
+        "resource": "/fonts/browser/serif-700-oblique.extended-025.f35e9c2b860b2cef.woff2",
+        "status": 200,
+        "expectedBytes": 208088
+      },
+      {
+        "resource": "/fonts/browser/serif-700.base.4c16fefe1cc6a5f3.woff2",
+        "status": 200,
+        "expectedBytes": 75292
+      },
+      {
+        "resource": "/fonts/browser/serif-700.common.4240ca36a5b2649c.woff2",
+        "status": 200,
+        "expectedBytes": 708060
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-000.abf8c6f6b17d616a.woff2",
+        "status": 200,
+        "expectedBytes": 72764
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-001.85e872071005aeb9.woff2",
+        "status": 200,
+        "expectedBytes": 194332
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-002.682574c9a3585aac.woff2",
+        "status": 200,
+        "expectedBytes": 212476
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-003.5ceb40220aec8ceb.woff2",
+        "status": 200,
+        "expectedBytes": 220872
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-004.fe90a3ba139e2048.woff2",
+        "status": 200,
+        "expectedBytes": 244388
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-005.cd0bfca0ed6439a1.woff2",
+        "status": 200,
+        "expectedBytes": 231124
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-006.f3309853106845c3.woff2",
+        "status": 200,
+        "expectedBytes": 234776
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-007.0e91df90da8f9aa2.woff2",
+        "status": 200,
+        "expectedBytes": 243800
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-008.3f5c11a72ecf84b9.woff2",
+        "status": 200,
+        "expectedBytes": 233148
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-009.eb91fe15f92d6b2b.woff2",
+        "status": 200,
+        "expectedBytes": 213724
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-010.5858aa8f9a83cec2.woff2",
+        "status": 200,
+        "expectedBytes": 229580
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-011.0a8129505f397bc2.woff2",
+        "status": 200,
+        "expectedBytes": 218352
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-012.d293642acc8cf9af.woff2",
+        "status": 200,
+        "expectedBytes": 240528
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-013.3dc6dec9bd57fb9c.woff2",
+        "status": 200,
+        "expectedBytes": 225480
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-014.ac1cd4173966058b.woff2",
+        "status": 200,
+        "expectedBytes": 252196
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-015.d79a7eb45e32fda3.woff2",
+        "status": 200,
+        "expectedBytes": 243384
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-016.d589869b0ef29029.woff2",
+        "status": 200,
+        "expectedBytes": 231660
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-017.3c5addd86529a501.woff2",
+        "status": 200,
+        "expectedBytes": 267148
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-018.359877fcbd3b3ef8.woff2",
+        "status": 200,
+        "expectedBytes": 242836
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-019.faeb02b66bc9a1ad.woff2",
+        "status": 200,
+        "expectedBytes": 246852
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-020.69c4d3749660e2ff.woff2",
+        "status": 200,
+        "expectedBytes": 243456
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-021.1efbf82a61934064.woff2",
+        "status": 200,
+        "expectedBytes": 234192
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-022.b5929318a0bd80d0.woff2",
+        "status": 200,
+        "expectedBytes": 251260
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-023.8d3c46f95b45913e.woff2",
+        "status": 200,
+        "expectedBytes": 264584
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-024.924843d6cae96d4f.woff2",
+        "status": 200,
+        "expectedBytes": 282500
+      },
+      {
+        "resource": "/fonts/browser/serif-700.extended-025.2ab86552a5ad9da9.woff2",
+        "status": 200,
+        "expectedBytes": 198400
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.base.6b780e33f1fed544.woff2",
+        "status": 200,
+        "expectedBytes": 53556
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.common.fad9d01bffdb2662.woff2",
+        "status": 200,
+        "expectedBytes": 561968
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-000.ed0704c8d0da3a10.woff2",
+        "status": 200,
+        "expectedBytes": 63088
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-001.493b874e7faad2ac.woff2",
+        "status": 200,
+        "expectedBytes": 137652
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-002.a280a05bd935bd4d.woff2",
+        "status": 200,
+        "expectedBytes": 170172
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-003.5ead253de7360208.woff2",
+        "status": 200,
+        "expectedBytes": 181872
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-004.e08276c7ecc6ea38.woff2",
+        "status": 200,
+        "expectedBytes": 198072
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-005.f282eeaf2c848045.woff2",
+        "status": 200,
+        "expectedBytes": 194992
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-006.9c8193b7ffa16e0f.woff2",
+        "status": 200,
+        "expectedBytes": 192364
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-007.a530986e89849191.woff2",
+        "status": 200,
+        "expectedBytes": 198540
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-008.b20b4cf6e1a45e59.woff2",
+        "status": 200,
+        "expectedBytes": 188044
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-009.a356ea6ced48ae9c.woff2",
+        "status": 200,
+        "expectedBytes": 163012
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-010.cf9829e630ecd109.woff2",
+        "status": 200,
+        "expectedBytes": 171572
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-011.5d000ceff3ec0f7d.woff2",
+        "status": 200,
+        "expectedBytes": 163904
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-012.aba395d81fe9b503.woff2",
+        "status": 200,
+        "expectedBytes": 185360
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-013.6d20ca0ebd1e28d6.woff2",
+        "status": 200,
+        "expectedBytes": 175492
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-014.ed74ab050470a239.woff2",
+        "status": 200,
+        "expectedBytes": 182632
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-015.8aab42cf2fd65b79.woff2",
+        "status": 200,
+        "expectedBytes": 187548
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-016.92410043a6eacc6a.woff2",
+        "status": 200,
+        "expectedBytes": 177076
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-017.d8de292150db0216.woff2",
+        "status": 200,
+        "expectedBytes": 205828
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-018.23520c9d8d26d772.woff2",
+        "status": 200,
+        "expectedBytes": 185616
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-019.d40754799bb53b7e.woff2",
+        "status": 200,
+        "expectedBytes": 187896
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-020.b5f2e7e5ec10757a.woff2",
+        "status": 200,
+        "expectedBytes": 188820
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-021.5c4f4c7a51b7d181.woff2",
+        "status": 200,
+        "expectedBytes": 178440
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-022.a51f11a76bd078a9.woff2",
+        "status": 200,
+        "expectedBytes": 184928
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-023.2d1524161f1fca60.woff2",
+        "status": 200,
+        "expectedBytes": 194864
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-024.93e5a60c154af0ab.woff2",
+        "status": 200,
+        "expectedBytes": 215488
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400-oblique.extended-025.f9db7a0d42134897.woff2",
+        "status": 200,
+        "expectedBytes": 144680
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.base.568fdc88b1ab39c6.woff2",
+        "status": 200,
+        "expectedBytes": 49560
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.common.bb6fdfd702c31a0c.woff2",
+        "status": 200,
+        "expectedBytes": 531404
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-000.543db60881389de8.woff2",
+        "status": 200,
+        "expectedBytes": 58224
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-001.dee5fd52bac05374.woff2",
+        "status": 200,
+        "expectedBytes": 129556
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-002.a500c9e872a617ed.woff2",
+        "status": 200,
+        "expectedBytes": 160604
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-003.20f86f2bc2c5cdae.woff2",
+        "status": 200,
+        "expectedBytes": 172364
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-004.9e13cfdf3ef16325.woff2",
+        "status": 200,
+        "expectedBytes": 187856
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-005.5a42d698001eeaec.woff2",
+        "status": 200,
+        "expectedBytes": 185024
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-006.c9567f882f00e7c7.woff2",
+        "status": 200,
+        "expectedBytes": 181524
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-007.1104bea47e978b88.woff2",
+        "status": 200,
+        "expectedBytes": 186940
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-008.c0a99a83c2d005ce.woff2",
+        "status": 200,
+        "expectedBytes": 178184
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-009.671ef3373455e684.woff2",
+        "status": 200,
+        "expectedBytes": 153172
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-010.0b165c5cbd5f299f.woff2",
+        "status": 200,
+        "expectedBytes": 162188
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-011.ddb5ff0baa71cd6b.woff2",
+        "status": 200,
+        "expectedBytes": 154612
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-012.d8e511e875e82ba9.woff2",
+        "status": 200,
+        "expectedBytes": 176000
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-013.ff7aca9ce9ecb7ae.woff2",
+        "status": 200,
+        "expectedBytes": 165904
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-014.10ceb9c81664c432.woff2",
+        "status": 200,
+        "expectedBytes": 173816
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-015.bdff39cceeb378d8.woff2",
+        "status": 200,
+        "expectedBytes": 178212
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-016.2c87738549a3421d.woff2",
+        "status": 200,
+        "expectedBytes": 165988
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-017.d03ff2e391454c86.woff2",
+        "status": 200,
+        "expectedBytes": 196956
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-018.e0923167b9382e76.woff2",
+        "status": 200,
+        "expectedBytes": 175876
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-019.c7c559bdafc15d1a.woff2",
+        "status": 200,
+        "expectedBytes": 177280
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-020.9316617b653fff34.woff2",
+        "status": 200,
+        "expectedBytes": 177124
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-021.aa8653f90a5405ad.woff2",
+        "status": 200,
+        "expectedBytes": 167636
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-022.3541733e58860475.woff2",
+        "status": 200,
+        "expectedBytes": 174956
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-023.4c1d07d45fd17cbb.woff2",
+        "status": 200,
+        "expectedBytes": 184448
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-024.2df4457f38b83e00.woff2",
+        "status": 200,
+        "expectedBytes": 204352
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-400.extended-025.3d9fa6fc77db8b7d.woff2",
+        "status": 200,
+        "expectedBytes": 136412
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.base.053618d69f0cb8b0.woff2",
+        "status": 200,
+        "expectedBytes": 54560
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.common.caac088abaeeabd4.woff2",
+        "status": 200,
+        "expectedBytes": 575052
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-000.2eec69c2aed59432.woff2",
+        "status": 200,
+        "expectedBytes": 63704
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-001.8ac7a79929590886.woff2",
+        "status": 200,
+        "expectedBytes": 140856
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-002.604ae5df38d20073.woff2",
+        "status": 200,
+        "expectedBytes": 174680
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-003.39a9dfdb5790869a.woff2",
+        "status": 200,
+        "expectedBytes": 187012
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-004.871de6c441697f40.woff2",
+        "status": 200,
+        "expectedBytes": 202888
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-005.fd0762c6f722a8bb.woff2",
+        "status": 200,
+        "expectedBytes": 200976
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-006.4997b473ed6e579d.woff2",
+        "status": 200,
+        "expectedBytes": 197056
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-007.ff571fff955f3a89.woff2",
+        "status": 200,
+        "expectedBytes": 204024
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-008.15dc71dfd4ae6044.woff2",
+        "status": 200,
+        "expectedBytes": 193056
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-009.f0bd4b2294126766.woff2",
+        "status": 200,
+        "expectedBytes": 166692
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-010.f6acd6f07ba8c6ed.woff2",
+        "status": 200,
+        "expectedBytes": 176216
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-011.f28001c424a1d303.woff2",
+        "status": 200,
+        "expectedBytes": 168128
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-012.e7dedf4c0aeac787.woff2",
+        "status": 200,
+        "expectedBytes": 190192
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-013.dd75cf6982f169d7.woff2",
+        "status": 200,
+        "expectedBytes": 179172
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-014.8a6dc81630cee909.woff2",
+        "status": 200,
+        "expectedBytes": 187708
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-015.dc4920cd77444204.woff2",
+        "status": 200,
+        "expectedBytes": 192076
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-016.ccdba30c0df9cc80.woff2",
+        "status": 200,
+        "expectedBytes": 181176
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-017.91467c1447ba5891.woff2",
+        "status": 200,
+        "expectedBytes": 212568
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-018.37b390cb8c27c9e7.woff2",
+        "status": 200,
+        "expectedBytes": 191092
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-019.3a48889418157908.woff2",
+        "status": 200,
+        "expectedBytes": 192564
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-020.cd46552282c8857f.woff2",
+        "status": 200,
+        "expectedBytes": 192788
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-021.9290d521330cc7fa.woff2",
+        "status": 200,
+        "expectedBytes": 182280
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-022.30569b9dda00a2e1.woff2",
+        "status": 200,
+        "expectedBytes": 188988
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-023.b982ff11f2f899e0.woff2",
+        "status": 200,
+        "expectedBytes": 199856
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-024.8cb03b34eee746ba.woff2",
+        "status": 200,
+        "expectedBytes": 222664
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700-oblique.extended-025.04b3362931a47dec.woff2",
+        "status": 200,
+        "expectedBytes": 147456
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.base.10fed64ecd9a15e4.woff2",
+        "status": 200,
+        "expectedBytes": 50372
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.common.c99a0f679e916bec.woff2",
+        "status": 200,
+        "expectedBytes": 545084
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-000.63933ade4692313a.woff2",
+        "status": 200,
+        "expectedBytes": 58916
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-001.707c25bf65dfdb21.woff2",
+        "status": 200,
+        "expectedBytes": 132696
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-002.504813265a397266.woff2",
+        "status": 200,
+        "expectedBytes": 164904
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-003.fd92fe0cbb44b4c2.woff2",
+        "status": 200,
+        "expectedBytes": 177116
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-004.d66df463c66bc5ba.woff2",
+        "status": 200,
+        "expectedBytes": 192944
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-005.ee018a5ce40ab97e.woff2",
+        "status": 200,
+        "expectedBytes": 190328
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-006.f600a434830dd61f.woff2",
+        "status": 200,
+        "expectedBytes": 186056
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-007.9e37252d3959faba.woff2",
+        "status": 200,
+        "expectedBytes": 191836
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-008.4ad7bc7d0f6ad21d.woff2",
+        "status": 200,
+        "expectedBytes": 182628
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-009.3f92a5237bdcdfb8.woff2",
+        "status": 200,
+        "expectedBytes": 156432
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-010.211863621fd170ad.woff2",
+        "status": 200,
+        "expectedBytes": 166660
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-011.b24a7c97171d720e.woff2",
+        "status": 200,
+        "expectedBytes": 158588
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-012.ccd8c76cfe468f5d.woff2",
+        "status": 200,
+        "expectedBytes": 180432
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-013.3240d11f1b94674b.woff2",
+        "status": 200,
+        "expectedBytes": 169388
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-014.305f8639d6d100a7.woff2",
+        "status": 200,
+        "expectedBytes": 178996
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-015.d974ec7d4e0d9845.woff2",
+        "status": 200,
+        "expectedBytes": 182672
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-016.6edbf9193e936f1d.woff2",
+        "status": 200,
+        "expectedBytes": 170416
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-017.09d3bbeae58f0710.woff2",
+        "status": 200,
+        "expectedBytes": 203068
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-018.726bc697f2b8e8ae.woff2",
+        "status": 200,
+        "expectedBytes": 180952
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-019.05c380d2bd527b6d.woff2",
+        "status": 200,
+        "expectedBytes": 181896
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-020.acff5149b6896664.woff2",
+        "status": 200,
+        "expectedBytes": 181520
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-021.5939478c0da43f09.woff2",
+        "status": 200,
+        "expectedBytes": 172000
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-022.d14acdc067ec0ffe.woff2",
+        "status": 200,
+        "expectedBytes": 178352
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-023.72ebc2bc029f2fe8.woff2",
+        "status": 200,
+        "expectedBytes": 188564
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-024.618838be56149e57.woff2",
+        "status": 200,
+        "expectedBytes": 210152
+      },
+      {
+        "resource": "/fonts/browser/sourcehan-700.extended-025.945684d1873cf1ae.woff2",
+        "status": 200,
+        "expectedBytes": 138944
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.base.1eea7b074f7221c5.woff2",
+        "status": 200,
+        "expectedBytes": 82364
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.common.26798511307f69e1.woff2",
+        "status": 200,
+        "expectedBytes": 1043100
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-000.8607d9da7549fae5.woff2",
+        "status": 200,
+        "expectedBytes": 53196
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-001.57ce0237e6c521df.woff2",
+        "status": 200,
+        "expectedBytes": 116192
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-002.1569c2f75d48f9ae.woff2",
+        "status": 200,
+        "expectedBytes": 215100
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-003.b4c11ba43208e39c.woff2",
+        "status": 200,
+        "expectedBytes": 308220
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-004.36fff8a0fe8d9c62.woff2",
+        "status": 200,
+        "expectedBytes": 306956
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-005.79ef90f71ca04570.woff2",
+        "status": 200,
+        "expectedBytes": 326268
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-006.e947628327d94aff.woff2",
+        "status": 200,
+        "expectedBytes": 338952
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-007.827eade7522fabbe.woff2",
+        "status": 200,
+        "expectedBytes": 365028
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-008.03e5b35111e1c620.woff2",
+        "status": 200,
+        "expectedBytes": 328776
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-009.ca0a6718fa233db0.woff2",
+        "status": 200,
+        "expectedBytes": 366788
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-010.65c92833a01fc1d7.woff2",
+        "status": 200,
+        "expectedBytes": 344592
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-011.8a2717e64d0e661c.woff2",
+        "status": 200,
+        "expectedBytes": 361152
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-012.3b07e37a6310375b.woff2",
+        "status": 200,
+        "expectedBytes": 348748
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-013.fa356db6a0906b0b.woff2",
+        "status": 200,
+        "expectedBytes": 362904
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-014.451244b1d77b60cc.woff2",
+        "status": 200,
+        "expectedBytes": 375204
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-015.d1a1454cbb7776d2.woff2",
+        "status": 200,
+        "expectedBytes": 248512
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-016.a808b42c189fba39.woff2",
+        "status": 200,
+        "expectedBytes": 328492
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400-oblique.extended-017.750f2c5afed30652.woff2",
+        "status": 200,
+        "expectedBytes": 42684
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.base.4a383b76a9c655f2.woff2",
+        "status": 200,
+        "expectedBytes": 77296
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.common.e80fad0ea63b2228.woff2",
+        "status": 200,
+        "expectedBytes": 987188
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-000.5c5541b9a2db0e28.woff2",
+        "status": 200,
+        "expectedBytes": 49760
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-001.b2adbef01c00c9d3.woff2",
+        "status": 200,
+        "expectedBytes": 110140
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-002.96df76a53207bb3c.woff2",
+        "status": 200,
+        "expectedBytes": 203648
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-003.2e4d3d9f37ddca68.woff2",
+        "status": 200,
+        "expectedBytes": 296044
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-004.bb7efc6e6aa8a8d0.woff2",
+        "status": 200,
+        "expectedBytes": 292692
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-005.9b257904ac4c9577.woff2",
+        "status": 200,
+        "expectedBytes": 311048
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-006.87597ba3b3e065d4.woff2",
+        "status": 200,
+        "expectedBytes": 322772
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-007.1c07dd02073d40ef.woff2",
+        "status": 200,
+        "expectedBytes": 349568
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-008.c5a8b3eaadf2480d.woff2",
+        "status": 200,
+        "expectedBytes": 313884
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-009.0ab21b354742185c.woff2",
+        "status": 200,
+        "expectedBytes": 349240
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-010.916b185b88a2d978.woff2",
+        "status": 200,
+        "expectedBytes": 329264
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-011.429c86218cdd22f3.woff2",
+        "status": 200,
+        "expectedBytes": 342708
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-012.9e7163461cf9f3e3.woff2",
+        "status": 200,
+        "expectedBytes": 331484
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-013.cfe2545f5d374e5b.woff2",
+        "status": 200,
+        "expectedBytes": 346436
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-014.27f026e41050981d.woff2",
+        "status": 200,
+        "expectedBytes": 358568
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-015.79fe579055f46bdc.woff2",
+        "status": 200,
+        "expectedBytes": 238212
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-016.a3c2616f71d16978.woff2",
+        "status": 200,
+        "expectedBytes": 315240
+      },
+      {
+        "resource": "/fonts/browser/wenkai-400.extended-017.35c79d06b6518a47.woff2",
+        "status": 200,
+        "expectedBytes": 41448
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.base.160c0ddd49fc4516.woff2",
+        "status": 200,
+        "expectedBytes": 85432
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.common.b7b8bdd644b9674a.woff2",
+        "status": 200,
+        "expectedBytes": 1072136
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-000.f0f69fde15f831b8.woff2",
+        "status": 200,
+        "expectedBytes": 55224
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-001.4edc6a9ce6825b91.woff2",
+        "status": 200,
+        "expectedBytes": 115592
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-002.b0e5c0a8c70c6f7b.woff2",
+        "status": 200,
+        "expectedBytes": 214492
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-003.b5924bd99ae52c54.woff2",
+        "status": 200,
+        "expectedBytes": 311812
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-004.6e87987104f1e423.woff2",
+        "status": 200,
+        "expectedBytes": 316020
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-005.75c6ba78d4411d6c.woff2",
+        "status": 200,
+        "expectedBytes": 336868
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-006.601ec092e9c6f4a1.woff2",
+        "status": 200,
+        "expectedBytes": 350068
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-007.1aa2ebe9bb1b0191.woff2",
+        "status": 200,
+        "expectedBytes": 377504
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-008.a7d56f51323b21b1.woff2",
+        "status": 200,
+        "expectedBytes": 341572
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-009.79ed2ed63c3c3d1e.woff2",
+        "status": 200,
+        "expectedBytes": 390296
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-010.de9a488fd314104a.woff2",
+        "status": 200,
+        "expectedBytes": 356996
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-011.1ef7c1b34b383977.woff2",
+        "status": 200,
+        "expectedBytes": 379252
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-012.f378088d0583611a.woff2",
+        "status": 200,
+        "expectedBytes": 368340
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-013.cc3582dc5b856306.woff2",
+        "status": 200,
+        "expectedBytes": 384540
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-014.6cbd6737d3294e85.woff2",
+        "status": 200,
+        "expectedBytes": 405580
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-015.80370ec49a610722.woff2",
+        "status": 200,
+        "expectedBytes": 248084
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-016.30d621d501a21730.woff2",
+        "status": 200,
+        "expectedBytes": 334860
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700-oblique.extended-017.bf5bf46e2608b335.woff2",
+        "status": 200,
+        "expectedBytes": 43304
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.base.79093dcc54b3e41b.woff2",
+        "status": 200,
+        "expectedBytes": 79596
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.common.4fc42a8cbb518c1a.woff2",
+        "status": 200,
+        "expectedBytes": 1017000
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-000.02ef48063cac8a0f.woff2",
+        "status": 200,
+        "expectedBytes": 51488
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-001.5a27735f9fe16f31.woff2",
+        "status": 200,
+        "expectedBytes": 109336
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-002.a592493b3f7eec05.woff2",
+        "status": 200,
+        "expectedBytes": 202688
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-003.510a2ddc45142bb1.woff2",
+        "status": 200,
+        "expectedBytes": 299896
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-004.3623268bfd5199d5.woff2",
+        "status": 200,
+        "expectedBytes": 301756
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-005.17c2e4de0a4a23e5.woff2",
+        "status": 200,
+        "expectedBytes": 322072
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-006.63b36f919e26b689.woff2",
+        "status": 200,
+        "expectedBytes": 334772
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-007.73d2c6d1335ffa73.woff2",
+        "status": 200,
+        "expectedBytes": 362472
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-008.398d614ba471ecd7.woff2",
+        "status": 200,
+        "expectedBytes": 327148
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-009.efd3d0ca608d8eea.woff2",
+        "status": 200,
+        "expectedBytes": 373264
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-010.695983314a4e4a14.woff2",
+        "status": 200,
+        "expectedBytes": 341980
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-011.7f467533e4e3569b.woff2",
+        "status": 200,
+        "expectedBytes": 360876
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-012.c0ecf7fea9edaf46.woff2",
+        "status": 200,
+        "expectedBytes": 351536
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-013.43eb8797dbde038b.woff2",
+        "status": 200,
+        "expectedBytes": 368128
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-014.694f13570a5c16e3.woff2",
+        "status": 200,
+        "expectedBytes": 388708
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-015.1ff0f3d9a506b872.woff2",
+        "status": 200,
+        "expectedBytes": 238076
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-016.86df4ba65db63ef7.woff2",
+        "status": 200,
+        "expectedBytes": 321056
+      },
+      {
+        "resource": "/fonts/browser/wenkai-700.extended-017.b02f230aa250cb40.woff2",
+        "status": 200,
+        "expectedBytes": 41748
+      }
+    ],
+    "fontDownloads": [
+      {
+        "id": "ibm-plex-sans-sc",
+        "weight": 400,
+        "resource": "/fonts/browser/plex-400.base.7b0aa588eb74b74d.woff2",
+        "bytes": 36396,
+        "sha256": "7ab7c5d769e7cfd6984cccb63cef4e6e62312fd3699b580eaf07b5d67c32ec26"
+      },
+      {
+        "id": "ibm-plex-sans-sc",
+        "weight": 700,
+        "resource": "/fonts/browser/plex-700.base.ae159b7f57211700.woff2",
+        "bytes": 35972,
+        "sha256": "08fafa9f89355a12f137b438ffb07d823cea1c237ed657c37c19064ba142a2b9"
+      },
+      {
+        "id": "chiron-round-tc",
+        "weight": 400,
+        "resource": "/fonts/browser/round-400.base.d0db02384f22c73f.woff2",
+        "bytes": 88532,
+        "sha256": "58bb2b532b0ff55b539bb921f511b952496ebc3850fc604fa335a0c19d8e7b1b"
+      },
+      {
+        "id": "chiron-round-tc",
+        "weight": 700,
+        "resource": "/fonts/browser/round-700.base.6a9cd86b75d2aa25.woff2",
+        "bytes": 89208,
+        "sha256": "dcf9692c1eee980bf387d42c15bd7c606cbd2d11f37e827d8dc27c4b07d96a8b"
+      },
+      {
+        "id": "noto-sans-sc",
+        "weight": 400,
+        "resource": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+        "bytes": 49496,
+        "sha256": "34f8bcb387397755c785575156625a5598b100d8df84ff25aa75ed213b4cd147"
+      },
+      {
+        "id": "noto-sans-sc",
+        "weight": 700,
+        "resource": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+        "bytes": 50336,
+        "sha256": "4cd3e7d3c896bbce7d7b722b47e16591ff3ef3f92117449fc6f0103aee50c416"
+      },
+      {
+        "id": "noto-serif-sc",
+        "weight": 400,
+        "resource": "/fonts/browser/serif-400.base.51c2e3bfc192e1e5.woff2",
+        "bytes": 74512,
+        "sha256": "2bbf5cbe1873af3fa1e11a8ae32903b74ee4d7e6175f6cee8f0fd401bfb080ac"
+      },
+      {
+        "id": "noto-serif-sc",
+        "weight": 700,
+        "resource": "/fonts/browser/serif-700.base.4c16fefe1cc6a5f3.woff2",
+        "bytes": 75292,
+        "sha256": "6a641d2301af5a7f670ae796eb86a656cfadfbf67d2c9b0cdd8d64823c245238"
+      },
+      {
+        "id": "source-han-sans-sc",
+        "weight": 400,
+        "resource": "/fonts/browser/sourcehan-400.base.568fdc88b1ab39c6.woff2",
+        "bytes": 49560,
+        "sha256": "7839b33e203e4a0d892835c882dfafcb344aaf0a92a858568041b7cc62f85b0c"
+      },
+      {
+        "id": "source-han-sans-sc",
+        "weight": 700,
+        "resource": "/fonts/browser/sourcehan-700.base.10fed64ecd9a15e4.woff2",
+        "bytes": 50372,
+        "sha256": "f24938bb36de54a0c4066f8e0d1f2b0790e204d3ce85950b37be831224b6f68d"
+      },
+      {
+        "id": "lxgw-wenkai",
+        "weight": 400,
+        "resource": "/fonts/browser/wenkai-400.base.4a383b76a9c655f2.woff2",
+        "bytes": 77296,
+        "sha256": "9a1ee7a28b9aeb95f9f0a0277fe92ef9af69d166953a90cfdf88e4fd995e8660"
+      },
+      {
+        "id": "lxgw-wenkai",
+        "weight": 700,
+        "resource": "/fonts/browser/wenkai-700.base.79093dcc54b3e41b.woff2",
+        "bytes": 79596,
+        "sha256": "f8f92af8f5804fe4c22a48926dcc68e358d049904caef3071a7b6219df05fa61"
+      }
+    ],
+    "templates": [
+      {
+        "resource": "/assets/atelier-B4KMEETR.webp",
+        "bytes": 12974,
+        "sha256": "b515e61535c94f223a4cefffa081c70dc89bae318a6dea6c2cf4e736aa44c3c9"
+      },
+      {
+        "resource": "/assets/aurora-C8pA01w-.webp",
+        "bytes": 15514,
+        "sha256": "de69d0453629a03c7a09ad45967c5b0012f09579a7a29f9a9247433a3b5e913d"
+      },
+      {
+        "resource": "/assets/band-BAmQ7h4I.webp",
+        "bytes": 15202,
+        "sha256": "1a4609beb81136ad975351a65ad8cc7ea7e7e1d238cbae840d00898cf04169a9"
+      },
+      {
+        "resource": "/assets/clean-8ZuYqX-w.webp",
+        "bytes": 14822,
+        "sha256": "b10d8043bc3d0deadbddb5e70e0fcc3ee2fb2b32a186451bdb23eccf130181ce"
+      },
+      {
+        "resource": "/assets/essential-CFWHo87U.webp",
+        "bytes": 15112,
+        "sha256": "40ce3185bca5afa6b0a046f04c060c37879de242c333f95b92802a69db6fe04d"
+      },
+      {
+        "resource": "/assets/executive-pk9P8LNe.webp",
+        "bytes": 15846,
+        "sha256": "c2a8c844a58a3e3dbf151902f6dafed3c34ae36c509062a31334ef93384befdd"
+      },
+      {
+        "resource": "/assets/gradient-CLa0PHr2.webp",
+        "bytes": 15666,
+        "sha256": "f6973a399a0714ecaf68ad4fff1cc6c4aefc4370beb8f9bcfd1b06c3b413a4b1"
+      },
+      {
+        "resource": "/assets/leafish-DnlWdScI.webp",
+        "bytes": 15586,
+        "sha256": "6bf3302a9ab69de19721a7206d596eb3e9e724838929a401c72d84ce1f27fa9b"
+      },
+      {
+        "resource": "/assets/ledger-DOI5inIO.webp",
+        "bytes": 15330,
+        "sha256": "9560163fe9189857df251784b39defd5d4e9265b2c7a59aaf2451a3b03f64e7b"
+      },
+      {
+        "resource": "/assets/lined-C1cm5mOK.webp",
+        "bytes": 14804,
+        "sha256": "5d846e2d39f08f109b9014f914e8690f105772d5561cf48450e82c4ba89db803"
+      },
+      {
+        "resource": "/assets/modern-Dx9ffqEG.webp",
+        "bytes": 15942,
+        "sha256": "efb3e0d7c244e7f6fd959fae074e7c9ca74755da4223d4ae4056b6a7e8fa9dbb"
+      },
+      {
+        "resource": "/assets/modernSplit-cKaLGsOj.webp",
+        "bytes": 15588,
+        "sha256": "b36f93841344c25f2e08feeab9a2bbdf24dde77044c120c26bcf1b30e635b468"
+      },
+      {
+        "resource": "/assets/reed-Dvf_R4h6.webp",
+        "bytes": 14832,
+        "sha256": "ee69f08c14af71eea9268385372554b125b7b2f79a8ebe6bc75459ea59efa8aa"
+      },
+      {
+        "resource": "/assets/ribbon-D24bW0mV.webp",
+        "bytes": 15194,
+        "sha256": "e8a5be8f9069e2672de54a55a9fb117701b003788def8ca3c51fd2d0cacfc6c4"
+      },
+      {
+        "resource": "/assets/scholar-BO5Hhpz5.webp",
+        "bytes": 14088,
+        "sha256": "6d991762d4693586f9b221e81807fb5e8aa3acf0235d2ce22a76fd3231ec9624"
+      },
+      {
+        "resource": "/assets/split-CYnWnCuQ.webp",
+        "bytes": 15072,
+        "sha256": "2106fc2997af32995fa01c763d1b30467151b09539a1001da418e34e199c4ced"
+      }
+    ],
+    "pdfFontHeads": [
+      {
+        "resource": "/fonts/compressed/plex-400-oblique.a8fdac76b8151f30.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/plex-400.f37112f27f47b0bd.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/plex-700-oblique.ad94c20875374f05.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/plex-700.bdcdc1823fefc08b.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/round-400-oblique.a5923e461d7819a3.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/round-400.220efc0e887f3a3a.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/round-700-oblique.244d6a5103a41ec8.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/round-700.76a6cf7826922552.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/sans-400-oblique.958d1a57eeaf9e82.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/sans-400.4057d5c5a9bae8a3.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/sans-700-oblique.fa6ba2d11a90ea89.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/sans-700.787da4d73fe0e2b9.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/serif-400-oblique.9e2cc035eccd2274.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/serif-400.d2ca0b025f2121dd.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/serif-700-oblique.9f1a069b33e65f42.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/serif-700.0042ff25e087e803.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/sourcehan-400-oblique.dc63c0a130928717.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/sourcehan-400.ff30fbebe3a8ab59.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/sourcehan-700-oblique.9bbad2b23c7f5cb5.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/sourcehan-700.f38cafa2c3068d22.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/wenkai-400-oblique.9fa070c348a2516e.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/wenkai-400.1c9550542b5a9176.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/wenkai-700-oblique.e4e6cf33132a8df0.ttf",
+        "status": 200
+      },
+      {
+        "resource": "/fonts/compressed/wenkai-700.02777467fc45cf9d.ttf",
+        "status": 200
+      }
+    ],
+    "api": {
+      "status": 200,
+      "anonymous": true,
+      "cacheControl": "no-store"
+    },
+    "completedAt": "2026-11-07T04:56:16.630Z"
+  },
+  "imports": {
+    "origin": "https://sparkshark.sharmoon.cc.cd",
+    "completedAt": "2026-11-07T04:56:38.297Z",
+    "jsonBackup": true,
+    "markdownCustomMapping": true,
+    "pdfImportAndReload": true,
+    "docxReview": true,
+    "mobileOverflow": false,
+    "timings": [
+      {
+        "type": "pdf",
+        "run": 0,
+        "elapsedMs": 2373,
+        "condition": "first parser request in session"
+      },
+      {
+        "type": "pdf",
+        "run": 1,
+        "elapsedMs": 112,
+        "condition": "parser cache warm"
+      },
+      {
+        "type": "pdf",
+        "run": 2,
+        "elapsedMs": 103,
+        "condition": "parser cache warm"
+      },
+      {
+        "type": "docx",
+        "run": 0,
+        "elapsedMs": 1356,
+        "condition": "first DOCX parser request in session"
+      }
+    ],
+    "cloudWrites": 0
+  },
+  "network": {
+    "origin": "https://sparkshark.sharmoon.cc.cd",
+    "completedAt": "2026-11-07T04:57:11.569Z",
+    "browser": "156.0.8078.80",
+    "conditions": "Real public network, foreground emulation, default synthetic two-page resume, three cold/warm pairs, no simultaneous release upload or verification downloads. No artificial network/CPU throttle.",
+    "rows": [
+      {
+        "run": 0,
+        "cache": "cold",
+        "gaps": [],
+        "editorMs": 309.4,
+        "previewMs": 348.9,
+        "fontReadyMs": 503.8,
+        "stableMs": 519.4,
+        "pages": 2,
+        "visibility": "visible",
+        "resources": [
+          {
+            "path": "/assets/index-B0S09vYw.js",
+            "transferBytes": 428883,
+            "encodedBytes": 428583,
+            "durationMs": 54,
+            "startMs": 46.6
+          },
+          {
+            "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+            "transferBytes": 1034,
+            "encodedBytes": 734,
+            "durationMs": 27.2,
+            "startMs": 46.7
+          },
+          {
+            "path": "/assets/resume-DARQQHql.js",
+            "transferBytes": 37532,
+            "encodedBytes": 37232,
+            "durationMs": 43.9,
+            "startMs": 46.8
+          },
+          {
+            "path": "/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092",
+            "transferBytes": 0,
+            "encodedBytes": 0,
+            "durationMs": 25.8,
+            "startMs": 46.9
+          },
+          {
+            "path": "/assets/index-D0ICWCGb.css",
+            "transferBytes": 19897,
+            "encodedBytes": 19597,
+            "durationMs": 32.2,
+            "startMs": 46.9
+          },
+          {
+            "path": "/cdn-cgi/rum",
+            "transferBytes": 300,
+            "encodedBytes": 0,
+            "durationMs": 18.4,
+            "startMs": 149.9
+          },
+          {
+            "path": "/favicon.svg",
+            "transferBytes": 500,
+            "encodedBytes": 200,
+            "durationMs": 23.6,
+            "startMs": 151.6
+          },
+          {
+            "path": "/api/auth/me",
+            "transferBytes": 418,
+            "encodedBytes": 118,
+            "durationMs": 79.8,
+            "startMs": 177.6
+          },
+          {
+            "path": "/fonts/browser-manifests/noto-sans-sc.json",
+            "transferBytes": 34755,
+            "encodedBytes": 34455,
+            "durationMs": 27.6,
+            "startMs": 334.4
+          },
+          {
+            "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+            "transferBytes": 49796,
+            "encodedBytes": 49496,
+            "durationMs": 27.1,
+            "startMs": 372.9
+          },
+          {
+            "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+            "transferBytes": 532000,
+            "encodedBytes": 531700,
+            "durationMs": 43.5,
+            "startMs": 373
+          },
+          {
+            "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+            "transferBytes": 174140,
+            "encodedBytes": 173840,
+            "durationMs": 45.8,
+            "startMs": 373.1
+          },
+          {
+            "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+            "transferBytes": 50636,
+            "encodedBytes": 50336,
+            "durationMs": 56.9,
+            "startMs": 373.2
+          },
+          {
+            "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+            "transferBytes": 545268,
+            "encodedBytes": 544968,
+            "durationMs": 56.6,
+            "startMs": 373.3
+          }
+        ]
+      },
+      {
+        "run": 0,
+        "cache": "warm",
+        "gaps": [],
+        "editorMs": 342.2,
+        "previewMs": 377,
+        "fontReadyMs": 461.1,
+        "stableMs": 490.1,
+        "pages": 2,
+        "visibility": "visible",
+        "resources": [
+          {
+            "path": "/assets/index-B0S09vYw.js",
+            "transferBytes": 0,
+            "encodedBytes": 428583,
+            "durationMs": 0,
+            "startMs": 143.4
+          },
+          {
+            "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+            "transferBytes": 0,
+            "encodedBytes": 734,
+            "durationMs": 0,
+            "startMs": 143.5
+          },
+          {
+            "path": "/assets/resume-DARQQHql.js",
+            "transferBytes": 0,
+            "encodedBytes": 37232,
+            "durationMs": 0,
+            "startMs": 143.6
+          },
+          {
+            "path": "/assets/index-D0ICWCGb.css",
+            "transferBytes": 0,
+            "encodedBytes": 19597,
+            "durationMs": 0,
+            "startMs": 143.8
+          },
+          {
+            "path": "/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092",
+            "transferBytes": 0,
+            "encodedBytes": 0,
+            "durationMs": 0,
+            "startMs": 143.9
+          },
+          {
+            "path": "/cdn-cgi/rum",
+            "transferBytes": 300,
+            "encodedBytes": 0,
+            "durationMs": 19.4,
+            "startMs": 187.1
+          },
+          {
+            "path": "/favicon.svg",
+            "transferBytes": 300,
+            "encodedBytes": 200,
+            "durationMs": 25.3,
+            "startMs": 195.2
+          },
+          {
+            "path": "/api/auth/me",
+            "transferBytes": 418,
+            "encodedBytes": 118,
+            "durationMs": 76.7,
+            "startMs": 211
+          },
+          {
+            "path": "/fonts/browser-manifests/noto-sans-sc.json",
+            "transferBytes": 300,
+            "encodedBytes": 34455,
+            "durationMs": 25.1,
+            "startMs": 367.1
+          },
+          {
+            "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 49496,
+            "durationMs": 0.6,
+            "startMs": 403.7
+          },
+          {
+            "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 531700,
+            "durationMs": 0.9,
+            "startMs": 403.9
+          },
+          {
+            "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 173840,
+            "durationMs": 1.8,
+            "startMs": 404
+          },
+          {
+            "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 50336,
+            "durationMs": 1.6,
+            "startMs": 404.1
+          },
+          {
+            "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 544968,
+            "durationMs": 1.6,
+            "startMs": 404.3
+          }
+        ]
+      },
+      {
+        "run": 1,
+        "cache": "cold",
+        "gaps": [],
+        "editorMs": 289.2,
+        "previewMs": 325.2,
+        "fontReadyMs": 488.9,
+        "stableMs": 513.3,
+        "pages": 2,
+        "visibility": "visible",
+        "resources": [
+          {
+            "path": "/assets/index-B0S09vYw.js",
+            "transferBytes": 428862,
+            "encodedBytes": 428562,
+            "durationMs": 57.1,
+            "startMs": 41.1
+          },
+          {
+            "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+            "transferBytes": 1034,
+            "encodedBytes": 734,
+            "durationMs": 26.5,
+            "startMs": 41.4
+          },
+          {
+            "path": "/assets/resume-DARQQHql.js",
+            "transferBytes": 37532,
+            "encodedBytes": 37232,
+            "durationMs": 28.8,
+            "startMs": 41.4
+          },
+          {
+            "path": "/assets/index-D0ICWCGb.css",
+            "transferBytes": 19897,
+            "encodedBytes": 19597,
+            "durationMs": 27.4,
+            "startMs": 41.6
+          },
+          {
+            "path": "/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092",
+            "transferBytes": 0,
+            "encodedBytes": 0,
+            "durationMs": 28.5,
+            "startMs": 41.6
+          },
+          {
+            "path": "/cdn-cgi/rum",
+            "transferBytes": 300,
+            "encodedBytes": 0,
+            "durationMs": 17.4,
+            "startMs": 136.2
+          },
+          {
+            "path": "/favicon.svg",
+            "transferBytes": 500,
+            "encodedBytes": 200,
+            "durationMs": 25.6,
+            "startMs": 138
+          },
+          {
+            "path": "/api/auth/me",
+            "transferBytes": 418,
+            "encodedBytes": 118,
+            "durationMs": 80.3,
+            "startMs": 159.1
+          },
+          {
+            "path": "/fonts/browser-manifests/noto-sans-sc.json",
+            "transferBytes": 34755,
+            "encodedBytes": 34455,
+            "durationMs": 42.8,
+            "startMs": 314.9
+          },
+          {
+            "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+            "transferBytes": 49796,
+            "encodedBytes": 49496,
+            "durationMs": 30.6,
+            "startMs": 369.1
+          },
+          {
+            "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+            "transferBytes": 532000,
+            "encodedBytes": 531700,
+            "durationMs": 80.3,
+            "startMs": 369.3
+          },
+          {
+            "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+            "transferBytes": 174140,
+            "encodedBytes": 173840,
+            "durationMs": 30.1,
+            "startMs": 369.4
+          },
+          {
+            "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+            "transferBytes": 50636,
+            "encodedBytes": 50336,
+            "durationMs": 26.7,
+            "startMs": 369.6
+          },
+          {
+            "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+            "transferBytes": 545268,
+            "encodedBytes": 544968,
+            "durationMs": 67.3,
+            "startMs": 369.6
+          }
+        ]
+      },
+      {
+        "run": 1,
+        "cache": "warm",
+        "gaps": [],
+        "editorMs": 240.8,
+        "previewMs": 276,
+        "fontReadyMs": 365.7,
+        "stableMs": 401.8,
+        "pages": 2,
+        "visibility": "visible",
+        "resources": [
+          {
+            "path": "/assets/index-B0S09vYw.js",
+            "transferBytes": 0,
+            "encodedBytes": 428562,
+            "durationMs": 0,
+            "startMs": 46.5
+          },
+          {
+            "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+            "transferBytes": 0,
+            "encodedBytes": 734,
+            "durationMs": 0,
+            "startMs": 46.7
+          },
+          {
+            "path": "/assets/resume-DARQQHql.js",
+            "transferBytes": 0,
+            "encodedBytes": 37232,
+            "durationMs": 0,
+            "startMs": 46.9
+          },
+          {
+            "path": "/assets/index-D0ICWCGb.css",
+            "transferBytes": 0,
+            "encodedBytes": 19597,
+            "durationMs": 0,
+            "startMs": 46.9
+          },
+          {
+            "path": "/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092",
+            "transferBytes": 0,
+            "encodedBytes": 0,
+            "durationMs": 0,
+            "startMs": 47.1
+          },
+          {
+            "path": "/cdn-cgi/rum",
+            "transferBytes": 300,
+            "encodedBytes": 0,
+            "durationMs": 17.5,
+            "startMs": 91.6
+          },
+          {
+            "path": "/favicon.svg",
+            "transferBytes": 300,
+            "encodedBytes": 200,
+            "durationMs": 27.1,
+            "startMs": 100.9
+          },
+          {
+            "path": "/api/auth/me",
+            "transferBytes": 418,
+            "encodedBytes": 118,
+            "durationMs": 77.7,
+            "startMs": 114.3
+          },
+          {
+            "path": "/fonts/browser-manifests/noto-sans-sc.json",
+            "transferBytes": 300,
+            "encodedBytes": 34455,
+            "durationMs": 29.2,
+            "startMs": 265.9
+          },
+          {
+            "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 49496,
+            "durationMs": 0.6,
+            "startMs": 307.7
+          },
+          {
+            "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 531700,
+            "durationMs": 1.3,
+            "startMs": 307.8
+          },
+          {
+            "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 173840,
+            "durationMs": 1,
+            "startMs": 308
+          },
+          {
+            "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 50336,
+            "durationMs": 1.5,
+            "startMs": 308.1
+          },
+          {
+            "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 544968,
+            "durationMs": 1.6,
+            "startMs": 308.3
+          }
+        ]
+      },
+      {
+        "run": 2,
+        "cache": "cold",
+        "gaps": [
+          126
+        ],
+        "editorMs": 410,
+        "previewMs": 447.2,
+        "fontReadyMs": 913,
+        "stableMs": 933.4,
+        "pages": 2,
+        "visibility": "visible",
+        "resources": [
+          {
+            "path": "/assets/index-B0S09vYw.js",
+            "transferBytes": 428883,
+            "encodedBytes": 428583,
+            "durationMs": 179.3,
+            "startMs": 44.7
+          },
+          {
+            "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+            "transferBytes": 1034,
+            "encodedBytes": 734,
+            "durationMs": 123.6,
+            "startMs": 44.8
+          },
+          {
+            "path": "/assets/resume-DARQQHql.js",
+            "transferBytes": 37532,
+            "encodedBytes": 37232,
+            "durationMs": 125.3,
+            "startMs": 44.8
+          },
+          {
+            "path": "/assets/index-D0ICWCGb.css",
+            "transferBytes": 19896,
+            "encodedBytes": 19596,
+            "durationMs": 125,
+            "startMs": 44.9
+          },
+          {
+            "path": "/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092",
+            "transferBytes": 0,
+            "encodedBytes": 0,
+            "durationMs": 124,
+            "startMs": 45
+          },
+          {
+            "path": "/cdn-cgi/rum",
+            "transferBytes": 300,
+            "encodedBytes": 0,
+            "durationMs": 22,
+            "startMs": 254.9
+          },
+          {
+            "path": "/favicon.svg",
+            "transferBytes": 500,
+            "encodedBytes": 200,
+            "durationMs": 48.1,
+            "startMs": 257.2
+          },
+          {
+            "path": "/api/auth/me",
+            "transferBytes": 418,
+            "encodedBytes": 118,
+            "durationMs": 78.2,
+            "startMs": 278.3
+          },
+          {
+            "path": "/fonts/browser-manifests/noto-sans-sc.json",
+            "transferBytes": 34676,
+            "encodedBytes": 34376,
+            "durationMs": 71.2,
+            "startMs": 436.7
+          },
+          {
+            "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+            "transferBytes": 49796,
+            "encodedBytes": 49496,
+            "durationMs": 140.1,
+            "startMs": 518.4
+          },
+          {
+            "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+            "transferBytes": 532000,
+            "encodedBytes": 531700,
+            "durationMs": 374.1,
+            "startMs": 518.6
+          },
+          {
+            "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+            "transferBytes": 174140,
+            "encodedBytes": 173840,
+            "durationMs": 158.8,
+            "startMs": 518.7
+          },
+          {
+            "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+            "transferBytes": 50636,
+            "encodedBytes": 50336,
+            "durationMs": 327.3,
+            "startMs": 518.7
+          },
+          {
+            "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+            "transferBytes": 545268,
+            "encodedBytes": 544968,
+            "durationMs": 326.8,
+            "startMs": 518.9
+          }
+        ]
+      },
+      {
+        "run": 2,
+        "cache": "warm",
+        "gaps": [],
+        "editorMs": 237.3,
+        "previewMs": 269.7,
+        "fontReadyMs": 353.8,
+        "stableMs": 383.7,
+        "pages": 2,
+        "visibility": "visible",
+        "resources": [
+          {
+            "path": "/assets/index-B0S09vYw.js",
+            "transferBytes": 0,
+            "encodedBytes": 428583,
+            "durationMs": 0,
+            "startMs": 44.2
+          },
+          {
+            "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+            "transferBytes": 0,
+            "encodedBytes": 734,
+            "durationMs": 0,
+            "startMs": 44.3
+          },
+          {
+            "path": "/assets/resume-DARQQHql.js",
+            "transferBytes": 0,
+            "encodedBytes": 37232,
+            "durationMs": 0,
+            "startMs": 44.4
+          },
+          {
+            "path": "/assets/index-D0ICWCGb.css",
+            "transferBytes": 0,
+            "encodedBytes": 19596,
+            "durationMs": 0,
+            "startMs": 44.4
+          },
+          {
+            "path": "/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092",
+            "transferBytes": 0,
+            "encodedBytes": 0,
+            "durationMs": 0,
+            "startMs": 44.5
+          },
+          {
+            "path": "/cdn-cgi/rum",
+            "transferBytes": 300,
+            "encodedBytes": 0,
+            "durationMs": 18,
+            "startMs": 85.7
+          },
+          {
+            "path": "/favicon.svg",
+            "transferBytes": 300,
+            "encodedBytes": 200,
+            "durationMs": 23.2,
+            "startMs": 93.6
+          },
+          {
+            "path": "/api/auth/me",
+            "transferBytes": 418,
+            "encodedBytes": 118,
+            "durationMs": 77.8,
+            "startMs": 108.9
+          },
+          {
+            "path": "/fonts/browser-manifests/noto-sans-sc.json",
+            "transferBytes": 300,
+            "encodedBytes": 34376,
+            "durationMs": 25.4,
+            "startMs": 260.2
+          },
+          {
+            "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 49496,
+            "durationMs": 0.6,
+            "startMs": 296.7
+          },
+          {
+            "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 531700,
+            "durationMs": 1.1,
+            "startMs": 296.7
+          },
+          {
+            "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 173840,
+            "durationMs": 2,
+            "startMs": 296.9
+          },
+          {
+            "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 50336,
+            "durationMs": 1.7,
+            "startMs": 297
+          },
+          {
+            "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 544968,
+            "durationMs": 1.9,
+            "startMs": 297.2
+          }
+        ]
+      }
+    ],
+    "summary": [
+      {
+        "cache": "cold",
+        "preview": {
+          "count": 3,
+          "medianMs": 348.9,
+          "minMs": 325.2,
+          "maxMs": 447.2
+        },
+        "fontStable": {
+          "count": 3,
+          "medianMs": 519.4,
+          "minMs": 513.3,
+          "maxMs": 933.4
+        },
+        "fontFailures": 0
+      },
+      {
+        "cache": "warm",
+        "preview": {
+          "count": 3,
+          "medianMs": 276,
+          "minMs": 269.7,
+          "maxMs": 377
+        },
+        "fontStable": {
+          "count": 3,
+          "medianMs": 401.8,
+          "minMs": 383.7,
+          "maxMs": 490.1
+        },
+        "fontFailures": 0
+      }
+    ]
+  },
+  "browserCache": {
+    "origin": "https://sparkshark.sharmoon.cc.cd",
+    "completedAt": "2026-11-07T04:57:42.015Z",
+    "cachedResources": 9,
+    "rows": [
+      {
+        "cache": "cold",
+        "resources": [
+          {
+            "path": "/assets/index-B0S09vYw.js",
+            "transferBytes": 428883,
+            "encodedBytes": 428583
+          },
+          {
+            "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+            "transferBytes": 1034,
+            "encodedBytes": 734
+          },
+          {
+            "path": "/assets/index-D0ICWCGb.css",
+            "transferBytes": 19897,
+            "encodedBytes": 19597
+          },
+          {
+            "path": "/assets/resume-DARQQHql.js",
+            "transferBytes": 37526,
+            "encodedBytes": 37226
+          },
+          {
+            "path": "/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092",
+            "transferBytes": 0,
+            "encodedBytes": 0
+          },
+          {
+            "path": "/cdn-cgi/rum",
+            "transferBytes": 300,
+            "encodedBytes": 0
+          },
+          {
+            "path": "/favicon.svg",
+            "transferBytes": 500,
+            "encodedBytes": 200
+          },
+          {
+            "path": "/api/auth/me",
+            "transferBytes": 418,
+            "encodedBytes": 118
+          },
+          {
+            "path": "/fonts/browser-manifests/noto-sans-sc.json",
+            "transferBytes": 34755,
+            "encodedBytes": 34455
+          },
+          {
+            "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+            "transferBytes": 49796,
+            "encodedBytes": 49496
+          },
+          {
+            "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+            "transferBytes": 532000,
+            "encodedBytes": 531700
+          },
+          {
+            "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+            "transferBytes": 174140,
+            "encodedBytes": 173840
+          },
+          {
+            "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+            "transferBytes": 50636,
+            "encodedBytes": 50336
+          },
+          {
+            "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+            "transferBytes": 545268,
+            "encodedBytes": 544968
+          }
+        ]
+      },
+      {
+        "cache": "warm",
+        "resources": [
+          {
+            "path": "/assets/index-B0S09vYw.js",
+            "transferBytes": 0,
+            "encodedBytes": 428583
+          },
+          {
+            "path": "/assets/rolldown-runtime-BCiCTKAo.js",
+            "transferBytes": 0,
+            "encodedBytes": 734
+          },
+          {
+            "path": "/assets/resume-DARQQHql.js",
+            "transferBytes": 0,
+            "encodedBytes": 37226
+          },
+          {
+            "path": "/assets/index-D0ICWCGb.css",
+            "transferBytes": 0,
+            "encodedBytes": 19597
+          },
+          {
+            "path": "/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092",
+            "transferBytes": 0,
+            "encodedBytes": 0
+          },
+          {
+            "path": "/cdn-cgi/rum",
+            "transferBytes": 300,
+            "encodedBytes": 0
+          },
+          {
+            "path": "/favicon.svg",
+            "transferBytes": 300,
+            "encodedBytes": 200
+          },
+          {
+            "path": "/api/auth/me",
+            "transferBytes": 418,
+            "encodedBytes": 118
+          },
+          {
+            "path": "/fonts/browser-manifests/noto-sans-sc.json",
+            "transferBytes": 300,
+            "encodedBytes": 34455
+          },
+          {
+            "path": "/fonts/browser/sans-400.base.9c2a70a9f1eb4d97.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 49496
+          },
+          {
+            "path": "/fonts/browser/sans-400.common.6ab9ca0f4fa553cc.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 531700
+          },
+          {
+            "path": "/fonts/browser/sans-400.extended-014.94659bd8e79af9bb.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 173840
+          },
+          {
+            "path": "/fonts/browser/sans-700.base.39d4b51cd8982d22.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 50336
+          },
+          {
+            "path": "/fonts/browser/sans-700.common.88f97ab5567fbc87.woff2",
+            "transferBytes": 0,
+            "encodedBytes": 544968
+          }
+        ]
+      }
+    ]
+  },
+  "downloads": {
+    "downloads": [
+      {
+        "label": "下载 JSON 备份",
+        "filename": "ui-example.json",
+        "suggestedFilename": "前端工程师 · 示例.json",
+        "bytes": 19320,
+        "elapsedMs": 157
+      },
+      {
+        "label": "下载 PDF",
+        "filename": "ui-example.pdf",
+        "suggestedFilename": "前端工程师 · 示例.pdf",
+        "bytes": 69536,
+        "elapsedMs": 274
+      },
+      {
+        "label": "下载图片",
+        "filename": "ui-example-images.zip",
+        "suggestedFilename": "前端工程师 · 示例-图片.zip",
+        "bytes": 368937,
+        "elapsedMs": 8065
+      },
+      {
+        "label": "下载 HTML",
+        "filename": "ui-example.html",
+        "suggestedFilename": "前端工程师 · 示例.html",
+        "bytes": 19709,
+        "elapsedMs": 176
+      },
+      {
+        "label": "下载图片",
+        "filename": "ui-single-300dpi.png",
+        "suggestedFilename": "单页图片导出 · 虚构示例.png",
+        "bytes": 199120,
+        "elapsedMs": 1282
+      }
+    ],
+    "offlineHtml": {
+      "hasName": true,
+      "photos": 1,
+      "scripts": 0,
+      "externalRequests": 0
+    },
+    "singleImage300dpi": {
+      "width": 2481,
+      "height": 3508
+    },
+    "cloudWrites": 0,
+    "note": "Download timings are one observation with shared renderer/font caches, not a latency benchmark."
+  },
+  "pdf": {
+    "pages": 2,
+    "bytes": 68297,
+    "sha256": "725c52479a528dd88d153656d28e903d47931542e0e75c9bb41a57e0bc4ee0ef",
+    "fonts": [
+      "/CZZZZZ+MyResumeSourceHanSansSC-Bold",
+      "/DZZZZZ+MyResumeSourceHanSansSC-Regular",
+      "/EZZZZZ+MyResumeSourceHanSansSC-Regular",
+      "/Helvetica"
+    ],
+    "bodyFontsEmbedded": true,
+    "textChecks": true,
+    "imageZip": [
+      {
+        "width": 1241,
+        "height": 1754
+      },
+      {
+        "width": 1241,
+        "height": 1754
+      }
+    ],
+    "single300dpi": {
+      "width": 2481,
+      "height": 3508
+    }
+  },
+  "browserChecks": {
+    "addDuplicateMoveHideUndo": true,
+    "localSaveFailureKeepsDraftAndRetries": true,
+    "actualTwoTabConflictCopyAndReload": true,
+    "appearanceKeyboardAndValueRetention": true,
+    "mobileOverflow": false,
+    "templates": 16,
+    "bodyWeight": 400,
+    "entryWeight": 700,
+    "fontSizes": [
+      20,
+      16,
+      14
+    ],
+    "implicitPdfRequests": 0,
+    "explicitPdfPreview": true,
+    "screenshotsReviewed": true
+  },
+  "oneOffPreviewScriptObservations": {
+    "openEditorMs": 321,
+    "editMs": 164,
+    "templateMs": 272,
+    "note": "UI automation timing in a resource-blocking functional test, not a distribution benchmark."
+  },
+  "limits": [
+    "Anonymous test profile with synthetic local resumes; no account or cloud resume writes.",
+    "HTTP HEAD checks establish availability and cache policy; full font hashes sampled on 12 basic face shards.",
+    "Cold cache is browser HTTP cache only; CDN edges may be warm from earlier verification.",
+    "Three cold/warm navigation observations are summarized as median/min/max, not p95.",
+    "The November 5 observation used different conditions and cannot establish a precise speedup ratio.",
+    "Source commit remains the deployed build; later commits add verification scripts and release documentation only."
+  ]
+}

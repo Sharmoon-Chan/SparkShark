@@ -1,6 +1,6 @@
 {
   "recordedOn": "2026-11-06",
-  "status": "Locally verified; committed in functional batches on 2026-11-06; not deployed",
+  "status": "Locally verified; released on 2026-11-07. Original measurements below are local; production results are in release-2026-11-07.json.",
   "environment": "Windows Chrome via Vite development modules, foreground visible iframe, synthetic resumes; font data already loaded during edit loops",
   "measurementScope": "Programmatic renderHtmlPreview + runtime.update to paginated output and next animation frame; excludes human input, React store and WAN transfer. Median is middle pair mean; p95 nearest rank for n=20.",
   "discardedRuns": "Early iframe/background runs were throttled to approximately 1-second animation frames and excluded as invalid foreground latency measurements.",
@@ -428,5 +428,11 @@
     "Browser-font shards add build assets; only requested glyph ranges/faces are transferred to the browser.",
     "The DOM paginator clips visual fragments, with a separate single semantic reading copy to avoid screen-reader duplication.",
     "No server PDF export architecture change or production deployment in this stage."
-  ]
+  ],
+  "release": {
+    "date": "2026-11-07",
+    "sourceCommit": "23d7b22b63bd6d7285b1157d1ab464ca2646f849",
+    "version": "1d445e51-7424-45b9-bb3e-e2154ed86bb7",
+    "record": "../releases/2026-11-07-instant-preview.md"
+  }
 }
