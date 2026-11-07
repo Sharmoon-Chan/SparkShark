@@ -1,7 +1,7 @@
 import React, { type ReactElement, type ReactNode } from 'react';
 import { Document, Image, Link, Page, Path, pdf, Svg, Text, View } from '@react-pdf/renderer';
 import { PDFArray, PDFDict, PDFDocument, PDFHexString, PDFName, PDFString, StandardFonts, rgb } from 'pdf-lib';
-import type { CustomSection, PreparedAsset, PreviewFieldRegion, PreviewRegion, Resume, ResumeItem, RichNode, Section } from '../domain/types';
+import type { CustomSection, PreparedAsset, PreviewFieldRegion, PreviewRegion, Resume, ResumeItem, RichNode, Section, TextAlignment } from '../domain/types';
 import { hasContent, richText, safeLink } from '../domain/resume';
 import { sectionTitle } from '../domain/registry';
 import { checkGlyphs, fontFamily, prepareFonts } from './fonts';
@@ -11,7 +11,7 @@ import { extractPreviewRegions, type PreviewLayoutNode } from './previewRegions'
 import { templateDesign } from '../domain/templates';
 import { readableThemeColor } from './colors';
 import { contentFieldSpecs, resolveContentLayout } from '../domain/contentLayout';
-import { contentFontSize, contentTextDecoration, moduleContentRows, type ContentCell } from './contentLayoutView';
+import { contentFontSize, contentRowPresentation, contentTextDecoration, moduleContentRows, type ContentCell } from './contentLayoutView';
 import { RESUME_TYPE_SCALE, resumeTypeSize } from '../domain/typography';
 import { extractPreviewFields, previewFieldId } from './previewFields';
 import { avatarFrame } from '../domain/avatar';
@@ -20,7 +20,7 @@ import { A4, pt } from './constants';
 export { A4, pt } from './constants';
 type LayoutNode = PreviewLayoutNode;
 type PdfAssetMap = Record<string, PreparedAsset>;
-interface Context { resume: Resume; font: string; size: number; line: number; spacing: number; theme: string; width: number; height: number; blockedLinks: ReadonlySet<string>; italic?: boolean; underline?: boolean }
+interface Context { resume: Resume; font: string; size: number; line: number; spacing: number; theme: string; width: number; height: number; blockedLinks: ReadonlySet<string>; italic?: boolean; underline?: boolean; paragraphAlign?: TextAlignment; defaultTextAlign?: TextAlignment }
 const makeContext = (resume: Resume, blockedLinks: ReadonlySet<string>): Context => ({ resume, font: fontFamily(resume.appearance.fontFamilyId), size: pt(resume.appearance.fontSizePx), line: resume.appearance.lineHeight, spacing: resume.appearance.spacingScale ?? 1, theme: readableThemeColor(resume.appearance.themeColor), width: A4.width - pt(resume.appearance.marginPx) * 2, height: A4.height - pt(resume.appearance.marginPx) * 2, blockedLinks });
 
 function segments(text: string, code: boolean, font: string, italic = false): ReactNode {
@@ -51,11 +51,11 @@ function Rich({ node, context, depth = 0, id, prefix }: { node: RichNode; contex
       <Rich node={child} context={context} depth={depth + 1} prefix={{ text: node.type === 'orderedList' ? `${(node.attrs?.start ?? 1) + index}. ` : '• ', width }} />
     </View>)}</View>;
   }
-  if (node.type === 'codeBlock') return <View id={id} style={{ backgroundColor: '#F4F5F6', padding: 5 * context.spacing, marginBottom: 5 * context.spacing }}><Text orphans={2} widows={2} style={{ fontSize: context.size * .9, lineHeight: context.line, fontStyle: context.italic ? 'italic' : undefined, textDecoration: context.underline ? 'underline' : undefined }}>{prefix && <Text>{prefix.text}</Text>}{segments(richText(node), true, context.font, context.italic)}</Text></View>;
+  if (node.type === 'codeBlock') return <View id={id} style={{ backgroundColor: '#F4F5F6', padding: 5 * context.spacing, marginBottom: 5 * context.spacing }}><Text orphans={2} widows={2} style={{ fontSize: context.size * .9, lineHeight: context.line, textAlign: context.paragraphAlign ?? context.defaultTextAlign, fontStyle: context.italic ? 'italic' : undefined, textDecoration: context.underline ? 'underline' : undefined }}>{prefix && <Text>{prefix.text}</Text>}{segments(richText(node), true, context.font, context.italic)}</Text></View>;
   if (node.type === 'text' || node.type === 'hardBreak') return <Inline node={node} context={context} />;
   const heading = node.type === 'heading';
   return <Text id={id} orphans={2} widows={2} minPresenceAhead={heading ? context.size * context.line * 2 : undefined} style={{ marginBottom: context.size * .35 * context.spacing, fontSize: heading ? context.size * ({ 1: 1.5, 2: 1.25, 3: 1.1 }[node.attrs?.level ?? 3]) : context.size,
-    fontWeight: heading ? 700 : 400, textAlign: node.attrs?.textAlign ?? 'left', lineHeight: context.line, textIndent: prefix ? -prefix.width : undefined }}>
+    fontWeight: heading ? 700 : 400, textAlign: context.paragraphAlign ?? node.attrs?.textAlign ?? context.defaultTextAlign ?? 'left', lineHeight: context.line, textIndent: prefix ? -prefix.width : undefined }}>
     {prefix && <Text style={{ fontFamily: context.font, fontWeight: 400, textIndent: -prefix.width }}>{prefix.text}</Text>}
     {children.map((child, index) => <Inline key={index} node={child} context={context} />)}
   </Text>;
@@ -196,21 +196,22 @@ function CustomItemPdf({ section, item, first, context }: { section: CustomSecti
 }
 
 function contextForCell(context: Context, cell: ContentCell): Context {
-  return { ...context, size: pt(contentFontSize(cell.layout, context.size / .75, cell.spec)), italic: cell.layout.italic, underline: cell.layout.underline };
+  return { ...context, size: pt(contentFontSize(cell.layout, context.size / .75, cell.spec)), italic: cell.layout.italic, underline: cell.layout.underline, paragraphAlign: cell.layout.paragraphAlign, defaultTextAlign: cell.layout.rowAlign };
 }
 
 function ContentRowPdf({ row, gap, context, sectionId, itemId }: { row: ContentCell[]; gap: number; context: Context; sectionId: string; itemId: string }) {
   const height = Math.max(...row.map(cell => textHeightBound(cell.text, contextForCell(context, cell), context.width / row.length)));
   const rich = row.some(cell => cell.rich);
-  const inlineRow = !rich && row.some(cell => cell.layout.inline);
-  return <View wrap={rich || height > context.height * .35} style={{ flexDirection: 'row', flexWrap: inlineRow ? 'wrap' : undefined, marginBottom: gap }}>{row.map((cell, index) => {
+  const { inline: inlineRow, alignment: rowAlign, justify } = contentRowPresentation(row);
+  return <View wrap={rich || height > context.height * .35} style={{ flexDirection: 'row', flexWrap: inlineRow ? 'wrap' : undefined, justifyContent: rowAlign ? justify : undefined, gap: rowAlign ? pt(8) : undefined, marginBottom: gap }}>{row.map((cell, index) => {
     const { layout, spec, text } = cell;
     const fieldContext = contextForCell(context, cell);
     const colour = layout.emphasis === 'muted' ? '#59635D' : templateDesign(context.resume.appearance.templateId).classic ? '#0F172A' : '#27312B';
     const style = { fontSize: fieldContext.size, color: colour, fontWeight: layout.emphasis === 'bold' ? 700 : 400, textAlign: layout.align, fontStyle: layout.italic ? 'italic' as const : 'normal' as const, textDecoration: contentTextDecoration(Boolean(layout.underline)) };
-    const natural = inlineRow && spec.type !== 'level' && (layout.inline || layout.align === 'right');
-    return <View id={previewFieldId(sectionId, itemId, layout.key)} key={layout.key} style={{ flexGrow: natural ? 0 : 1, flexShrink: 1, flexBasis: natural ? 'auto' : 0, minWidth: 0, maxWidth: '100%', marginLeft: natural && layout.align === 'right' ? 'auto' : 0, marginRight: index < row.length - 1 ? pt(8) : 0, fontSize: fieldContext.size }}>
-      {cell.rich ? <Rich node={cell.rich} context={fieldContext} /> : spec.type === 'level' && typeof cell.value === 'number' && context.resume.layout.mode === 'double' ? <View style={{ alignItems: layout.align === 'right' ? 'flex-end' : layout.align === 'center' ? 'center' : 'flex-start', paddingTop: 3 * context.spacing, paddingBottom: 3 * context.spacing }}><View style={{ width: '55%', height: 3, backgroundColor: '#E6EAE7' }}><View style={{ width: `${cell.value * 20}%`, height: 3, backgroundColor: context.theme }} /></View></View> : <Text orphans={2} widows={2} style={style}>{cell.href && !context.blockedLinks.has(text) ? <Link src={cell.href} style={{ color: layout.emphasis === 'muted' ? colour : context.theme, textDecoration: contentTextDecoration(Boolean(layout.underline) || context.resume.appearance.underlineLinks) }}>{text}</Link> : text}</Text>}
+    const natural = inlineRow && (rowAlign ? layout.inline !== false : spec.type !== 'level' && (layout.inline || layout.align === 'right'));
+    const groupLevel = Boolean(rowAlign && spec.type === 'level' && context.resume.layout.mode === 'double');
+    return <View id={previewFieldId(sectionId, itemId, layout.key)} key={layout.key} style={{ flexGrow: natural ? 0 : 1, flexShrink: 1, flexBasis: natural ? 'auto' : 0, minWidth: 0, maxWidth: '100%', width: groupLevel ? context.width * .55 : undefined, marginLeft: natural && !rowAlign && layout.align === 'right' ? 'auto' : 0, marginRight: !rowAlign && index < row.length - 1 ? pt(8) : 0, fontSize: fieldContext.size }}>
+      {cell.rich ? <Rich node={cell.rich} context={fieldContext} /> : spec.type === 'level' && typeof cell.value === 'number' && context.resume.layout.mode === 'double' ? <View style={{ alignItems: layout.align === 'right' ? 'flex-end' : layout.align === 'center' ? 'center' : 'flex-start', paddingTop: 3 * context.spacing, paddingBottom: 3 * context.spacing }}><View style={{ width: groupLevel ? '100%' : '55%', height: 3, backgroundColor: '#E6EAE7' }}><View style={{ width: `${cell.value * 20}%`, height: 3, backgroundColor: context.theme }} /></View></View> : <Text orphans={2} widows={2} style={style}>{cell.href && !context.blockedLinks.has(text) ? <Link src={cell.href} style={{ color: layout.emphasis === 'muted' ? colour : context.theme, textDecoration: contentTextDecoration(Boolean(layout.underline) || context.resume.appearance.underlineLinks) }}>{text}</Link> : text}</Text>}
     </View>;
   })}</View>;
 }

@@ -6,6 +6,12 @@ import { resumeTypeSize } from '../domain/typography';
 type ContentItem = ResumeItem | CustomSection['items'][number];
 export interface ContentCell { layout: ContentFieldLayout; spec: ContentFieldSpec; value: FieldValue; text: string; href?: string; rich?: RichDocument }
 
+/** Keep group placement distinct from alignment inside an allocated text cell. */
+export function contentRowPresentation(row: readonly ContentCell[]) {
+  const rich = row.some(cell => cell.rich), alignment = row.find(cell => cell.layout.rowAlign !== undefined)?.layout.rowAlign;
+  return { alignment, inline: !rich && (Boolean(alignment) || row.some(cell => cell.layout.inline)), justify: alignment === 'right' ? 'flex-end' as const : alignment === 'center' ? 'center' as const : 'flex-start' as const };
+}
+
 export function contentFontSize(layout: ContentFieldLayout, basePx: number, spec?: Pick<ContentFieldSpec, 'primary'>): number {
   return layout.fontSizeRatio !== undefined ? basePx * layout.fontSizeRatio : layout.fontSizePx ?? resumeTypeSize(basePx, spec?.primary ? 'entry' : 'body');
 }

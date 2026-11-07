@@ -1,11 +1,11 @@
-import type { PreparedAsset, Resume, RichNode, Section } from '../domain/types';
+import type { PreparedAsset, Resume, RichNode, Section, TextAlignment } from '../domain/types';
 import { hasContent, parseResume, richText, safeLink } from '../domain/resume';
 import { sectionTitle } from '../domain/registry';
 import { basicsView, compactItemView, inlineBasicsView, primaryKeyFor, visiblePageGroups } from './viewModel';
 import { previewFieldId } from './previewFields';
 import { readableThemeColor } from './colors';
 import { resolveContentLayout } from '../domain/contentLayout';
-import { contentFontSize, moduleContentRows, type ContentCell } from './contentLayoutView';
+import { contentFontSize, contentRowPresentation, moduleContentRows, type ContentCell } from './contentLayoutView';
 import { avatarFrame } from '../domain/avatar';
 import { fontOptionFor } from '../domain/fonts';
 import { RESUME_TYPE_SCALE } from '../domain/typography';
@@ -18,7 +18,7 @@ function linked(value: string, href?: string | null): string {
   return href ? `<a href="${escapeHtml(href)}" rel="noopener noreferrer">${escapeHtml(value)}</a>` : escapeHtml(value);
 }
 
-export function richHtml(node: RichNode): string {
+export function richHtml(node: RichNode, paragraphAlign?: TextAlignment, rowAlign?: TextAlignment, prefix?: { text: string; width: string }): string {
   if (node.type === 'text') {
     let value = escapeHtml(node.text ?? '');
     for (const mark of node.marks ?? []) {
@@ -33,15 +33,24 @@ export function richHtml(node: RichNode): string {
     return value;
   }
   if (node.type === 'hardBreak') return '<br>';
-  if (node.type === 'codeBlock') return `<pre><code>${escapeHtml(richText(node))}</code></pre>`;
-  const content = (node.content ?? []).map(richHtml).join('');
+  if (node.type === 'codeBlock') return `<pre${paragraphAlign ? ` style="text-align:${paragraphAlign}"` : ''}><code>${prefix ? escapeHtml(prefix.text) : ''}${escapeHtml(richText(node))}</code></pre>`;
+  // Keep list markers in the same first-line layout as PDF when a new
+  // alignment is selected; an outside HTML marker would stay at the left.
+  if ((paragraphAlign || rowAlign) && (node.type === 'bulletList' || node.type === 'orderedList')) {
+    const ordered = node.type === 'orderedList', tag = ordered ? 'ol' : 'ul', width = ordered ? '1.7em' : '1.15em';
+    const items = (node.content ?? []).map((child, index) => richHtml(child, paragraphAlign, rowAlign, { text: ordered ? `${(node.attrs?.start ?? 1) + index}. ` : '• ', width })).join('');
+    return `${prefix ? `<span>${escapeHtml(prefix.text)}</span>` : ''}<${tag} role="list"${ordered ? ` start="${node.attrs?.start ?? 1}"` : ''} style="list-style:none;padding-left:${width}">${items}</${tag}>`;
+  }
+  const content = (node.content ?? []).map((child, index) => richHtml(child, paragraphAlign, rowAlign, node.type === 'listItem' && index === 0 ? prefix : undefined)).join('');
   if (node.type === 'doc') return content;
   if (node.type === 'bulletList') return `<ul>${content}</ul>`;
   if (node.type === 'orderedList') return `<ol start="${node.attrs?.start ?? 1}">${content}</ol>`;
-  if (node.type === 'listItem') return `<li>${content}</li>`;
+  if (node.type === 'listItem') return `<li>${content || (prefix ? escapeHtml(prefix.text) : '')}</li>`;
   const tag = node.type === 'heading' ? `h${(node.attrs?.level ?? 3) + 2}` : 'p';
-  const alignment = node.attrs?.textAlign ? ` style="text-align:${node.attrs.textAlign}"` : '';
-  return `<${tag}${alignment}>${content}</${tag}>`;
+  const align = paragraphAlign ?? node.attrs?.textAlign;
+  const styles = [align ? `text-align:${align}` : '', prefix ? `text-indent:-${prefix.width}` : ''].filter(Boolean).join(';');
+  const alignment = styles ? ` style="${styles}"` : '';
+  return `<${tag}${alignment}>${prefix ? `<span aria-hidden="true">${escapeHtml(prefix.text)}</span>` : ''}${content}</${tag}>`;
 }
 
 function fieldMarker(enabled: boolean, sectionId: string, itemId: string, key: string): string {
@@ -51,19 +60,20 @@ function configuredSectionHtml(section: Section, resume: Resume, markers: boolea
   const settings = resolveContentLayout(section), title = sectionTitle(section, resume.locale);
   const entries = section.kind === 'summary' ? [{ id: section.id, rows: moduleContentRows(section) }] : section.items.filter(item => item.visible).map(item => ({ id: item.id, rows: moduleContentRows(section, item) })).filter(entry => entry.rows.length > 0);
   if (!entries.some(entry => entry.rows.length > 0)) return '';
-  const cellHtml = (cell: ContentCell, inlineRow: boolean, itemId: string) => {
+  const cellHtml = (cell: ContentCell, inlineRow: boolean, itemId: string, rowAlign?: TextAlignment) => {
     const { layout } = cell;
-    const natural = inlineRow && cell.spec.type !== 'level' && (layout.inline || layout.align === 'right');
+    const natural = inlineRow && (rowAlign ? layout.inline !== false : cell.spec.type !== 'level' && (layout.inline || layout.align === 'right'));
+    const groupLevel = Boolean(rowAlign && cell.spec.type === 'level' && resume.layout.mode === 'double');
     const fontSize = `${contentFontSize(layout, resume.appearance.fontSizePx, cell.spec)}px`;
     const typography = `font-size:${fontSize};font-style:${layout.italic ? 'italic' : 'normal'};text-decoration:${layout.underline ? 'underline' : 'none'};`;
-    const style = cell.rich ? `flex:1;min-width:0;${typography}` : `flex:${natural ? '0 1 auto' : '1'};min-width:0;max-width:100%;${natural && layout.align === 'right' ? 'margin-left:auto;' : ''}text-align:${layout.align};${typography}font-weight:${layout.emphasis === 'bold' ? 700 : 400};${layout.emphasis === 'muted' ? 'color:#59635d;' : ''}`;
-    const levelStyle = `margin-left:${layout.align === 'left' ? '0' : 'auto'};margin-right:${layout.align === 'right' ? '0' : 'auto'}`;
-    const body = cell.rich ? richHtml(cell.rich) : cell.spec.type === 'level' && typeof cell.value === 'number' && resume.layout.mode === 'double' ? `<div class="level" role="img" aria-label="${escapeHtml(cell.text)}" style="${levelStyle}"><span style="width:${cell.value * 20}%"></span></div>` : linked(cell.text, cell.href);
+    const style = cell.rich ? `flex:1;min-width:0;${rowAlign ? `text-align:${rowAlign};` : ''}${typography}` : `flex:${natural ? '0 1 auto' : '1'};min-width:0;max-width:100%;${groupLevel ? 'width:55%;' : ''}${natural && !rowAlign && layout.align === 'right' ? 'margin-left:auto;' : ''}text-align:${layout.align};${typography}font-weight:${layout.emphasis === 'bold' ? 700 : 400};${layout.emphasis === 'muted' ? 'color:#59635d;' : ''}`;
+    const levelStyle = `${groupLevel ? 'width:100%;' : ''}margin-left:${layout.align === 'left' ? '0' : 'auto'};margin-right:${layout.align === 'right' ? '0' : 'auto'}`;
+    const body = cell.rich ? richHtml(cell.rich, layout.paragraphAlign, rowAlign) : cell.spec.type === 'level' && typeof cell.value === 'number' && resume.layout.mode === 'double' ? `<div class="level" role="img" aria-label="${escapeHtml(cell.text)}" style="${levelStyle}"><span style="width:${cell.value * 20}%"></span></div>` : linked(cell.text, cell.href);
     return `<div class="content-layout-field${cell.rich ? ' content-layout-rich' : ''}" data-field-key="${escapeHtml(layout.key)}"${fieldMarker(markers, section.id, itemId, layout.key)} style="${style}">${body}</div>`;
   };
   const items = entries.map(({ rows, id }, index) => {
     const richIndex = rows.findIndex(row => row.some(cell => cell.rich)), headerCount = richIndex < 0 ? rows.length : richIndex;
-    const rowHtml = (row: ContentCell[], i: number) => { const inline = !row.some(cell => cell.rich) && row.some(cell => cell.layout.inline); return `<div class="content-layout-row${row.some(cell => cell.rich) ? ' has-rich' : ''}" style="margin-bottom:${i < rows.length - 1 ? settings.rowGapPx : 0}px;${inline ? 'flex-wrap:wrap;' : ''}">${row.map(cell => cellHtml(cell, inline, id)).join('')}</div>`; };
+    const rowHtml = (row: ContentCell[], i: number) => { const { inline, alignment, justify } = contentRowPresentation(row); return `<div class="content-layout-row${row.some(cell => cell.rich) ? ' has-rich' : ''}" style="margin-bottom:${i < rows.length - 1 ? settings.rowGapPx : 0}px;${inline ? 'flex-wrap:wrap;' : ''}${alignment ? `justify-content:${justify};` : ''}">${row.map(cell => cellHtml(cell, inline, id, alignment)).join('')}</div>`; };
     const heading = index === 0 && title ? `<h2>${escapeHtml(title)}</h2>` : '';
     return `<div class="resume-item content-layout-item" style="margin-bottom:${settings.itemGapPx}px"><div class="item-header">${heading}${rows.slice(0, headerCount).map(rowHtml).join('')}</div>${rows.slice(headerCount).map((row, i) => rowHtml(row, i + headerCount)).join('')}</div>`;
   }).join('');

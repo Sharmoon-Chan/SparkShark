@@ -41,10 +41,10 @@ const richSchema: z.ZodType<RichNode> = z.lazy(() => z.object({
 }).strict()) as z.ZodType<RichNode>;
 const richDocumentSchema = richSchema.refine(node => node.type === 'doc', '详情必须是文档节点');
 const contentLayoutSchema = z.object({
-  fields: z.array(z.object({ key: identifier, newLine: z.boolean(), align: z.enum(['left', 'center', 'right']), emphasis: z.enum(['normal', 'bold', 'muted']), visible: z.boolean(), inline: z.boolean().optional(), fontSizePx: z.number().min(8).max(36).optional(), fontSizeRatio: z.number().min(1 / 3).max(3.6).optional(), italic: z.boolean().optional(), underline: z.boolean().optional() }).strict()
+  fields: z.array(z.object({ key: identifier, newLine: z.boolean(), align: z.enum(['left', 'center', 'right']), emphasis: z.enum(['normal', 'bold', 'muted']), visible: z.boolean(), inline: z.boolean().optional(), rowAlign: z.enum(['left', 'center', 'right']).optional(), paragraphAlign: z.enum(['left', 'center', 'right']).optional(), fontSizePx: z.number().min(8).max(36).optional(), fontSizeRatio: z.number().min(1 / 3).max(3.6).optional(), italic: z.boolean().optional(), underline: z.boolean().optional() }).strict()
     .refine(field => field.fontSizePx === undefined || field.fontSizeRatio === undefined, '字号不能同时使用绝对值和比例')).max(100)
     .refine(fields => new Set(fields.map(field => field.key)).size === fields.length, '字段排版不能包含重复字段'),
-  rowGapPx: z.number().min(0).max(32), itemGapPx: z.number().min(0).max(64),
+  rowGapPx: z.number().min(0).max(32), itemGapPx: z.number().min(0).max(64), rowAlign: z.enum(['left', 'center', 'right']).optional(),
 }).strict();
 const sectionBase = { id: identifier, titleOverride: str.nullable(), visible: z.boolean(), contentLayout: contentLayoutSchema.optional() };
 const itemSchemas = ITEM_KINDS.map(kind => {

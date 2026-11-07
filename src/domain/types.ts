@@ -13,8 +13,10 @@ export type FieldValue = string | string[] | RichDocument | Level;
 export type ItemKind = 'profiles' | 'education' | 'work' | 'projects' | 'internships' | 'skills' | 'languages' | 'awards' | 'certifications' | 'interests' | 'publications' | 'volunteer' | 'references';
 export type SectionKind = ItemKind | 'summary' | 'custom';
 export interface ResumeItem { id: string; visible: boolean; fields: Record<string, FieldValue> }
-export interface ContentFieldLayout { key: string; newLine: boolean; align: 'left' | 'center' | 'right'; emphasis: 'normal' | 'bold' | 'muted'; visible: boolean; inline?: boolean; fontSizePx?: number; fontSizeRatio?: number; italic?: boolean; underline?: boolean }
-export interface SectionContentLayout { fields: ContentFieldLayout[]; rowGapPx: number; itemGapPx: number }
+export type TextAlignment = 'left' | 'center' | 'right';
+export type AlignmentScope = 'field' | 'row' | 'module';
+export interface ContentFieldLayout { key: string; newLine: boolean; align: TextAlignment; emphasis: 'normal' | 'bold' | 'muted'; visible: boolean; inline?: boolean; rowAlign?: TextAlignment; paragraphAlign?: TextAlignment; fontSizePx?: number; fontSizeRatio?: number; italic?: boolean; underline?: boolean }
+export interface SectionContentLayout { fields: ContentFieldLayout[]; rowGapPx: number; itemGapPx: number; rowAlign?: TextAlignment }
 export interface SectionBase { id: string; titleOverride: string | null; visible: boolean; contentLayout?: SectionContentLayout }
 export interface ItemSection extends SectionBase { kind: ItemKind; items: ResumeItem[] }
 export interface SummarySection extends SectionBase { kind: 'summary'; content: RichDocument }
@@ -58,6 +60,9 @@ export interface PreparedAsset { data: Uint8Array; mime: 'image/png' | 'image/jp
 export interface PreviewRegion { page: number; target: string; label: string; x: number; y: number; width: number; height: number }
 export type FieldDropPlacement = 'before' | 'after' | 'above' | 'below';
 export interface PreviewFieldRegion { page: number; sectionId: string; itemId: string; fieldKey: string; label: string; x: number; y: number; width: number; height: number; columnX: number; columnWidth: number; rich: boolean }
-export interface PreviewFieldDrop { sectionId: string; sourceKey: string; targetKey: string; placement: FieldDropPlacement }
+export interface PreviewAlignment { scope: AlignmentScope; value: TextAlignment }
+export interface PreviewFieldAlignment extends PreviewAlignment { sectionId: string; fieldKey: string }
+export interface FieldAlignmentState { field: TextAlignment | null; row: TextAlignment | null; module: TextAlignment | null }
+export interface PreviewFieldDrop { sectionId: string; sourceKey: string; targetKey: string; placement: FieldDropPlacement; alignment?: PreviewAlignment }
 export interface RenderResult { bytes: Uint8Array; pages: number; key: string; regions?: PreviewRegion[]; fields?: PreviewFieldRegion[] }
 export type Column = 'main' | 'sidebar';

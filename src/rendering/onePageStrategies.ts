@@ -1,7 +1,7 @@
 import type { Appearance, Resume, Section } from '../domain/types';
 import { contentFieldSpecs, defaultContentLayout } from '../domain/contentLayout';
 import { sectionTitle } from '../domain/registry';
-import { contentFontSize, moduleContentRows, sectionVisibleWithContent } from './contentLayoutView';
+import { contentFontSize, contentRowPresentation, moduleContentRows, sectionVisibleWithContent } from './contentLayoutView';
 import { resumeTypeSize } from '../domain/typography';
 
 export const MIN_SPACING_SCALE = .45;
@@ -68,7 +68,7 @@ function sectionHeight(section: Section, width: number, appearance: Appearance):
   const scale = appearance.spacingScale ?? 1;
   const rowGap = section.contentLayout?.rowGapPx ?? 4, itemGap = section.contentLayout?.itemGapPx ?? 8;
   return resumeTypeSize(appearance.fontSizePx, 'section') * appearance.lineHeight + 10 * scale + entries.reduce((total, rows) => total + rows.reduce((height, row) => {
-    const natural = row.some(cell => cell.layout.inline) && !row.some(cell => cell.rich);
+    const natural = contentRowPresentation(row).inline;
     const fonts = row.map(cell => contentFontSize(cell.layout, appearance.fontSizePx, cell.spec));
     const largest = Math.max(...fonts, 0);
     const textHeight = natural ? textLines(row.map(cell => cell.text).join('  '), width, largest) * largest * appearance.lineHeight

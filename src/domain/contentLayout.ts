@@ -57,21 +57,30 @@ export function resolveContentLayout(section: Section): SectionContentLayout {
     seen.add(field.key); fields.push({ ...field });
   }
   fields.push(...defaults.fields.filter(field => !seen.has(field.key)).map(field => ({ ...field })));
-  return { fields, rowGapPx: bounded(section.contentLayout.rowGapPx, defaults.rowGapPx, 32), itemGapPx: bounded(section.contentLayout.itemGapPx, defaults.itemGapPx, 64) };
+  return { fields, rowGapPx: bounded(section.contentLayout.rowGapPx, defaults.rowGapPx, 32), itemGapPx: bounded(section.contentLayout.itemGapPx, defaults.itemGapPx, 64), ...(section.contentLayout.rowAlign ? { rowAlign: section.contentLayout.rowAlign } : {}) };
 }
 
-/** Rich content spans a row, preserving its paragraph-level formatting. */
-export function contentLayoutRows(section: Section): ContentFieldLayout[][] {
-  const types = new Map(contentFieldSpecs(section).map(field => [field.key, field.type]));
+/** Hidden fields retain their row boundaries and alignment when neighbours move. */
+export function contentFieldRows(fields: readonly ContentFieldLayout[], richKeys: ReadonlySet<string>): ContentFieldLayout[][] {
   const rows: ContentFieldLayout[][] = [];
   let row: ContentFieldLayout[] = [], afterRich = false;
   const flush = () => { if (row.length) rows.push(row); row = []; };
-  for (const field of resolveContentLayout(section).fields) {
-    const rich = types.get(field.key) === 'rich';
+  for (const field of fields) {
+    const rich = richKeys.has(field.key);
     if (field.newLine || rich || afterRich) flush();
-    if (field.visible) row.push(field);
+    row.push(field);
     afterRich = rich;
   }
   flush();
   return rows;
+}
+
+/** Resolve row alignment before hiding/removing empty cells, including a hidden leader. */
+export function contentLayoutRows(section: Section): ContentFieldLayout[][] {
+  const layout = resolveContentLayout(section);
+  const richKeys = new Set(contentFieldSpecs(section).filter(field => field.type === 'rich').map(field => field.key));
+  return contentFieldRows(layout.fields, richKeys).map(row => {
+    const rowAlign = row.find(field => field.rowAlign !== undefined)?.rowAlign ?? layout.rowAlign;
+    return row.filter(field => field.visible).map(field => rowAlign ? { ...field, rowAlign } : field);
+  }).filter(row => row.length > 0);
 }
