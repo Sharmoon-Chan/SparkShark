@@ -1,4 +1,5 @@
 import type { Appearance, Resume } from '../domain/types';
+import { updatePageAppearance } from '../domain/typographyBinding';
 import { compactUnconfiguredFields, describeOnePageChanges, estimateOnePageCost, mergeOnePageGroups, spacingCandidate } from './onePageStrategies';
 import { fillOnePage, onePageUsage, ONE_PAGE_FILL_TARGET, type OnePageMeasurement } from './onePageFill';
 
@@ -61,7 +62,7 @@ async function reduceToOnePage(original: Resume, measure: (candidate: Resume) =>
   });
   const candidate = (structure: Resume, amount: number, mode: CompressionMode) => {
     const next = spacingCandidate(structure, amount);
-    if (mode === 'typography') next.appearance = { ...onePageAppearance(structure.appearance, amount), spacingScale: next.appearance.spacingScale };
+    if (mode === 'typography') updatePageAppearance(next, { ...onePageAppearance(structure.appearance, amount), spacingScale: next.appearance.spacingScale });
     else if (mode === 'margins') next.appearance.marginPx = onePageAppearance(structure.appearance, amount).marginPx;
     return next;
   };

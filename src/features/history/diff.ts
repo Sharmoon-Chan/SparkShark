@@ -9,7 +9,7 @@ function contentLayoutDescription(section: Section): string {
   if (!section.contentLayout) return '模板默认排版';
   const layout = resolveContentLayout(section), labels = new Map(contentFieldSpecs(section).map(field => [field.key, field.label]));
   const align = { left: '左对齐', center: '居中', right: '右对齐' }, emphasis = { normal: '正常', bold: '加粗', muted: '次要文字' };
-  return layout.fields.map((field, index) => `${labels.get(field.key) ?? field.key}（${field.visible ? `${index === 0 || field.newLine ? '新行' : '同行'}、${align[field.align]}、${emphasis[field.emphasis]}${field.fontSizePx !== undefined ? `、字号 ${field.fontSizePx}px` : ''}${field.italic ? '、斜体' : ''}${field.underline ? '、下划线' : ''}` : '隐藏'}）`).join('；') + `；行间距 ${layout.rowGapPx}px，条目间距 ${layout.itemGapPx}px`;
+  return layout.fields.map((field, index) => `${labels.get(field.key) ?? field.key}（${field.visible ? `${index === 0 || field.newLine ? '新行' : '同行'}、${align[field.align]}、${emphasis[field.emphasis]}${field.fontSizeRatio !== undefined ? `、字号随页面 ${Number((field.fontSizeRatio * 100).toFixed(2))}%` : field.fontSizePx !== undefined ? `、字号 ${field.fontSizePx}px` : ''}${field.italic ? '、斜体' : ''}${field.underline ? '、下划线' : ''}` : '隐藏'}）`).join('；') + `；行间距 ${layout.rowGapPx}px，条目间距 ${layout.itemGapPx}px`;
 }
 export function diffSnapshots(before: ResumeSnapshot, after: ResumeSnapshot): Difference[] {
   const differences: Difference[] = [];

@@ -1,4 +1,5 @@
 import type { PreviewFieldRegion, PreviewRegion, Resume } from '../domain/types';
+import { updatePageAppearance } from '../domain/typographyBinding';
 import { sectionVisibleWithContent } from './contentLayoutView';
 import { A4, pt } from './constants';
 
@@ -38,8 +39,8 @@ export function onePageExpansion(original: Resume, amount: number, mode: Expansi
       section.contentLayout.itemGapPx = enlarge(section.contentLayout.itemGapPx, ONE_PAGE_FILL_LIMITS.itemGapPx, t, 4);
     }
   } else {
-    if (mode !== 'line') appearance.fontSizePx = enlarge(appearance.fontSizePx, ONE_PAGE_FILL_LIMITS.fontSizePx, t, 4);
     if (mode !== 'font') appearance.lineHeight = enlarge(appearance.lineHeight, ONE_PAGE_FILL_LIMITS.lineHeight, t, 20);
+    if (mode !== 'line') updatePageAppearance(next, { fontSizePx: enlarge(appearance.fontSizePx, ONE_PAGE_FILL_LIMITS.fontSizePx, t, 4) });
   }
   return next;
 }

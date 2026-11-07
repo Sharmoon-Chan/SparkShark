@@ -13,7 +13,7 @@ export type FieldValue = string | string[] | RichDocument | Level;
 export type ItemKind = 'profiles' | 'education' | 'work' | 'projects' | 'internships' | 'skills' | 'languages' | 'awards' | 'certifications' | 'interests' | 'publications' | 'volunteer' | 'references';
 export type SectionKind = ItemKind | 'summary' | 'custom';
 export interface ResumeItem { id: string; visible: boolean; fields: Record<string, FieldValue> }
-export interface ContentFieldLayout { key: string; newLine: boolean; align: 'left' | 'center' | 'right'; emphasis: 'normal' | 'bold' | 'muted'; visible: boolean; inline?: boolean; fontSizePx?: number; italic?: boolean; underline?: boolean }
+export interface ContentFieldLayout { key: string; newLine: boolean; align: 'left' | 'center' | 'right'; emphasis: 'normal' | 'bold' | 'muted'; visible: boolean; inline?: boolean; fontSizePx?: number; fontSizeRatio?: number; italic?: boolean; underline?: boolean }
 export interface SectionContentLayout { fields: ContentFieldLayout[]; rowGapPx: number; itemGapPx: number }
 export interface SectionBase { id: string; titleOverride: string | null; visible: boolean; contentLayout?: SectionContentLayout }
 export interface ItemSection extends SectionBase { kind: ItemKind; items: ResumeItem[] }

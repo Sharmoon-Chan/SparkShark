@@ -45,7 +45,7 @@ async (page) => {
       return { body: style(body), section: style(body.querySelector('.resume-section h2')), entry: style(body.querySelector('.item-name')) };
     });
     assert(Math.abs(typography.section.size / typography.body.size - 20 / 14) < .01, 'Section title ratio is wrong');
-    assert(Math.abs(typography.entry.size / typography.body.size - 16 / 14) < .01, 'Entry title ratio is wrong');
+    assert(Math.abs(typography.entry.size / typography.body.size - 18 / 14) < .01, 'Entry title ratio is wrong');
     assert(typography.body.weight === '400' && typography.entry.weight === '700', 'Body/bold contrast is wrong');
     observations.typography = typography;
     await frame.locator('#preview-pages .resume-section').first().click();

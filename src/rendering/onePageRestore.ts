@@ -36,10 +36,20 @@ export function restoreOnePageFormat(current: Resume, record: OnePageRestore): R
     if (!different(c ?? null, b)) {
       if (a) section.contentLayout = structuredClone(a); else delete section.contentLayout;
     } else if (c && b) {
-      // Keep field moves made after fitting; undo only the fitted spacing values.
+      // Keep later field moves; undo fitted spacing and size bindings only if
+      // the user has not edited those values since the fit.
       const original = a ?? defaultContentLayout(section);
       if (c.rowGapPx === b.rowGapPx) c.rowGapPx = original.rowGapPx;
       if (c.itemGapPx === b.itemGapPx) c.itemGapPx = original.itemGapPx;
+      for (const field of c.fields) {
+        const fitted = b.fields.find(item => item.key === field.key), previous = original.fields.find(item => item.key === field.key);
+        if (!fitted || !previous) continue;
+        if (field.fontSizePx === fitted.fontSizePx && field.fontSizeRatio === fitted.fontSizeRatio) {
+          delete field.fontSizePx; delete field.fontSizeRatio;
+          if (previous.fontSizePx !== undefined) field.fontSizePx = previous.fontSizePx;
+          if (previous.fontSizeRatio !== undefined) field.fontSizeRatio = previous.fontSizeRatio;
+        }
+      }
     }
   }
   return next;

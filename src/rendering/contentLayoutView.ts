@@ -7,7 +7,7 @@ type ContentItem = ResumeItem | CustomSection['items'][number];
 export interface ContentCell { layout: ContentFieldLayout; spec: ContentFieldSpec; value: FieldValue; text: string; href?: string; rich?: RichDocument }
 
 export function contentFontSize(layout: ContentFieldLayout, basePx: number, spec?: Pick<ContentFieldSpec, 'primary'>): number {
-  return layout.fontSizePx ?? resumeTypeSize(basePx, spec?.primary ? 'entry' : 'body');
+  return layout.fontSizeRatio !== undefined ? basePx * layout.fontSizeRatio : layout.fontSizePx ?? resumeTypeSize(basePx, spec?.primary ? 'entry' : 'body');
 }
 
 export function contentTextDecoration(underline: boolean, strike = false): 'none' | 'underline' | 'line-through' | 'underline line-through' {

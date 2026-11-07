@@ -23,7 +23,7 @@ describe('standalone HTML export', () => {
     const fields = elements(renderResumeHtml(resume), 'div').filter(node => attr(node, 'data-field-key'));
     const company = fields.find(node => attr(node, 'data-field-key') === 'company')!;
     const position = fields.find(node => attr(node, 'data-field-key') === 'position')!;
-    expect(attr(company, 'style')).toContain('font-size:16px;');
+    expect(attr(company, 'style')).toContain('font-size:18px;');
     expect(attr(company, 'style')).toContain('font-weight:400;');
     expect(attr(position, 'style')).toContain('font-size:14px;');
     expect(attr(position, 'style')).toContain('font-weight:700;');

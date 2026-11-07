@@ -10,15 +10,15 @@ describe('configured module content', () => {
   it('inherits the field role independently of emphasis and preserves explicit sizes', () => {
     const field = defaultContentLayout(createExample().sections.find(section => section.kind === 'work')!).fields[0];
     for (const emphasis of ['normal', 'bold', 'muted'] as const) {
-      expect(contentFontSize({ ...field, emphasis }, 14, { primary: true })).toBe(16);
+      expect(contentFontSize({ ...field, emphasis }, 14, { primary: true })).toBe(18);
       expect(contentFontSize({ ...field, emphasis }, 14, { primary: false })).toBe(14);
-      expect(contentFontSize({ ...field, emphasis }, 17, { primary: true })).toBeCloseTo(19.428571);
+      expect(contentFontSize({ ...field, emphasis }, 17, { primary: true })).toBeCloseTo(21.857143);
       expect(contentFontSize({ ...field, emphasis, fontSizePx: 12.75 }, 18, { primary: true })).toBe(12.75);
       expect(contentFontSize({ ...field, emphasis, fontSizePx: 12.75 }, 18, { primary: false })).toBe(12.75);
     }
     expect(resumeTypeSize(14, 'section')).toBe(20);
     expect(resumeTypeSize(10.5, 'section')).toBe(15);
-    expect(resumeTypeSize(10.5, 'entry')).toBe(12);
+    expect(resumeTypeSize(10.5, 'entry')).toBeCloseTo(13.5);
   });
   it('keeps hidden problematic text in the data while excluding it from glyph and marker checks', () => {
     const resume = createExample(), work = resume.sections.find(section => section.kind === 'work')!;
