@@ -4,6 +4,8 @@ import { applyTemplate, createExample, plainRich } from '../../domain/resume';
 import { TEMPLATES } from '../../domain/templates';
 import { renderResumeHtml } from '../../rendering/html';
 import { HTML_PREVIEW_SHELL, previewPhotoDataUrl, renderHtmlPreview } from './htmlPreviewDocument';
+import { parsePreviewFieldId } from '../../rendering/previewFields';
+import { defaultContentLayout } from '../../domain/contentLayout';
 
 type Node = DefaultTreeAdapterTypes.Node;
 const visit = (node: Node): Node[] => [node, ...('childNodes' in node ? node.childNodes.flatMap(visit) : [])];
@@ -12,6 +14,32 @@ const attr = (node: DefaultTreeAdapterTypes.Element, name: string) => node.attrs
 const text = (node: Node): string => 'value' in node ? node.value : 'childNodes' in node ? node.childNodes.map(text).join('') : '';
 
 describe('instant HTML preview document', () => {
+  it('adds exact field identities only in drag mode and preserves every template text and data', () => {
+    for (const template of TEMPLATES) {
+      const resume = applyTemplate(createExample(), template.id), before = structuredClone(resume);
+      const normal = renderHtmlPreview(resume), drag = renderHtmlPreview(resume, undefined, true);
+      expect(normal).not.toContain('data-preview-field-id');
+      expect(text(elements(drag, 'body')[0])).toBe(text(elements(normal, 'body')[0]));
+      const fields = visit(parse(drag)).filter((node): node is DefaultTreeAdapterTypes.Element => 'tagName' in node && Boolean(attr(node, 'data-preview-field-id')));
+      const ids = fields.map(node => parsePreviewFieldId(attr(node, 'data-preview-field-id'))!);
+      const education = resume.sections.find(section => section.kind === 'education')!;
+      expect(ids.filter(id => id.sectionId === education.id).map(id => id.fieldKey)).toEqual(expect.arrayContaining(['institution', 'major', 'studyType', 'dateText']));
+      expect(ids.every(id => id && resume.sections.some(section => section.id === id.sectionId))).toBe(true);
+      expect(resume).toEqual(before);
+    }
+  });
+
+  it('keeps configured field IDs on the correct visible item, even when preceding items have no content', () => {
+    const resume = createExample(), work = resume.sections.find(section => section.kind === 'work')!;
+    if (work.kind !== 'work') throw new Error('fixture');
+    work.contentLayout = defaultContentLayout(work);
+    const original = structuredClone(work.items[0]), blank = structuredClone(original); blank.id += '-empty';
+    for (const key of Object.keys(blank.fields)) blank.fields[key] = typeof blank.fields[key] === 'object' ? plainRich('') : '';
+    work.items.unshift(blank);
+    const ids = visit(parse(renderHtmlPreview(resume, undefined, true))).filter((node): node is DefaultTreeAdapterTypes.Element => 'tagName' in node && Boolean(attr(node, 'data-preview-field-id'))).map(node => parsePreviewFieldId(attr(node, 'data-preview-field-id'))!).filter(id => id.sectionId === work.id);
+    expect(ids.length).toBeGreaterThan(0);
+    expect(ids.every(id => id.itemId === original.id)).toBe(true);
+  });
   it('boots a stable script-free shell with separate source, visual pages and one reading copy', () => {
     const mains = elements(HTML_PREVIEW_SHELL, 'main');
     expect(mains.map(node => attr(node, 'id'))).toEqual(['preview-source', 'preview-pages', 'preview-reading']);

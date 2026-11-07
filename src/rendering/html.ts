@@ -1,7 +1,8 @@
 import type { PreparedAsset, Resume, RichNode, Section } from '../domain/types';
 import { hasContent, parseResume, richText, safeLink } from '../domain/resume';
 import { sectionTitle } from '../domain/registry';
-import { basicsView, compactItemView, inlineBasicsView, visiblePageGroups } from './viewModel';
+import { basicsView, compactItemView, inlineBasicsView, primaryKeyFor, visiblePageGroups } from './viewModel';
+import { previewFieldId } from './previewFields';
 import { readableThemeColor } from './colors';
 import { resolveContentLayout } from '../domain/contentLayout';
 import { contentFontSize, moduleContentRows, type ContentCell } from './contentLayoutView';
@@ -43,11 +44,14 @@ export function richHtml(node: RichNode): string {
   return `<${tag}${alignment}>${content}</${tag}>`;
 }
 
-function configuredSectionHtml(section: Section, resume: Resume): string {
+function fieldMarker(enabled: boolean, sectionId: string, itemId: string, key: string): string {
+  return enabled ? ` data-preview-field-id="${escapeHtml(previewFieldId(sectionId, itemId, key))}"` : '';
+}
+function configuredSectionHtml(section: Section, resume: Resume, markers: boolean): string {
   const settings = resolveContentLayout(section), title = sectionTitle(section, resume.locale);
-  const entries = section.kind === 'summary' ? [moduleContentRows(section)] : section.items.filter(item => item.visible).map(item => moduleContentRows(section, item)).filter(rows => rows.length > 0);
-  if (!entries.some(rows => rows.length > 0)) return '';
-  const cellHtml = (cell: ContentCell, inlineRow: boolean) => {
+  const entries = section.kind === 'summary' ? [{ id: section.id, rows: moduleContentRows(section) }] : section.items.filter(item => item.visible).map(item => ({ id: item.id, rows: moduleContentRows(section, item) })).filter(entry => entry.rows.length > 0);
+  if (!entries.some(entry => entry.rows.length > 0)) return '';
+  const cellHtml = (cell: ContentCell, inlineRow: boolean, itemId: string) => {
     const { layout } = cell;
     const natural = inlineRow && cell.spec.type !== 'level' && (layout.inline || layout.align === 'right');
     const fontSize = `${contentFontSize(layout, resume.appearance.fontSizePx, cell.spec)}px`;
@@ -55,32 +59,34 @@ function configuredSectionHtml(section: Section, resume: Resume): string {
     const style = cell.rich ? `flex:1;min-width:0;${typography}` : `flex:${natural ? '0 1 auto' : '1'};min-width:0;max-width:100%;${natural && layout.align === 'right' ? 'margin-left:auto;' : ''}text-align:${layout.align};${typography}font-weight:${layout.emphasis === 'bold' ? 700 : 400};${layout.emphasis === 'muted' ? 'color:#59635d;' : ''}`;
     const levelStyle = `margin-left:${layout.align === 'left' ? '0' : 'auto'};margin-right:${layout.align === 'right' ? '0' : 'auto'}`;
     const body = cell.rich ? richHtml(cell.rich) : cell.spec.type === 'level' && typeof cell.value === 'number' && resume.layout.mode === 'double' ? `<div class="level" role="img" aria-label="${escapeHtml(cell.text)}" style="${levelStyle}"><span style="width:${cell.value * 20}%"></span></div>` : linked(cell.text, cell.href);
-    return `<div class="content-layout-field${cell.rich ? ' content-layout-rich' : ''}" data-field-key="${escapeHtml(layout.key)}" style="${style}">${body}</div>`;
+    return `<div class="content-layout-field${cell.rich ? ' content-layout-rich' : ''}" data-field-key="${escapeHtml(layout.key)}"${fieldMarker(markers, section.id, itemId, layout.key)} style="${style}">${body}</div>`;
   };
-  const items = entries.map((rows, index) => {
+  const items = entries.map(({ rows, id }, index) => {
     const richIndex = rows.findIndex(row => row.some(cell => cell.rich)), headerCount = richIndex < 0 ? rows.length : richIndex;
-    const rowHtml = (row: ContentCell[], i: number) => { const inline = !row.some(cell => cell.rich) && row.some(cell => cell.layout.inline); return `<div class="content-layout-row${row.some(cell => cell.rich) ? ' has-rich' : ''}" style="margin-bottom:${i < rows.length - 1 ? settings.rowGapPx : 0}px;${inline ? 'flex-wrap:wrap;' : ''}">${row.map(cell => cellHtml(cell, inline)).join('')}</div>`; };
+    const rowHtml = (row: ContentCell[], i: number) => { const inline = !row.some(cell => cell.rich) && row.some(cell => cell.layout.inline); return `<div class="content-layout-row${row.some(cell => cell.rich) ? ' has-rich' : ''}" style="margin-bottom:${i < rows.length - 1 ? settings.rowGapPx : 0}px;${inline ? 'flex-wrap:wrap;' : ''}">${row.map(cell => cellHtml(cell, inline, id)).join('')}</div>`; };
     const heading = index === 0 && title ? `<h2>${escapeHtml(title)}</h2>` : '';
     return `<div class="resume-item content-layout-item" style="margin-bottom:${settings.itemGapPx}px"><div class="item-header">${heading}${rows.slice(0, headerCount).map(rowHtml).join('')}</div>${rows.slice(headerCount).map((row, i) => rowHtml(row, i + headerCount)).join('')}</div>`;
   }).join('');
   return `<section class="resume-section" id="${escapeHtml(section.id)}">${items}</section>`;
 }
 
-function sectionHtml(section: Section, resume: Resume): string {
-  if (section.contentLayout) return configuredSectionHtml(section, resume);
+function sectionHtml(section: Section, resume: Resume, markers: boolean): string {
+  if (section.contentLayout) return configuredSectionHtml(section, resume, markers);
+  const marked = (itemId: string, key: string, html: string) => markers ? `<span${fieldMarker(true, section.id, itemId, key)} style="display:contents">${html}</span>` : html;
+  const markedRich = (itemId: string, key: string, node: RichNode) => !markers ? richHtml(node) : (node.content ?? []).map(child => richHtml(child).replace(/^<([a-z][a-z0-9]*)\b/i, `<$1${fieldMarker(true, section.id, itemId, key)}`)).join('');
   const title = sectionTitle(section, resume.locale);
   const heading = title ? `<h2>${escapeHtml(title)}</h2>` : '';
   let outsideHeading = heading;
   let content: string;
-  if (section.kind === 'summary') content = richHtml(section.content);
+  if (section.kind === 'summary') content = markedRich(section.id, 'summary', section.content);
   else if (section.kind === 'custom') content = section.items.filter(item => item.visible && Object.values(item.values).some(hasContent)).map(item => {
     const fields = section.fieldDefinitions.filter(field => field.visible && hasContent(item.values[field.id]));
     return `<div class="resume-item">${fields.map(field => {
       const value = item.values[field.id];
-      if (value && typeof value === 'object' && !Array.isArray(value)) return richHtml(value);
+      if (value && typeof value === 'object' && !Array.isArray(value)) return markedRich(item.id, field.id, value);
       const text = Array.isArray(value) ? value.join(' · ') : String(value);
       const body = field.type === 'url' ? linked(text, safeLink(text)) : escapeHtml(text);
-      return `<p${field.type === 'name' ? ' class="item-name"' : ''}>${body}</p>`;
+      return `<p${field.type === 'name' ? ' class="item-name"' : ''}${fieldMarker(markers, section.id, item.id, field.id)}>${body}</p>`;
     }).join('')}</div>`;
   }).join('');
   else {
@@ -91,12 +97,14 @@ function sectionHtml(section: Section, resume: Resume): string {
       const rightLabel = view.date || (single && view.level !== null ? `${view.level} / 5` : '');
       const summary = view.summary && hasContent(view.summary) ? view.summary : null;
       const short = (!summary || richText(summary).length <= 180) && (view.primary + view.date + view.caption + view.links.map(link => link.value).join('')).length <= 800;
-      const itemHeading = view.primary || rightLabel ? `<div class="item-heading">${view.primary ? `<h3 class="item-name">${escapeHtml(view.primary)}</h3>` : ''}${rightLabel ? `<p class="item-date">${escapeHtml(rightLabel)}</p>` : ''}</div>` : '';
+      const itemHeading = view.primary || rightLabel ? `<div class="item-heading">${view.primary ? `<h3 class="item-name"${fieldMarker(markers, section.id, item.id, primaryKeyFor(section.kind))}>${escapeHtml(view.primary)}</h3>` : ''}${rightLabel ? `<p class="item-date"${fieldMarker(markers, section.id, item.id, view.date ? 'dateText' : 'level')}>${escapeHtml(rightLabel)}</p>` : ''}</div>` : '';
       const classicCaption = resume.appearance.templateId === 'essential' && (section.kind === 'work' || section.kind === 'internships');
-      const leftCaption = [...view.details.filter(field => field.key !== 'dateText' && field.key !== 'location').map(field => field.value), ...(view.keywords.length ? [view.keywords.join(' · ')] : [])].join(' · ');
+      const captionFields = [...view.details.filter(field => field.key !== 'dateText'), ...(view.keywords.length ? [{ key: 'keywords', value: view.keywords.join(' · ') }] : [])];
+      const captionText = (fields: { key: string; value: string }[]) => fields.map(field => marked(item.id, field.key, escapeHtml(field.value))).join(' · ');
+      const leftCaption = captionText(captionFields.filter(field => field.key !== 'location'));
       const location = view.details.find(field => field.key === 'location')?.value ?? '';
-      const caption = !view.caption ? '' : classicCaption ? `<div class="item-detail item-detail-row"><span>${escapeHtml(leftCaption)}</span><span>${escapeHtml(location)}</span></div>` : `<p class="item-detail">${escapeHtml(view.caption)}</p>`;
-      return `<div class="resume-item${short ? ' short-item' : ''}${section.kind === 'skills' ? ' skill-item' : ''}"><div class="item-header">${index === 0 ? heading : ''}${itemHeading}${caption}${view.links.map(link => `<p class="item-link">${linked(link.value, link.href)}</p>`).join('')}${!single && view.level !== null ? `<div class="level" role="img" aria-label="${view.level} / 5"><span style="width:${view.level * 20}%"></span></div>` : ''}</div>${summary ? richHtml(summary) : ''}</div>`;
+      const caption = !view.caption ? '' : classicCaption ? `<div class="item-detail item-detail-row"><span>${leftCaption}</span><span${fieldMarker(markers && Boolean(location), section.id, item.id, 'location')}>${escapeHtml(location)}</span></div>` : `<p class="item-detail">${captionText(captionFields)}</p>`;
+      return `<div class="resume-item${short ? ' short-item' : ''}${section.kind === 'skills' ? ' skill-item' : ''}"><div class="item-header">${index === 0 ? heading : ''}${itemHeading}${caption}${view.links.map(link => `<p class="item-link"${fieldMarker(markers, section.id, item.id, link.key)}>${linked(link.value, link.href)}</p>`).join('')}${!single && view.level !== null ? `<div class="level" role="img" aria-label="${view.level} / 5"${fieldMarker(markers, section.id, item.id, 'level')}><span style="width:${view.level * 20}%"></span></div>` : ''}</div>${summary ? markedRich(item.id, 'summary', summary) : ''}</div>`;
     }).join('');
   }
   return `<section class="resume-section" id="${escapeHtml(section.id)}">${outsideHeading}${content}</section>`;
@@ -109,7 +117,7 @@ function imageData(asset: PreparedAsset): string {
 }
 
 /** A self-contained reading copy. Logical page groups retain the editor's section order. */
-export function renderResumeHtml(input: Resume, assets: Record<string, PreparedAsset> = {}): string {
+export function renderResumeHtml(input: Resume, assets: Record<string, PreparedAsset> = {}, options: { fieldMarkers?: boolean } = {}): string {
   const resume = parseResume(input), { basics } = resume, style = { ...resume.appearance, avatar: avatarFrame(resume.appearance.avatar), themeColor: readableThemeColor(resume.appearance.themeColor) };
   const spacing = style.spacingScale ?? 1;
   const view = basicsView(basics), groups = visiblePageGroups(resume);
@@ -119,7 +127,7 @@ export function renderResumeHtml(input: Resume, assets: Record<string, PreparedA
   const contactHtml = style.templateId === 'essential' ? `<div class="contacts">${inlineBasicsView(basics).map(contact => `<span class="contact">${linked(contact.text, contact.href)}</span>`).join('')}</div>` : `${view.contacts.length ? `<div class="contacts">${view.contacts.map(contact => `<span class="contact">${style.hideIcons ? '' : `<span class="contact-icon" aria-hidden="true">${symbols[contact.icon]}</span>`}${linked(contact.value, contact.href)}</span>`).join('')}</div>` : ''}${view.customFields.map(field => `<p class="custom-contact">${escapeHtml((field.label ? field.label + '：' : '') + field.value)}</p>`).join('')}`;
   const header = hasBasics ? `<header class="resume-header">${photo ? `<img class="avatar" src="${imageData(photo)}" alt="${escapeHtml(basics.name || '头像')}">` : ''}<div class="header-text">${basics.name ? `<h1>${escapeHtml(basics.name)}</h1>` : ''}${basics.headline ? `<p class="headline">${escapeHtml(basics.headline)}</p>` : ''}${contactHtml}</div></header>` : '';
   const pages = (groups.length ? groups : [{ id: 'blank', main: [], sidebar: [] }]).map((group, index) => {
-    const sectionContent = (sections: Section[]) => sections.map(section => sectionHtml(section, resume)).join('');
+    const sectionContent = (sections: Section[]) => sections.map(section => sectionHtml(section, resume, Boolean(options.fieldMarkers))).join('');
     const columns = resume.layout.mode === 'double'
       ? `<div class="columns"><div class="main-column">${sectionContent(group.main)}</div><aside class="sidebar-column">${sectionContent(group.sidebar)}</aside></div>`
       : `<div class="main-column">${sectionContent([...group.main, ...group.sidebar])}</div>`;

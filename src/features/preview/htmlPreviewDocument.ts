@@ -30,7 +30,7 @@ export function previewPhotoDataUrl(asset: PreparedAsset): string {
 }
 
 /** Reuse the export renderer without changing the standalone HTML export. */
-export function renderHtmlPreview(resume: Resume, photoDataUrl?: string): string {
+export function renderHtmlPreview(resume: Resume, photoDataUrl?: string, fieldMarkers = false): string {
   if (photoDataUrl && !/^data:image\/(?:png|jpeg);base64,[A-Za-z0-9+/]*={0,2}$/.test(photoDataUrl)) throw new Error('预览照片格式无效');
   const avatarId = resume.basics.avatarAssetId;
   // The photo has already been encoded when its source/crop changed. Use a tiny
@@ -38,7 +38,7 @@ export function renderHtmlPreview(resume: Resume, photoDataUrl?: string): string
   const assets: Record<string, PreparedAsset> = photoDataUrl && avatarId
     ? { [avatarId]: { data: new Uint8Array([1]), mime: 'image/png', width: 1, height: 1 } }
     : {};
-  let html = renderResumeHtml(resume, assets);
+  let html = renderResumeHtml(resume, assets, { fieldMarkers });
   if (photoDataUrl) html = html.replace(`src="${PLACEHOLDER_PHOTO}"`, `src="${photoDataUrl}"`);
   const css = `
 html,body{background:transparent;height:auto;min-height:0;overflow:hidden}

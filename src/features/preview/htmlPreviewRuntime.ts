@@ -1,9 +1,10 @@
-import type { Resume } from '../../domain/types';
+import type { PreviewFieldRegion, Resume } from '../../domain/types';
 import { sectionTitle } from '../../domain/registry';
 import { paginatePreview, type PaginationResult } from './domPagination';
 import { HTML_PREVIEW_MIN_HEIGHT, HTML_PREVIEW_WIDTH, previewSystemFont } from './htmlPreviewDocument';
 import { browserFontFamily, createBrowserFontController, type BrowserFontStatus } from './browserFonts';
 import { browserFontUsage } from './browserFontUsage';
+import { collectHtmlPreviewFields } from './htmlPreviewFields';
 
 export interface PreviewLayoutState {
   pages: number;
@@ -12,6 +13,9 @@ export interface PreviewLayoutState {
   durationMs: number;
   error?: string;
   diagnostics?: PaginationResult;
+  html?: string;
+  fields?: PreviewFieldRegion[];
+  fieldMeasurementMs?: number;
 }
 
 export interface PreviewRuntimeOptions {
@@ -20,6 +24,7 @@ export interface PreviewRuntimeOptions {
   onFontStatus?: (status: BrowserFontStatus) => void;
   beforeLayout?: () => void;
   onReveal?: (element: HTMLElement) => void;
+  onFieldLayoutPending?: () => void;
 }
 
 /** A stable iframe document: input changes update escaped markup, never srcdoc. */
@@ -34,6 +39,7 @@ export function createHtmlPreviewRuntime(document: Document, options: PreviewRun
   let lastHtml = '', lastStyle = '', sourceSize = '';
   let fontSignature = '';
   let sectionIds = new Set<string>();
+  let fieldMode = false;
   const focusSection = () => {
     for (const element of destination.querySelectorAll<HTMLElement>('[data-keyboard-focus]')) element.removeAttribute('data-keyboard-focus');
     const id = document.activeElement?.closest<HTMLElement>('#preview-reading [data-section-id]')?.dataset.sectionId;
@@ -74,7 +80,11 @@ export function createHtmlPreviewRuntime(document: Document, options: PreviewRun
       const measured = source.getBoundingClientRect();
       sourceSize = `${measured.width.toFixed(2)}:${measured.height.toFixed(2)}`;
       destination.dataset.layoutDuration = durationMs.toFixed(2);
-      options.onLayout({ pages: result.pages, height: result.height, revision, durationMs, diagnostics: result });
+      const fieldStarted = performance.now();
+      const fields = fieldMode ? collectHtmlPreviewFields(destination, current) : undefined;
+      const fieldMeasurementMs = fieldMode ? performance.now() - fieldStarted : 0;
+      destination.dataset.fieldMeasurementMs = String(fieldMeasurementMs);
+      options.onLayout({ pages: result.pages, height: result.height, revision, durationMs, diagnostics: result, html: lastHtml, fields, fieldMeasurementMs });
       focusSection();
     } catch (error) {
       // Keep the previous complete preview available on a failed measurement.
@@ -82,7 +92,7 @@ export function createHtmlPreviewRuntime(document: Document, options: PreviewRun
         durationMs: performance.now() - started, error: error instanceof Error ? error.message : String(error) });
     }
   };
-  const schedule = () => { if (!disposed && !scheduled) scheduled = view.requestAnimationFrame(measure); };
+  const schedule = () => { if (!disposed && !scheduled) { if (fieldMode) options.onFieldLayoutPending?.(); scheduled = view.requestAnimationFrame(measure); } };
   const fontController = createBrowserFontController(document, status => {
     if (disposed || !current || status.family !== browserFontFamily(current.appearance.fontFamilyId)) return;
     options.onFontStatus?.(status);
@@ -121,6 +131,7 @@ export function createHtmlPreviewRuntime(document: Document, options: PreviewRun
     const target = event.target as Element | null;
     if (!target?.closest) return;
     if (target.closest('a')) event.preventDefault();
+    if (fieldMode && target.closest('#preview-pages')) return;
     const section = target.closest<HTMLElement>('[data-section-id]');
     if (section && sectionIds.has(section.dataset.sectionId!)) { event.preventDefault(); options.onSelect(section.dataset.sectionId!); }
   };
@@ -134,11 +145,13 @@ export function createHtmlPreviewRuntime(document: Document, options: PreviewRun
   document.fonts.addEventListener('loadingdone', fontsLoaded);
 
   return {
-    update(html: string, resume: Resume) {
+    update(html: string, resume: Resume, fields = false) {
       if (disposed) return;
       current = resume;
+      const modeChanged = fieldMode !== fields;
+      fieldMode = fields;
       sectionIds = new Set(resume.sections.map(section => section.id));
-      if (html === lastHtml) return;
+      if (html === lastHtml) { if (modeChanged) schedule(); return; }
       lastHtml = html;
       const parsed = new DOMParser().parseFromString(html, 'text/html');
       const main = parsed.querySelector<HTMLElement>('main.resume');

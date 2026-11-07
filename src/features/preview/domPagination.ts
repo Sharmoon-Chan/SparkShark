@@ -11,7 +11,7 @@ export interface SlicePlanOptions {
 }
 
 const EPSILON = .2;
-const PAGE_GAP = 24;
+export const PAGE_GAP = 24;
 
 /** Merge overlapping glyph rectangles, including mixed bold/plain inline runs. */
 export function mergeLineIntervals(intervals: readonly VerticalInterval[]): VerticalInterval[] {
